@@ -81,13 +81,13 @@ analytics:
 # Site Author
 author:
   name             : "LI Zhe"
-  avatar           : "https://github.com/shanmon110/lz/blob/master/images/lizhe.png?raw=true"
+  avatar           : "https://raw.githubusercontent.com/shanmon110/lz/master/images/lizhe.jpg"
   bio              : "Your biography for the left-hand sidebar"
   location         : "Hong Kong"
   employer         :
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  pubmed           :  #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : "https://scholar.google.com.hk/citations?user=ye7VR5kAAAAJ&hl=zh-CN"
-  email            :
+  email            :  "lizheqlu@163.com"
   researchgate     : "https://www.researchgate.net/profile/Zhe-Li-136"
   uri              :
   bitbucket        :
