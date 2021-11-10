@@ -22,5 +22,7 @@ Nothing is impossible!
 News
 ======
 29/05/2021 Finally I also did it! I have also accomplished my Master Defense!.
+
 29/10/2020 [Video](https://hub.baai.ac.cn/view/3391) We have updated CCL 2020 oral presentation video.
+
 11/10/2020 [Video](https://www.bilibili.com/video/BV1PD4y197ma?p=6) We have updated CCMT2020 oral presentation video.
