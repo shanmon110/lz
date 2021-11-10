@@ -13,7 +13,7 @@ name                     : &name "LI Zhe"
 description              : &description "personal description"
 url                      : "https://github.com/shanmon110" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
-repository               : "shanmon110/lz"
+repository               : "academicpages/academicpages.github.io"
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 breadcrumbs              : false # true, false (default)
 words_per_minute         : 160
@@ -81,7 +81,7 @@ analytics:
 # Site Author
 author:
   name             : "LI Zhe"
-  avatar           : "lizhe.png"
+  avatar           : "https://github.com/shanmon110/lz/blob/master/images/lizhe.png?raw=true"
   bio              : "Your biography for the left-hand sidebar"
   location         : "Hong Kong"
   employer         :
