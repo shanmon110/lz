@@ -23,7 +23,7 @@ Others：
 * [8]Li, y., Luan, X., Ke, Z., **Li Z**., & Wushour, S. (0). A survey of knowledge-guided pre-trained language models. Computer engineering, 0. https://doi.org/10.19678/j.issn.1000-3428.0060823
 * [9] LIU Wanyue, Aishan Wumaier, **Li Z**, etc. Neural Machine Translation Based on Multi-sub-word Sequence Fusion[J] Journal of Chinese Information Processing
 
-Journal Papers
+Conference Papers
 ==
 * [10] Li X, **Li Z**, Sheng J, et al. Low-Resource Text Classification via Cross-lingual Language Model Fine-tuning[C]//Proceedings of the 19th Chinese National Conference on Computational Linguistics. 2020: 994-1005.
 * [11] Yu Q, **Li Z**, Sheng J, et al. YuQ: A Chinese-Uyghur Medical Domain Neural Machine Translation Dataset Towards Knowledge-driven, in The 16th china conference on machine translation, CCMT 2020, Hohho, China.
