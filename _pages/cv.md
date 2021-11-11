@@ -34,6 +34,44 @@ Work experience
   * Inspur
   * Duties included: Responsible for software testing of "LOVE TV App", writing technical documents including requirements document, and technical implementation document. 
 
+Principal Investigator
+======
+* Cross-modal and Multilingual Social Media Mining Based on Big Data in Cyberspace, Xinjiang Uygur Autonomous Region Graduate scientific research Innovation project, Project Grant NO. XJ2020G071, 2020/01-2021/4, PI.
+* Translation Times Network Translation Trading Consulting Co., LTD., National College students' Innovation, and Entrepreneurship training Plan,  Project Grant NO. 201410431049, 2014-2015, PI.
+
+Co-Principal Investigator
+======
+*  Research on cross-media and Multilingual Public opinion Information Technology based on big data in cyberspace, Nation State Language Commission key research projects,Project Approval NO.ZDI135-96 2019-2021, under research.
+*  Multilingual Network Public Opinion Monitoring System for Public Security, 2018/12/31-2021/12/31, Cooperation unit: China Electronic Science and Technology Group, under research.
+*  Multilingual topic monitoring and Research for Social environment in Xinjiang, National 242 Safety Plan project, Project Approval NO.2019Axxx, 178000000, 2019.12-2020.12, under research.
+* National Key Research and development project of Dark Network Intelligence Analysis and User Identification Technology, Project Approval NO.2017xxx0820xxx-3, 2018/02/01-2021/01/30, under research.
+
+Comprehensive Honor
+======
+
+* 2021,05 Scholarship of Xinjiang Uygur Autonomous Region, 
+* 2020.05 Excellent scientific and technological achievements Award of the Chinese Association for Artificial Intelligence
+* 2019.11 Top 100 teams of Intel Cup the first China Graduate Students artificial intelligence innovation competition
+* 2019.09 Bronze Award of The 5th China College Students' 'Internet+'Innovation and Entrepreneurship Competition Xinjiang Division
+* 2019.05 The Second Prize of The 10th Chinese College Students innovation and Entrepreneurship Competition
+* 2016.06 Outstanding Graduate of Shandong Province
+* 2016.06 Excellent Bachelor's Thesis of Shandong Province
+* 2015.12 The Third Prize of The 13th Qilu Software Design Competition
+* 2015.08 The Third Prize of The 6th Chinese College Students innovation and Entrepreneurship Competition
+* 2014.12 Honorable mention of 2014 Mobile Internet Application Development and Innovation Competition
+* 2014.05 Silver Award The 9th Challenge Cup Shandong Division
+* 2013.12 Runner-up of The 2th Langsin IBM Robocode Programming Contest
+* 2015.11 Shandong Provincial Government Scholarship
+* 2013.11 National Encouragement Scholarship
+
+Service
+======
+* Journal Reviewer
+  * Internation Journal Information and Communication Technology(IJ-ICT)
+  * IEEE Access Reviewer
+* Member
+  * Chinese Information Processing Society of China
+  * Chinese Association for Artificial Intelligence
 Skills
 ======
 * Deep Leaning Familiar with deep learning basic theories and models including RNN, Transfomer, BERT, and Seq2Seq, etc.
@@ -64,13 +102,3 @@ Talks
   <ul>{% for post in site.talks %}
     {% include archive-single-talk-cv.html %}
   {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
