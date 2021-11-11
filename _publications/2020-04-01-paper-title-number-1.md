@@ -1,5 +1,3 @@
----
-title: "基于迁移学习的维吾尔语命名实体识别"
-paperurl: 'http://www.cqvip.com/qk/90785x/202002/7101986375.html'
-citation: '孔祥鹏, 吾守尔, 斯拉木, 等. 基于迁移学习的维吾尔语命名实体识别[J]. 东北师大学报: 自然科学版, 2020, 52(2): 58-65.'
----
+Biography
+======
+I am a PhD student in the Department of Electronic and Information Engineering at the Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/). My research interests include speaker recognition and multimodal semantic analysis.
