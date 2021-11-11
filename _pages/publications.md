@@ -1,16 +1,12 @@
 ---
-layout: archive
-title: "Publications"
-permalink: /publications/
+permalink: /
+title: ""
+excerpt: "publications"
 author_profile: true
+redirect_from: 
+  - /publications/
+  - /publications.html
 ---
-
-{% if author.googlescholar %}
-  You can also find my articles on <u><a href="{{author.googlescholar}}">my Google Scholar profile</a>.</u>
-{% endif %}
-
-{% include base_path %}
-
-{% for post in site.publications reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+Biography
+======
+I am a PhD student in the Department of Electronic and Information Engineering at the Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/). My research interests include speaker recognition and multimodal semantic analysis.
