@@ -1,15 +1,7 @@
----
-title: "Paper Title Number 3"
-collection: publications
-permalink: /publication/2015-10-01-paper-title-number-3
-excerpt: 'This paper is about the number 3. The number 4 is left for future work.'
-date: 2015-10-01
-venue: 'Journal 1'
-paperurl: 'http://academicpages.github.io/files/paper3.pdf'
-citation: 'Your Name, You. (2015). &quot;Paper Title Number 3.&quot; <i>Journal 1</i>. 1(3).'
----
-This paper is about the number 3. The number 4 is left for future work.
+Biography
+======
+I am a PhD student in the Department of Electronic and Information Engineering at the Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/). My research interests include speaker recognition and multimodal semantic analysis.
 
-[Download paper here](http://academicpages.github.io/files/paper3.pdf)
+I have received my master degree in Xinjiang Key Laboratory of Multilingual Information Technology at Xinjiang University. My supervisor is [Prof.Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), the Academician of Chinese Academy of Engineering. My research interests are Natural Language Processing(NLP), Multilingual public opinion analysis, especially Uyghur. I have been exploring some works related to Uyghur NLP since September 2018. I am working on NLP between both Low-Resource minority Languages (LRLs) and Morphologically Rich minority Languages (MRLs). I was working on identifying sensitive and harmful information in social media posts made in low resource languages (e.g., Uyghur).
 
-Recommended citation: Your Name, You. (2015). "Paper Title Number 3." <i>Journal 1</i>. 1(3).
+In my master's study, I have won the Excellent Scientific and Technological Achievements Award of the Chinese Association for Artificial Intelligence. I have published five SCI papers, presented two papers at the EI conference and four Chinese core papers. I have been the principal investigator of a scientific research project and co-participant of several National Key R&D Program of China projects regarding Social Computing. I have presented an oral paper presentation at the 16th China Conference on Machine Translation.
