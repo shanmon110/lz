@@ -72,6 +72,7 @@ Service
 * Member
   * Chinese Information Processing Society of China
   * Chinese Association for Artificial Intelligence
+
 Skills
 ======
 * Deep Leaning Familiar with deep learning basic theories and models including RNN, Transfomer, BERT, and Seq2Seq, etc.
