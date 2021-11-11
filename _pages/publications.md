@@ -1,16 +1,1 @@
----
-layout: archive
-title: "Publications"
-permalink: /publications/
-author_profile: true
----
-
-{% if author.googlescholar %}
-  You can also find my articles on <u><a href="{{author.googlescholar}}">my Google Scholar profile</a>.</u>
-{% endif %}
-
-{% include base_path %}
-
-{% for post in site.publications reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+Li Z, Li X, Sheng J, et al. AgglutiFiT: Efficient Low-Resource Agglutinative Language Model Fine-Tuning[J]. IEEE Access, 2020, 8: 148489-148499.
