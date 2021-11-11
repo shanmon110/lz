@@ -11,7 +11,7 @@ redirect_from:
 
 Journal Papers
 ==
-* [1] **Li Z**, Li X, Sheng J, et al. AgglutiFiT: Efficient Low-Resource Agglutinative Language Model Fine-Tuning[J]. IEEE Access, 2020, 8: 148489-148499.
+* [1] **Li Z**, Li X, Sheng J, et al. [AgglutiFiT: Efficient Low-Resource Agglutinative Language Model Fine-Tuning[J]](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9164940). IEEE Access, 2020, 8: 148489-148499.
 * [2] **Li Z**, Maimaiti M, Sheng J, et al. An Empirical Study on Deep Neural Network Models for Chinese Dialogue Generation[J]. Symmetry-Basel, 2020, 12(11): 1756.
 Co-first author：
 * [3] Ke Z, **Li Z**, Zhou C, et al. Rumor Detection on Social Media via Fused Semantic Information and a Propagation Heterogeneous Graph[J]. Symmetry-Basel, 2020, 12(11): 1806.
