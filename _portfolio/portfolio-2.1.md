@@ -1,5 +1,5 @@
 ---
-title: "CAAI Award"
+title: "2020.05 CAAI Award"
 excerpt: "CAAI Award<br/><img src='/images/2.png'>"
 collection: portfolio
 ---
