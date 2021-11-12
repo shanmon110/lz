@@ -1,6 +1,6 @@
 ---
 title: "Master Defense"
-excerpt: "Master Defense<br/><img src='/images/9.png'>"
+excerpt: "After 3 years of hard working and 1 hours brain frying I have also accomplished my master Defense!<br/><img src='/images/9.png'>"
 collection: portfolio
 ---
 
