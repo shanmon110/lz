@@ -23,6 +23,9 @@ News
 ======
 29/05/2021 Finally I also did it! I have accomplished my Master Defense!
 
+14/11/2020 [CAAI Award](https://mp.weixin.qq.com/s/HgcGxSYnunYZaDQIU7Tjuw) I have won the Excellent Scientific and Technological Achievements Award of the Chinese Association for Artificial Intelligence.
+
 29/10/2020 [Video](https://hub.baai.ac.cn/view/3391) We have updated CCL2020 oral presentation video.
 
 11/10/2020 [Video](https://www.bilibili.com/video/BV1PD4y197ma?p=6) We have updated CCMT2020 oral presentation video.
+
