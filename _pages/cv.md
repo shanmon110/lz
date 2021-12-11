@@ -11,7 +11,7 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Electronic and Information Engineering, Hong Kong Polytechnic University, 2021 Semester 2
+* Ph.D in Electronic and Information Engineering, Hong Kong Polytechnic University, 2021
 * M.S. in Software Engineering, Xinjiang University, 2018
 * B.S. in Computer Science, Qilu University of Technology University, 2012
 
