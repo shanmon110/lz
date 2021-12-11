@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Dr. LI Zhe"
+title                    : "Mr. LI Zhe"
 title_separator          : "-"
 name                     : &name "LI Zhe"
 description              : &description "personal description"
@@ -87,7 +87,7 @@ author:
   employer         :
   pubmed           :  #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : "https://scholar.google.com.hk/citations?user=ye7VR5kAAAAJ&hl=zh-CN"
-  email            :  "lizheqlu@163.com"
+  email            :  "cszhe.li@polyu.edu.hk"
   researchgate     : "https://www.researchgate.net/profile/Zhe-Li-136"
   uri              :
   bitbucket        :
