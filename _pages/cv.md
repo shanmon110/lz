@@ -11,7 +11,7 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Electronic and Information Engineering, Hong Kong Polytechnic University, 2021
+* Ph.D in Electronic and Information Engineering, Hong Kong Polytechnic University, 2021 sem 2
 * M.S. in Software Engineering, Xinjiang University, 2018
 * B.S. in Computer Science, Qilu University of Technology University, 2012
 
@@ -97,6 +97,7 @@ Others：
 * [9] Ren, Z., Zhenchao, W., Zunwang, K., **Li Z**., & Wushour, S. (2021). A survey of multimodal data fusion. Computer Engineering and Applications.
 * [10]Li, y., Luan, X., Ke, Z., **Li Z**., & Wushour, S. (0). A survey of knowledge-guided pre-trained language models. Computer engineering, 0. https://doi.org/10.19678/j.issn.1000-3428.0060823
 * [11] LIU Wanyue, Aishan Wumaier, **Li Z**, etc. Neural Machine Translation Based on Multi-sub-word Sequence Fusion[J] Journal of Chinese Information Processing
+* [12] MA chunming, LI Xiuhong, **Li Z**, WANG Huiru, YANG Dan. A Survey of Event Extraction[J] Journal of Computer Applications
   
 Talks
 ======
