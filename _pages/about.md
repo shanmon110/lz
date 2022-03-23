@@ -32,6 +32,8 @@ News
 
 *[·-·]:![visitors](https://visitor-badge.glitch.me/badge?page_id=shanmon110.github.io)
 
+<center>
 <a href="https://clustrmaps.com/site/1bnha" title="Visit tracker"><img height="400" src="//www.clustrmaps.com/map_v2.png?d=OAgNznmdz5Fw3L7FYL-Pj_2xqMjFZiO76BaC6AWvMzs&cl=ffffff"></a>
+</center>
 
 
