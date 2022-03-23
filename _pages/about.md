@@ -31,6 +31,5 @@ News
 11/10/2020 [Video](https://www.bilibili.com/video/BV1PD4y197ma?p=6) We have updated CCMT2020 oral presentation video.
 
 ![visitors](https://visitor-badge.glitch.me/badge?page_id=shanmon110.github.io)
-<script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=OAgNznmdz5Fw3L7FYL-Pj_2xqMjFZiO76BaC6AWvMzs&cl=ffffff&w=a"></script>
-
+<a href="https://clustrmaps.com/site/1bnha" title="Visit tracker"><img src="//www.clustrmaps.com/map_v2.png?d=OAgNznmdz5Fw3L7FYL-Pj_2xqMjFZiO76BaC6AWvMzs&cl=ffffff"></a>
 
