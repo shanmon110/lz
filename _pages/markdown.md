@@ -1,13 +1,12 @@
 ---
 permalink: /markdown/
-title: "Markdown"
+title: "Services"
 author_profile: true
 redirect_from: 
   - /md/
   - /markdown.html
 ---
 
-Service
 ======
 * Conference Reviewer
   * 2022 IEEE World Congress on Computational Intelligence, IEEE WCCI 2022
