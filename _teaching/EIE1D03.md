@@ -1,0 +1,11 @@
+---
+title: "Artificial Intelligence and Science Fiction"
+collection: teaching
+type: "Postgraduate Course"
+permalink: /teaching/EIE1D03
+venue: "Hong Kong Polytechnic University, Department of Electronic and Information Engineering"
+date: 2022,Semester 2
+location: "Hong Kong, China"
+---
+
+Laboratory supervision, laboratory exercise development, conducting tutorials, marking tests/homework scripts, guiding project students, examination invigilation, etc.
