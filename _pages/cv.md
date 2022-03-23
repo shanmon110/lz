@@ -66,12 +66,23 @@ Comprehensive Honor
 
 Service
 ======
+* Conference Reviewer
+  * 2022 IEEE World Congress on Computational Intelligence
+   * IEEE International Joint Conference on Neural Networks,IJCNN
+   * IEEE CEC
 * Journal Reviewer
   * Internation Journal Information and Communication Technology(IJ-ICT)
   * IEEE Access Reviewer
 * Member
   * Chinese Information Processing Society of China
   * Chinese Association for Artificial Intelligence
+
+Teaching Experiences
+======
+*  Semester 2,2022，EIE4105 Multimodal Human Computer Interaction Technologies, Lecturer: Prof.MAK Man Wai, The Hong Kong Polytechnic University
+*  Semester 2,2022，EIE1003 Foundations of Data Science, Lecturer: Dr LEUNG Hung Fat, Frank, The Hong Kong Polytechnic University
+*  Semester 2,2022，EIE1D03 Artificial Intelligence and Science Fiction, Lecturer: Mr PANG Chun Yu, Frank, The Hong Kong Polytechnic University
+ 
 
 Skills
 ======
