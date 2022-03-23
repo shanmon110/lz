@@ -10,7 +10,7 @@ redirect_from:
 
 Biography
 ======
-I am a PhD student in the Department of Electronic and Information Engineering at the Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/). My research interests include speaker recognition and multimodal semantic analysis.
+I am a PhD student in the Department of Electronic and Information Engineering at the Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/). My research interests include robust speaker diarization and multimodal semantic analysis.
 
 I have received my master degree in Xinjiang Key Laboratory of Multilingual Information Technology at Xinjiang University. My supervisor is [Prof.Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), the Academician of Chinese Academy of Engineering. My research interests are Natural Language Processing(NLP), Multilingual public opinion analysis, especially Uyghur. I have been exploring some works related to Uyghur NLP since September 2018. I am working on NLP between both Low-Resource minority Languages (LRLs) and Morphologically Rich minority Languages (MRLs). I was working on identifying sensitive and harmful information in social media posts made in low resource languages (e.g., Uyghur).
 
