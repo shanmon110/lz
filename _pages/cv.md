@@ -72,7 +72,7 @@ Service
    * IEEE CEC
 * Journal Reviewer
   * Internation Journal Information and Communication Technology(IJ-ICT)
-  * IEEE Access Reviewer
+  * IEEE Access
 * Member
   * Chinese Information Processing Society of China
   * Chinese Association for Artificial Intelligence
