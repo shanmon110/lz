@@ -108,7 +108,8 @@ Others：
 * [9] Ren, Z., Zhenchao, W., Zunwang, K., **Li Z**., & Wushour, S. (2021). A survey of multimodal data fusion. Computer Engineering and Applications.
 * [10]Li, y., Luan, X., Ke, Z., **Li Z**., & Wushour, S. (0). A survey of knowledge-guided pre-trained language models. Computer engineering, 0. https://doi.org/10.19678/j.issn.1000-3428.0060823
 * [11] LIU Wanyue, Aishan Wumaier, **Li Z**, etc. Neural Machine Translation Based on Multi-sub-word Sequence Fusion[J] Journal of Chinese Information Processing
-* [12] MA chunming, LI Xiuhong, **Li Z**, WANG Huiru, YANG Dan. A Survey of Event Extraction[J] Journal of Computer Applications
+* [12] MA chunming, LI Xiuhong, **Li Z**, WANG Huiru, YANG Dan. A Survey of Event Extraction[J] Journal of Computer Applications,1-20[2022-06-17]
+* [13] WANG Huiru, LI Xiuhong, **Li Z**, MA chunming, REN Zeyu, YANG Dan. A Survey of Survey of multimodal pre-trained models[J] Journal of Computer Applications
   
 Talks
 ======
