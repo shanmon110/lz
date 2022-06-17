@@ -23,9 +23,10 @@ https://www.cnki.com.cn/Article/CJFDTotal-DBSZ202002010.htm)[J]. Journal of Nort
 * [7] Ren, Z., Zhenchao, W., Zunwang, K., **Li Z**., & Wushour, S. (2021). [A survey of multimodal data fusion](http://cea.ceaj.org/CN/abstract/abstract39897.shtml)[J]. Computer Engineering and Applications.
 * [8]Li, y., Luan, X., Ke, Z., **Li Z**., & Wushour, S. (0). [A survey of knowledge-guided pre-trained language models](http://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0060823#1)[J]. Computer engineering, 0. https://doi.org/10.19678/j.issn.1000-3428.0060823
 * [9] LIU Wanyue, Aishan Wumaier, **Li Z**, etc. Neural Machine Translation Based on Multi-sub-word Sequence Fusion[J] Journal of Chinese Information Processing
-* [10] MA chunming, LI Xiuhong, **Li Z**, WANG Huiru, YANG Dan. A Survey of Event Extraction[J] Journal of Computer Applications
+* [10] MA chunming, LI Xiuhong, **Li Z**, WANG Huiru, YANG Dan. A Survey of Event Extraction[J] Journal of Computer Applications,1-20[2022-06-17]
+* [11] WANG Huiru, LI Xiuhong, **Li Z**, MA chunming, REN Zeyu, YANG Dan. A Survey of Survey of multimodal pre-trained models[J] Journal of Computer Applications
 
 Conference Papers
 ==
-* [11] Li X, **Li Z**, Sheng J, et al. [Low-Resource Text Classification via Cross-lingual Language Model Fine-tuning](https://aclanthology.org/2020.ccl-1.92.pdf)[C]//Proceedings of the 19th Chinese National Conference on Computational Linguistics. 2020: 994-1005.
-* [12] Yu Q, **Li Z**, Sheng J, et al. [YuQ: A Chinese-Uyghur Medical Domain Neural Machine Translation Dataset Towards Knowledge-driven](http://sc.cipsc.org.cn/mt/conference/2020/papers/T20-1004.pdf)[C], in The 16th china conference on machine translation, CCMT 2020, Hohho, China.
+* [12] Li X, **Li Z**, Sheng J, et al. [Low-Resource Text Classification via Cross-lingual Language Model Fine-tuning](https://aclanthology.org/2020.ccl-1.92.pdf)[C]//Proceedings of the 19th Chinese National Conference on Computational Linguistics. 2020: 994-1005.
+* [13] Yu Q, **Li Z**, Sheng J, et al. [YuQ: A Chinese-Uyghur Medical Domain Neural Machine Translation Dataset Towards Knowledge-driven](http://sc.cipsc.org.cn/mt/conference/2020/papers/T20-1004.pdf)[C], in The 16th china conference on machine translation, CCMT 2020, Hohho, China.
