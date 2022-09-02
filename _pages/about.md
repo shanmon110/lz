@@ -22,6 +22,8 @@ Moreover, I am keen on addressing some NLP problems by exploiting Machine Learni
 
 News
 ======
+14/11/2020 [Speaker of Participant Talk]([https://mp.weixin.qq.com/s/HgcGxSYnunYZaDQIU7Tjuw](https://www.bilibili.com/video/BV18S4y1p7xY?p=8&vd_source=72429a47df312126433e0bb950f77049)) I take a shared talk about speaker verification as 'Speaker of Participant talk 'in Odyssey-CNSRC Workshop 2022.
+
 29/05/2021 Finally I did it! I have accomplished my master oral examination!
 
 14/11/2020 [CAAI Award](https://mp.weixin.qq.com/s/HgcGxSYnunYZaDQIU7Tjuw) I have won the Excellent Scientific and Technological Achievements Award of the Chinese Association for Artificial Intelligence.
