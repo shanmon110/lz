@@ -10,7 +10,7 @@ redirect_from:
 {% include base_path %}
 Conference Papers
 ==
-* [1] **Li Z** and Man-Wai Mak, "Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability", Proc. APSIPA, Chiang Mai, Nov. 2022. Paper
+* [1] **Li Z** and Man-Wai Mak, "[Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability](http://www.eie.polyu.edu.hk/~mwmak/papers/apsipa22.pdf)", Proc. APSIPA, Chiang Mai, Nov. 2022. Paper
 * [2] Li X, **Li Z**, Sheng J, et al. [Low-Resource Text Classification via Cross-lingual Language Model Fine-tuning](https://aclanthology.org/2020.ccl-1.92.pdf)[C]//Proceedings of the 19th Chinese National Conference on Computational Linguistics. 2020: 994-1005.
 * [3] Yu Q, **Li Z**, Sheng J, et al. [YuQ: A Chinese-Uyghur Medical Domain Neural Machine Translation Dataset Towards Knowledge-driven](http://sc.cipsc.org.cn/mt/conference/2020/papers/T20-1004.pdf)[C], in The 16th china conference on machine translation, CCMT 2020, Hohho, China.
 
