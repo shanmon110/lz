@@ -17,7 +17,7 @@ redirect_from:
 2022
 ==
 * [1] **Li Z** and Man-Wai Mak, "[Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability](http://www.eie.polyu.edu.hk/~mwmak/papers/apsipa22.pdf)", In 2022 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC) (pp. 962-967).
-* [2] WANG Huiru, LI Xiuhong, **Li Z**, MA chunming, REN Zeyu, YANG Dan. A Survey of Survey of multimodal pre-trained models[J] Journal of Computer Applications
+* [2] WANG Huiru, LI Xiuhong, **Li Z**, MA chunming, REN Zeyu, YANG Dan. A Survey of Survey of multimodal pre-trained models[J] Journal of Computer Applications.
 * [3] MA chunming, LI Xiuhong, **Li Z**, WANG Huiru, YANG Dan. A Survey of Event Extraction[J] Journal of Computer Applications,1-20[2022-06-17]
 
 2021
