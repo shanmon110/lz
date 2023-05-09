@@ -10,7 +10,7 @@ redirect_from:
 {% include base_path %}
 2023
 ==
-* [1] **Li Z**, Man-Wai Mak, and Helen Mei-Ling Meng. "[Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space](https://arxiv.org/pdf/2210.16622.pdf)." in IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP) 2023. **CCF B**
+* [1] **Li Z**, Man-Wai Mak, and Helen Mei-Ling Meng. "[Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space](https://arxiv.org/pdf/2210.16622.pdf)." in ICASSP 2023 - 2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Rhodes Island, Greece, 2023, pp. 1-5. **CCF B**
 * [2] Yang zhenyu, Wang Yu, Liu Guojing, **Li Z**, Wang xingang, Recommendation Model Based on Multi-grained Interaction that Fuses Users' Dynamic Interests, International Journal of Machine Learning and Cybernetics[J], Accept.
 * [3] Sheng, J., **Li Z**, Lam, S. K., Zhang, J., Teng, X, Zhang, Y. & Cai, J.. (2022). [Multi-view Contrastive Learning with Additive Margin for Adaptive Nasopharyngeal Carcinoma Radiotherapy Prediction](https://arxiv.org/pdf/2210.15201.pdf). In Proceedings of the 2023 International Conference on Multimedia Retrieval. **CCF B**
 
