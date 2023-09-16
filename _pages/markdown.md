@@ -12,6 +12,7 @@ redirect_from:
    * IEEE International Joint Conference on Neural Networks, IJCNN
    * IEEE CEC
 * Journal Reviewer
+  * Information Science
   * Internation Journal Information and Communication Technology(IJ-ICT)
   * IEEE Access
 * Member
