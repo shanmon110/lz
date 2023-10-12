@@ -21,6 +21,7 @@ redirect_from:
 * [9] Di WU, Liting Jiang, Lili Yin, **Li Zhe**, Hao Huang, CEA-Net: A Co-interactive External Attention Network for Joint Intent Detection and Slot Filling, Neural Computing, and Applications. Accept, **CCF C**
 * [10] Yan Ke, Wanghao Mo, **Li Zhe**, Ruyi Cao, Wendong Zhang, MDCN: Multi-Scale Dilated Convolutional Enhanced Residual Network for Traffic Sign Detection, The 19th anniversary of the International Conference on Advanced Data Mining and Applications (ADMA'23). Accept, **CCF C**
 * [11] Yang zhenyu, Wang Yu, Liu Guojing, **Li Zhe**, Wang xingang, Recommendation Model Based on Multi-grained Interaction that Fuses Users' Dynamic Interests, International Journal of Machine Learning and Cybernetics[J], Accept.
+* [12] Guo Q, Liao Y, **Li Zhe**, Liang S. [Multi-Modal Representation via Contrastive Learning with Attention Bottleneck Fusion and Attentive Statistics Features](https://www.mdpi.com/1099-4300/25/10/1421). Entropy. 2023; 25(10):1421.
 
 
 2022
