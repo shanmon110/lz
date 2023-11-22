@@ -10,9 +10,9 @@ redirect_from:
 {% include base_path %}
 2023
 ==
-* [1] **Li Zhe**, Man-Wai Mak, and Helen Mei-Ling Meng. "[Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space](https://arxiv.org/pdf/2210.16622.pdf)." in ICASSP 2023 - 2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Rhodes Island, Greece, 2023, pp. 1-5. **CCF B**
+* [1] **Li Zhe**, Man-Wai Mak, and Helen Mei-Ling Meng. "[Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space](https://arxiv.org/pdf/2210.16622.pdf)." in IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Rhodes Island, Greece, 2023. **CCF B**
 * [2] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling, Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples, IEEE/ACM Transactions on Audio, Speech and Language Processing, **under review**
-* [3] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling. Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters, in Proc.ICASSP 2024, **under review**
+* [3] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling. Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters, in Proc. ICASSP 2024, **under review**
 * [4] **Li Zhe**, Mak, Man-Wai, Jen-Tzung CHIEN and Meng, Helen Mei-Ling. Cross-Lingual Speaker Embedding Generation via Fine-Tuning Pre-trained Speech Models by Using Generalized Diffusion Process, **under review**
 * [5] **Li Zhe**, Mak, Man-Wai, Hung-yi Lee and Meng, Helen Mei-Ling. Prompt-driven speaker verification,  **under review**
 * [6] Sheng, J., **Li Zhe**, Lam, S. K., Zhang, J., Teng, X, Zhang, Y. & Cai, J.. (2022). [Multi-view Contrastive Learning with Additive Margin for Adaptive Nasopharyngeal Carcinoma Radiotherapy Prediction](https://arxiv.org/pdf/2210.15201.pdf). In Proceedings of the 2023 International Conference on Multimedia Retrieval. **CCF B**
