@@ -21,7 +21,7 @@ Moreover, I am keen on addressing some Audio-Visual problems by exploiting Machi
 News
 ======
 
-08/12/2023 I gave a talk on "Maximal Speaker Separability via Robust Speaker Representation Learning", National Conference on Man-Machine Speech Communication, NCMMSC2023, Soochow, China, Dec 2023
+08/12/2023 I gave a talk on "Maximal Speaker Separability via Robust Speaker Representation Learning," National Conference on Man-Machine Speech Communication, NCMMSC2023, Soochow, China, Dec 2023
  
 03/12/2023 I gave a talk on "Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples", The International Doctoral Forum 2023, Hong Kong SAR, Dec 2023
 
@@ -39,11 +39,12 @@ News
 
 11/10/2020 [Video](https://www.bilibili.com/video/BV1PD4y197ma?p=6) We have updated CCMT2020 oral presentation video.
 
+<!--
 *[·-·]:![visitors](https://visitor-badge.glitch.me/badge?page_id=shanmon110.github.io)
 
 <center>
 <a href='https://clustrmaps.com/site/1bnha'  title='Visit tracker'><img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=300&t=tt&d=OAgNznmdz5Fw3L7FYL-Pj_2xqMjFZiO76BaC6AWvMzs'/></a>
-  
 </center>
+-->
 
 
