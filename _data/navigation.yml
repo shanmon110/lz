@@ -6,8 +6,8 @@ main:
   - title: "Talks"
     url: /talks/    
 
-  - title: "Teaching Assistant"
-    url: /teaching/    
+  # - title: "Teaching Assistant"
+  #   url: /teaching/    
     
   - title: "Services"
     url: /markdown/
@@ -18,5 +18,5 @@ main:
 #   - title: "Blog"
 #     url: /year-archive/
     
-  - title: "CV"
-    url: /cv/
+  # - title: "CV"
+  #   url: /cv/
