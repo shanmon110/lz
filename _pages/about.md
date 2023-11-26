@@ -20,15 +20,15 @@ Moreover, I am keen on addressing some Audio-Visual problems by exploiting Machi
 News
 ======
 
-08/12/2023 I gave a talk on "Maximal Speaker Separability via Robust Speaker Representation Learning," National Conference on Man-Machine Speech Communication, NCMMSC2023, Soochow, China, Dec 2023
+08/12/2023 I gave a talk on *Maximal Speaker Separability via Robust Speaker Representation Learning*, National Conference on Man-Machine Speech Communication, NCMMSC2023, Soochow, China, Dec 2023
  
-03/12/2023 I gave a talk on "Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples", The International Doctoral Forum 2023, Hong Kong SAR, Dec 2023
+03/12/2023 I gave a talk on *Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples*, The International Doctoral Forum 2023, Hong Kong SAR, Dec 2023
 
-15/05/2023 [Paper Sharing Session](https://www.bilibili.com/video/BV1y8411S7Qg/?spm_id_from=333.999.0.0&vd_source=72429a47df312126433e0bb950f77049) I gave a talk on "Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space" at the paper presentation session of ICASSP 2023.
+15/05/2023 [Paper Sharing Session](https://www.bilibili.com/video/BV1y8411S7Qg/?spm_id_from=333.999.0.0&vd_source=72429a47df312126433e0bb950f77049) I gave a talk on *Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space* at the paper presentation session of ICASSP 2023.
 
 11/09/2022 [Speaker of Participant Talk] I delivered an oral report about Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability in APSIPA ASC 2022.
 
-01/07/2022 [Speaker of Participant Talk](https://www.bilibili.com/video/BV18S4y1p7xY?p=8&vd_source=72429a47df312126433e0bb950f77049&t=0.9) I take a shared talk about speaker verification as 'Speaker of Participant talk 'in Odyssey-CNSRC Workshop 2022.
+01/07/2022 [Speaker of Participant Talk](https://www.bilibili.com/video/BV18S4y1p7xY?p=8&vd_source=72429a47df312126433e0bb950f77049&t=0.9) I take a shared talk about speaker verification as *Speaker of Participant talk* in Odyssey-CNSRC Workshop 2022.
 
 29/05/2021 Finally, I did it! I have completed my master's oral examination!
 
