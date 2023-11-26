@@ -12,8 +12,8 @@ main:
   - title: "Services"
     url: /markdown/
     
-  - title: "Portfolio"
-    url: /portfolio/
+  # - title: "Portfolio"
+  #   url: /portfolio/
         
 #   - title: "Blog"
 #     url: /year-archive/
