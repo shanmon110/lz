@@ -26,7 +26,7 @@ News
 
 15/05/2023 [Paper Sharing Session](https://www.bilibili.com/video/BV1y8411S7Qg/?spm_id_from=333.999.0.0&vd_source=72429a47df312126433e0bb950f77049) I gave a talk on *Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space* at the paper presentation session of ICASSP 2023.
 
-11/09/2022 [Speaker of Participant Talk] I delivered an oral report about Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability in APSIPA ASC 2022.
+11/09/2022 [Speaker of Participant Talk] I delivered an oral report about *Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability* in APSIPA ASC 2022.
 
 01/07/2022 [Speaker of Participant Talk](https://www.bilibili.com/video/BV18S4y1p7xY?p=8&vd_source=72429a47df312126433e0bb950f77049&t=0.9) I take a shared talk about speaker verification as *Speaker of Participant talk* in Odyssey-CNSRC Workshop 2022.
 
