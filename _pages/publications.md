@@ -8,12 +8,15 @@ redirect_from:
 ---
 
 {% include base_path %}
+
 2024
 ==
-* [1] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling, Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples, IEEE/ACM Transactions on Audio, Speech and Language Processing, **under review**
-* [2] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling. Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters, in Proc. ICASSP 2024, **under review**
-* [3] **Li Zhe**, Mak, Man-Wai, Jen-Tzung CHIEN and Meng, Helen Mei-Ling. Cross-Lingual Speaker Embedding Generation via Fine-Tuning Pre-trained Speech Models by Using Generalized Diffusion Process, **under review**
-* [4] **Li Zhe**, Mak, Man-Wai, Hung-yi Lee and Meng, Helen Mei-Ling. Prompt-driven speaker verification,  **under review**
+* [1] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling. Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters, in Proc. IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, 2024. **CCF B**
+* [2] Di Wu, Liting Jiang, Lili Yin, Kai Wang, Haoxiang Su, **Li Zhe**, Hao Huang. Dual Level Intent-Slot Interaction for Improved Multi-Intent Spoken Language Understanding, in Proc. IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, 2024. **CCF B**
+* [3] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling, Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples, IEEE/ACM Transactions on Audio, Speech and Language Processing, **under review**, **CCF B**
+* [4] **Li Zhe**, Mak, Man-Wai, Jen-Tzung CHIEN and Meng, Helen Mei-Ling. Cross-Lingual Speaker Embedding Generation via Fine-Tuning Pre-trained Speech Models by Using Generalized Diffusion Process, **under review**
+* [5] **Li Zhe**, Mak, Man-Wai, Hung-yi Lee and Meng, Helen Mei-Ling. Prompt-driven speaker verification,  **under review**
+  
 2023
 ==
 * [1] **Li Zhe**, Man-Wai Mak, and Helen Mei-Ling Meng. "[Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space](https://arxiv.org/pdf/2210.16622.pdf)." in IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Rhodes Island, Greece, 2023. **CCF B**
