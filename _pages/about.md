@@ -9,24 +9,25 @@ redirect_from:
 ---
 Biography
 ======
-I am a PhD student in the Department of Electronic and Information Engineering at the Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/). My research interests include robust speaker diarization and multimodal speaker recognition.
+I am currently a visiting PhD researcher at 🇺🇸 [Stanford University](https://profiles.stanford.edu/332001). Additionally, I am pursuing my PhD at the 🇭🇰 Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/). My research focuses on robust speaker representation learning and machine learning.
 
-I have received my master's degree in Xinjiang Key Laboratory of Multilingual Information Technology at Xinjiang University. My supervisor is [Prof. Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), the Academician of the Chinese Academy of Engineering. My research interests are Natural Language Processing(NLP) and multilingual public opinion analysis, especially in Uyghur. I have been exploring some works related to Uyghur NLP since September 2018. I am working on NLP between Low-Resource minority Languages (LRLs) and Morphologically Rich minority Languages (MRLs). I was working on identifying sensitive and harmful information in social media posts made in low-resource languages (e.g., Uyghur).
+I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multilingual Information Technology at Xinjiang University. My supervisor is [Prof. Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), the Academician of the Chinese Academy of Engineering. My research interests are Natural Language Processing(NLP) and multilingual public opinion analysis, especially in Uyghur. I have been exploring some works related to Uyghur NLP since September 2018. I am working on NLP between Low-Resource minority Languages (LRLs) and Morphologically Rich minority Languages (MRLs). I was working on identifying sensitive and harmful information in social media posts made in low-resource languages (e.g., Uyghur).
 
-Moreover, I am keen on addressing some Audio-Visual problems by exploiting Machine Learning and Deep Learning approaches. I spend most of my time on Audio-Visual tasks, mainly on interesting and meaningful problems for multimodal speaker diarization.
 
 **You are more than what you have become!**
 
 News
 ======
 
-08/12/2023 I gave a talk on *Maximal Speaker Separability via Robust Speaker Representation Learning*, National Conference on Man-Machine Speech Communication, NCMMSC2023, Soochow, China, Dec 2023
+03/04/2024 [Paper Sharing Session](https://www.bilibili.com/video/BV17T42127Wd?t=47.1) I gave a talk on *Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters* at the paper share session of ICASSP 2024.
+
+08/12/2023 I gave a talk on **Maximal Speaker Separability via Robust Speaker Representation Learning**, National Conference on Man-Machine Speech Communication, NCMMSC2023, Soochow, China, Dec 2023
  
-03/12/2023 I gave a talk on *Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples*, The International Doctoral Forum 2023, Hong Kong SAR, Dec 2023
+03/12/2023 I gave a talk on **Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples**, The International Doctoral Forum 2023, Hong Kong SAR, Dec 2023
 
-15/05/2023 [Paper Sharing Session](https://www.bilibili.com/video/BV1y8411S7Qg/?spm_id_from=333.999.0.0&vd_source=72429a47df312126433e0bb950f77049) I gave a talk on *Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space* at the paper presentation session of ICASSP 2023.
+15/05/2023 [Paper Sharing Session](https://www.bilibili.com/video/BV1y8411S7Qg?t=3.8) I gave a talk on **Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space** at the paper presentation session of ICASSP 2023.
 
-11/09/2022 [Speaker of Participant Talk] I delivered an oral report about *Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability* in APSIPA ASC 2022.
+11/09/2022 [Speaker of Participant Talk] I delivered an oral report about **Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability** in APSIPA ASC 2022.
 
 01/07/2022 [Speaker of Participant Talk](https://www.bilibili.com/video/BV18S4y1p7xY?p=8&vd_source=72429a47df312126433e0bb950f77049&t=0.9) I take a shared talk about speaker verification as *Speaker of Participant talk* in Odyssey-CNSRC Workshop 2022.
 
