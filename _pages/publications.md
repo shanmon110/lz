@@ -6,9 +6,9 @@ author_profile: true
 redirect_from:
   - /publications
 ---
-
-{% include base_path %}
 📔
+{% include base_path %}
+
 2024
 ==
 * [1] He Zhenzhen He, Yu Jiong, **Li Zhe**, et al. [Cardinality estimation for property graph queries with gated learning approach on the graph database](https://doi.org/10.1007/s11042-024-19215-7). Multimedia Tools and Applications (2024). **CCF C**
