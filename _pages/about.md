@@ -7,7 +7,7 @@ redirect_from:
   - /about/
   - /about.html
 ---
-Biography
+👨‍🎓 Biography
 ======
 I am currently a visiting PhD researcher at 🇺🇸 [Stanford University](https://profiles.stanford.edu/332001). Additionally, I am pursuing my PhD at the 🇭🇰 Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/). My research focuses on robust speaker representation learning and machine learning.
 
@@ -16,10 +16,10 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 **You are more than what you have become!**
 
-News
+📰 News
 ======
 
-03/04/2024 [Paper Sharing Session](https://www.bilibili.com/video/BV17T42127Wd?t=47.1) I gave a talk on *Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters* at the paper share session of ICASSP 2024.
+03/04/2024 [Paper Sharing Session](https://www.bilibili.com/video/BV17T42127Wd?t=47.1) I gave a talk on **Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters** at the paper share session of ICASSP 2024.
 
 08/12/2023 I gave a talk on **Maximal Speaker Separability via Robust Speaker Representation Learning**, National Conference on Man-Machine Speech Communication, NCMMSC2023, Soochow, China, Dec 2023
  
