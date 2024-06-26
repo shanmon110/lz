@@ -11,20 +11,20 @@ redirect_from:
 
 📔 2024
 ==
-* [1] **Li Zhe**, Mak, Man-Wai, Hung-yi Lee and Meng, Helen Mei-Ling. Parameter-efficient Fine-tuning of Speaker-Aware Dynamic Prompts for Speaker Verification, Proc. InterSpeech 2024, Kos Island, Greece.  **CCF C**
-* [2] Guinan Li, Jiajun Deng, **Li Zhe**, et.al. Joint Speaker Features Learning for Audio-visual Multichannel Speech Separation and Recognition, Proc. InterSpeech 2024, Kos Island, Greece. **CCF C**
-* [3] He Zhenzhen He, Yu Jiong, **Li Zhe**, et al. [Cardinality estimation for property graph queries with gated learning approach on the graph database](https://doi.org/10.1007/s11042-024-19215-7). Multimedia Tools and Applications (2024). **CCF C**
-* [4] Wandi Wang, Mahdi Motagh, **Li Zhe**, et al, [A framework for automated landslide dating utilizing SAR-Derived Parameters Time-Series, An Enhanced Transformer Model, and Dynamic Thresholding](https://doi.org/10.1016/j.jag.2024.103795), International Journal of Applied Earth Observation and Geoinformation, Volume 129, 2024 **SCI Q1 Top**
-* [5] Li, Songlin., Li, Xiuhong, **Li Zhe**, et al. Dual Guidance Enhancing Camouflaged Object Detection via Focusing Boundary and Localization Representation. IEEE International Conference on Multimedia and Expo (ICME 2024), Niagra Falls, Canada. **CCF B**
-* [6] Yang, Dan., Li, Xiuhong, **Li Zhe**, et al. Prompt Fusion Interaction Transformer For Aspect-Based Multimodal Sentiment Analysis. IEEE International Conference on Multimedia and Expo (ICME 2024), Niagra Falls, Canada. **CCF B**
-* [7] Li Songlin, Li Xiuhong, **Li Zhe**, et al. "Boundary-Guided Fusion of Multi-Level Features Network for Camouflaged Object Detection." International Joint Conference on Neural Networks (IJCNN), Yokohama, Japan, 2024. **CCF C**
-* [8] Chen Fan, Li Xiuhong, **Li Zhe**, et al. "Multimodal Rumor Detection via Multimodal Prompt Learning." International Joint Conference on Neural Networks (IJCNN), Yokohama, Japan, 2024. **CCF C**
-* [9] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling. [Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters](https://ieeexplore.ieee.org/abstract/document/10447795), in Proc. IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, 2024. **CCF B**
-* [10] Di Wu, Liting Jiang, Lili Yin, Kai Wang, Haoxiang Su, **Li Zhe**, Hao Huang. [Dual Level Intent-Slot Interaction for Improved Multi-Intent Spoken Language Understanding](https://ieeexplore.ieee.org/document/10448206), in Proc. IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, 2024. **CCF B**
-<!--
-* [11] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling, Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples, IEEE/ACM Transactions on Audio, Speech and Language Processing, **under review**, **SCI Q1** **CCF B**
-* [12] **Li Zhe**, Mak, Man-Wai, Jen-Tzung CHIEN and Meng, Helen Mei-Ling. Cross-Lingual Speaker Embedding Generation via Fine-Tuning Pre-trained Speech Models by Using Generalized Diffusion Process, **under review**
--->
+* [1] Wang Xiaofan, Xiuhong Li, **Li Zhe**. Multimodal Sentiment Analysis Model Based on Alignment Prompt Learning, Proc. of in Chinese Conference on Pattern Recognition and Computer Vision (PRCV) 2024, Urumqi, China. **CCF C**
+* [2] **Li Zhe**, Mak, Man-Wai, Hung-yi Lee and Meng, Helen Mei-Ling. Parameter-efficient Fine-tuning of Speaker-Aware Dynamic Prompts for Speaker Verification, Proc. InterSpeech 2024, Kos Island, Greece.  **CCF C**
+* [3] Guinan Li, Jiajun Deng, **Li Zhe**, et.al. Joint Speaker Features Learning for Audio-visual Multichannel Speech Separation and Recognition, Proc. InterSpeech 2024, Kos Island, Greece. **CCF C**
+* [4] He Zhenzhen He, Yu Jiong, **Li Zhe**, et al. [Cardinality estimation for property graph queries with gated learning approach on the graph database](https://doi.org/10.1007/s11042-024-19215-7). Multimedia Tools and Applications (2024). **CCF C**
+* [5] Wandi Wang, Mahdi Motagh, **Li Zhe**, et al, [A framework for automated landslide dating utilizing SAR-Derived Parameters Time-Series, An Enhanced Transformer Model, and Dynamic Thresholding](https://doi.org/10.1016/j.jag.2024.103795), International Journal of Applied Earth Observation and Geoinformation, Volume 129, 2024 **SCI Q1 Top**
+* [6] Li, Songlin., Li, Xiuhong, **Li Zhe**, et al. Dual Guidance Enhancing Camouflaged Object Detection via Focusing Boundary and Localization Representation. IEEE International Conference on Multimedia and Expo (ICME 2024), Niagra Falls, Canada. **CCF B**
+* [7] Yang, Dan., Li, Xiuhong, **Li Zhe**, et al. Prompt Fusion Interaction Transformer For Aspect-Based Multimodal Sentiment Analysis. IEEE International Conference on Multimedia and Expo (ICME 2024), Niagra Falls, Canada. **CCF B**
+* [8] Li Songlin, Li Xiuhong, **Li Zhe**, et al. "Boundary-Guided Fusion of Multi-Level Features Network for Camouflaged Object Detection." International Joint Conference on Neural Networks (IJCNN), Yokohama, Japan, 2024. **CCF C**
+* [9] Chen Fan, Li Xiuhong, **Li Zhe**, et al. "Multimodal Rumor Detection via Multimodal Prompt Learning." International Joint Conference on Neural Networks (IJCNN), Yokohama, Japan, 2024. **CCF C**
+* [10] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling. [Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters](https://ieeexplore.ieee.org/abstract/document/10447795), in Proc. IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, 2024. **CCF B**
+* [11] Di Wu, Liting Jiang, Lili Yin, Kai Wang, Haoxiang Su, **Li Zhe**, Hao Huang. [Dual Level Intent-Slot Interaction for Improved Multi-Intent Spoken Language Understanding](https://ieeexplore.ieee.org/document/10448206), in Proc. IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, 2024. **CCF B**
+* [12] **Li Zhe**, Mak, Man-Wai, Mert Pilanci and Helen Meng, Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples, IEEE/ACM Transactions on Audio, Speech and Language Processing, **under review**, **SCI Q1** **CCF B**
+* [13] **Li Zhe**, Mak, Man-Wai, Jen-Tzung CHIEN, Hung-yi Lee and Helen Meng. Cross-Lingual Speaker Embedding Generation via Fine-Tuning Pre-trained Speech Models by Using Generalized Diffusion Process, **under review**
+
   
 📔 2023
 ==
