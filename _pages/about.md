@@ -19,6 +19,8 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 📰 News
 ======
 
+17/06/2024 [Paper Sharing Session] I gave a talk on **Parameter-efficient Fine-tuning of Speaker-Aware Dynamic Prompts for Speaker Verification** at the paper share session of InterSpeech 2024.
+
 03/04/2024 [Paper Sharing Session](https://www.bilibili.com/video/BV17T42127Wd?t=47.1) I gave a talk on **Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters** at the paper share session of ICASSP 2024.
 
 08/12/2023 I gave a talk on **Maximal Speaker Separability via Robust Speaker Representation Learning**, National Conference on Man-Machine Speech Communication, NCMMSC2023, Soochow, China, Dec 2023
