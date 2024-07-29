@@ -63,7 +63,7 @@ redirect_from:
 * [2] **Li Z**, Maimaiti M, Sheng J, et al. [An Empirical Study on Deep Neural Network Models for Chinese Dialogue Generation](https://www.mdpi.com/2073-8994/12/11/1756/htm)[J]. Symmetry-Basel, 2020, 12(11): 1756. **SCI Q2**
 * [3] Li X, **Li Z**, Sheng J, et al. [Low-Resource Text Classification via Cross-lingual Language Model Fine-tuning](https://aclanthology.org/2020.ccl-1.92.pdf)[C]//Proceedings of the 19th Chinese National Conference on Computational Linguistics. 2020: 994-1005.
 * [4] Yu Q, **Li Z**, Sheng J, et al. [YuQ: A Chinese-Uyghur Medical Domain Neural Machine Translation Dataset Towards Knowledge-driven](http://sc.cipsc.org.cn/mt/conference/2020/papers/T20-1004.pdf)[C], in The 16th china conference on machine translation, CCMT 2020, Hohho, China.
-* [5] Ke Z, **Li Z**, Zhou C, et al. [Rumor Detection on Social Media via Fused Semantic Information and a Propagation Heterogeneous Graph](https://www.mdpi.com/2073-8994/12/11/1806)[J]. Symmetry-Basel, 2020, 12(11): 1806. **SCI Q2**
-* [6] Sheng J, Wumaier A, **Li Z**. [POISE: Efficient Cross-Domain Chinese Named Entity Recognization via Transfer Learning](https://www.mdpi.com/2073-8994/12/10/1673)[J]. Symmetry-Basel, 2020, 12(10): 1673. **SCI Q2**
+* [5] Ke Z, **Li Z**, Zhou C, et al. [Rumor Detection on Social Media via Fused Semantic Information and a Propagation Heterogeneous Graph](https://www.mdpi.com/2073-8994/12/11/1806)[J]. Symmetry-Basel, 2020, 12(11): 1806. **SCI Q1**
+* [6] Sheng J, Wumaier A, **Li Z**. [POISE: Efficient Cross-Domain Chinese Named Entity Recognization via Transfer Learning](https://www.mdpi.com/2073-8994/12/10/1673)[J]. Symmetry-Basel, 2020, 12(10): 1673. **SCI Q1**
 * [7] Kong, X., Silamu, W., Qimeng, Y., & **Li Z**. (2020). [Uyghur named entity recognition via transfer learning](
 https://www.cnki.com.cn/Article/CJFDTotal-DBSZ202002010.htm)[J]. Journal of Northeast Normal University(Natural Science Edition), 52(2), 58–65.
