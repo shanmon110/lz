@@ -45,22 +45,22 @@ redirect_from:
 📔 2022
 ==
 1. **Zhe Li** and Man-Wai Mak, “[Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability](http://www.eie.polyu.edu.hk/~mwmak/papers/apsipa22.pdf),” in *Proceedings of the 2022 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC)*, pp. 962-967, 2022.
-1. H. Wang, Xiuhong Li, **Zhe Li**, C. Ma, Z. Ren, and D. Yang, “A survey of multimodal pre-trained models,” *Journal of Computer Applications*, 2022. **[J]**
-1. C. Ma, Xiuhong Li, **Zhe Li**, H. Wang, and D. Yang, “A survey of event extraction,” *Journal of Computer Applications*, pp. 1-20, 2022. **[J]**
+1. Huiru Wang, Xiuhong Li, **Zhe Li**, et al., "[Survey of multimodal pre-training models](https://www.joca.cn/EN/10.11772/j.issn.1001-9081.2022020296)," *Journal of Computer Applications*, vol. 43, no. 4, pp. 991, 2023.
+1. Chunming Ma, Xiuhong Li, **Zhe Li**, et al., "[Survey of event extraction](https://www.joca.cn/CN/abstract/abstract25696.shtml)," *Journal of Computer Applications*, vol. 42, no. 10, pp. 2975, 2022.
 
 📔 2021
 ==
-1. Z. Ke, Jiabao Sheng, **Zhe Li**, W. Silamu, and Q. Guo, “[Knowledge-Guided Sentiment Analysis Via Learning From Natural Language Explanations](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9316242),” *IEEE Access*, vol. 9, pp. 3570-3578, 2021. **SCI Q1**.
-1. Z. Ren, W. Zhenchao, K. Zunwang, **Zhe Li**, and S. Wushour, “[A survey of multimodal data fusion](http://cea.ceaj.org/CN/abstract/abstract39897.shtml),” *Computer Engineering and Applications*, vol. 57, no. 18, pp. 49-64, 2021.
-1. Y. Li, X. Luan, Z. Ke, **Zhe Li**, and S. Wushour, “[A survey of knowledge-guided pre-trained language models](http://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0060823#1),” *Computer Engineering*, pp. 18-33, 2023. [Online]. Available: https://doi.org/10.19678/j.issn.1000-3428.0060823.
-1. W. Liu, A. Wumaier, **Zhe Li**, et al., “Neural machine translation based on multi-sub-word sequence fusion,” *Journal of Chinese Information Processing*, 2023. **[J]**
+1. Zunwang Ke, Jiabao Sheng, **Zhe Li**, Wushour. Silamu, and Qinglang Guo, “[Knowledge-Guided Sentiment Analysis Via Learning From Natural Language Explanations](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9316242),” *IEEE Access*, vol. 9, pp. 3570-3578, 2021. **SCI Q1**.
+1. Zeyu Ren, Zhenchao Wang, Zunwang Ke, **Zhe Li**, and Wushour Silamu, “[A survey of multimodal data fusion](http://cea.ceaj.org/CN/abstract/abstract39897.shtml),” *Computer Engineering and Applications*, vol. 57, no. 18, pp. 49-64, 2021.
+1. Yuze Li, Xin Luan, Zunwang Ke, **Zhe Li**, and Wushour Silamu, “[A survey of knowledge-guided pre-trained language models](http://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0060823#1),” *Computer Engineering*, pp. 18-33, 2023. [Online]. Available: https://doi.org/10.19678/j.issn.1000-3428.0060823.
+1. Wanyue Liu, Aishan Wumaier, **Zhe Li**, Yue Han, Daren Zhang, Nian Yi. Neural Machine Translation Based on Multi-sub-word Sequence Fusion. *Journal of Chinese Information Processing*. vol. 37, no. 2, pp. 87-96, 106, 2023.
 
 📔 2020
 ==
 1. **Zhe Li**, Xiuhong Li, Jiabao Sheng, et al., “[AgglutiFiT: Efficient Low-Resource Agglutinative Language Model Fine-Tuning](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9164940),” *IEEE Access*, vol. 8, pp. 148489-148499, 2020. **SCI Q1**.
-1. **Zhe Li**, M. Maimaiti, Jiabao Sheng, et al., “[An Empirical Study on Deep Neural Network Models for Chinese Dialogue Generation](https://www.mdpi.com/2073-8994/12/11/1756/htm),” *Symmetry-Basel*, vol. 12, no. 11, p. 1756, 2020. **SCI Q2**.
+1. **Zhe Li**, Mieradilijiang Maimaiti, Jiabao Sheng, et al., “[An Empirical Study on Deep Neural Network Models for Chinese Dialogue Generation](https://www.mdpi.com/2073-8994/12/11/1756/htm),” *Symmetry-Basel*, vol. 12, no. 11, p. 1756, 2020. **SCI Q2**.
 1. Xiuhong Li, **Zhe Li**, Jiabao Sheng, et al., “[Low-Resource Text Classification via Cross-lingual Language Model Fine-tuning](https://aclanthology.org/2020.ccl-1.92.pdf),” in *Proceedings of the 19th Chinese National Conference on Computational Linguistics*, pp. 994-1005, 2020. **[C]**
-1. Q. Yu, **Zhe Li**, Jiabao Sheng, et al., “[YuQ: A Chinese-Uyghur Medical Domain Neural Machine Translation Dataset Towards Knowledge-driven](http://sc.cipsc.org.cn/mt/conference/2020/papers/T20-1004.pdf),” in *Proceedings of the 16th China Conference on Machine Translation (CCMT)*, 2020. **[C]**
-1. Z. Ke, **Zhe Li**, C. Zhou, et al., “[Rumor Detection on Social Media via Fused Semantic Information and a Propagation Heterogeneous Graph](https://www.mdpi.com/2073-8994/12/11/1806),” *Symmetry-Basel*, vol. 12, no. 11, p. 1806, 2020. **SCI Q1**.
-1. Jiabao Sheng, A. Wumaier, **Zhe Li**, “[POISE: Efficient Cross-Domain Chinese Named Entity Recognization via Transfer Learning](https://www.mdpi.com/2073-8994/12/10/1673),” *Symmetry-Basel*, vol. 12, no. 10, p. 1673, 2020. **SCI Q2**.
-1. X. Kong, W. Silamu, Y. Qimeng, and **Zhe Li**, “[Uyghur Named Entity Recognition via Transfer Learning](https://www.cnki.com.cn/Article/CJFDTotal-DBSZ202002010.htm),” *Journal of Northeast Normal University (Natural Science Edition)*, vol. 52, no. 2, pp. 58–65, 2020.
+1. Qing Yu, **Zhe Li**, Jiabao Sheng, et al., “[YuQ: A Chinese-Uyghur Medical Domain Neural Machine Translation Dataset Towards Knowledge-driven](http://sc.cipsc.org.cn/mt/conference/2020/papers/T20-1004.pdf),” in *Proceedings of the 16th China Conference on Machine Translation (CCMT)*, 2020. **[C]**
+1. Zunwang Ke, **Zhe Li**, Chenzhi Zhou, et al., “[Rumor Detection on Social Media via Fused Semantic Information and a Propagation Heterogeneous Graph](https://www.mdpi.com/2073-8994/12/11/1806),” *Symmetry-Basel*, vol. 12, no. 11, p. 1806, 2020. **SCI Q2**.
+1. Jiabao Sheng, Aishan Wumaier, **Zhe Li**, “[POISE: Efficient Cross-Domain Chinese Named Entity Recognization via Transfer Learning](https://www.mdpi.com/2073-8994/12/10/1673),” *Symmetry-Basel*, vol. 12, no. 10, p. 1673, 2020. **SCI Q2**.
+1. Xiangpeng. Kong, Wushour Silamu, Qimeng Yang, and **Zhe Li**, “[Uyghur Named Entity Recognition via Transfer Learning](https://www.cnki.com.cn/Article/CJFDTotal-DBSZ202002010.htm),” *Journal of Northeast Normal University (Natural Science Edition)*, vol. 52, no. 2, pp. 58–65, 2020.
