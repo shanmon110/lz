@@ -11,19 +11,32 @@ redirect_from:
 
 📔 2024
 ==
-* [1] Zhou Chenyu, Li Xiuhong, **Li Zhe** et al. Enhancing Multimodal Rumor Detection with Statistical Image Features and Modal Alignment via Contrastive Learning, Proc. of The Pacific Rim International Conference on Artificial Intelligence (PRICAI), Nov 18-24, 2024, Kyoto, Japan. **CCF C**
-* [2] Qiu, Tianchi, Li, Xiuhong, **Li Zhe** et al. [Locate, enhance and fuse: a progressively optimized network for camouflaged object detection](https://doi.org/10.1007/s11042-024-19891-5).  Multimedia Tools and Applications. **SCI Q3 CCF C**
-* [3] Wang Xiaofan, Xiuhong Li, **Li Zhe**. Multimodal Sentiment Analysis Model Based on Alignment Prompt Learning, Proc. of in Chinese Conference on Pattern Recognition and Computer Vision (PRCV) 2024, Urumqi, China. **CCF C**
-* [4] **Li Zhe**, Mak, Man-Wai, Hung-yi Lee and Meng, Helen Mei-Ling. [Parameter-efficient Fine-tuning of Speaker-Aware Dynamic Prompts for Speaker Verification](https://www.isca-archive.org/interspeech_2024/li24e_interspeech.pdf), Proc. of InterSpeech 2024, Kos Island, Greece.  **CCF C**
-* [5] Guinan Li, Jiajun Deng, **Li Zhe**, et.al. [Joint Speaker Features Learning for Audio-visual Multichannel Speech Separation and Recognition](https://arxiv.org/pdf/2406.10152), Proc. of InterSpeech 2024, Kos Island, Greece. **CCF C**
-* [6] Zhenzhen He, Yu Jiong, **Li Zhe**, et al. [Cardinality estimation for property graph queries with gated learning approach on the graph database](https://doi.org/10.1007/s11042-024-19215-7). Multimedia Tools and Applications (2024). **SCI Q3 CCF C**
-* [7] Wandi Wang, Mahdi Motagh, **Li Zhe**, et al, [A framework for automated landslide dating utilizing SAR-Derived Parameters Time-Series, An Enhanced Transformer Model, and Dynamic Thresholding](https://doi.org/10.1016/j.jag.2024.103795), International Journal of Applied Earth Observation and Geoinformation, Volume 129, 2024 **SCI Q1 Top**
-* [8] Li, Songlin., Li, Xiuhong, **Li Zhe**, et al. Dual Guidance Enhancing Camouflaged Object Detection via Focusing Boundary and Localization Representation. Proc. of IEEE International Conference on Multimedia and Expo (ICME 2024), Niagra Falls, Canada. **CCF B**
-* [9] Yang, Dan., Li, Xiuhong, **Li Zhe**, et al. Prompt Fusion Interaction Transformer For Aspect-Based Multimodal Sentiment Analysis. Proc. of IEEE International Conference on Multimedia and Expo (ICME 2024), Niagra Falls, Canada. **CCF B**
-* [10] Li Songlin, Li Xiuhong, **Li Zhe**, et al. [Boundary-Guided Fusion of Multi-Level Features Network for Camouflaged Object Detection](https://ieeexplore.ieee.org/document/10651185). International Joint Conference on Neural Networks (IJCNN), Yokohama, Japan, 2024. **CCF C**
-* [11] Chen Fan, Li Xiuhong, **Li Zhe**, et al. [Multimodal Rumor Detection via Multimodal Prompt Learning](https://ieeexplore.ieee.org/abstract/document/10650974). Proc. of International Joint Conference on Neural Networks (IJCNN), Yokohama, Japan, 2024. **CCF C**
-* [12] **Li Zhe**, Mak, Man-Wai and Meng, Helen Mei-Ling. [Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters](https://ieeexplore.ieee.org/abstract/document/10447795), in Proc. of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, 2024. **CCF B**
-* [13] Di Wu, Liting Jiang, Lili Yin, Kai Wang, Haoxiang Su, **Li Zhe**, Hao Huang. [Dual Level Intent-Slot Interaction for Improved Multi-Intent Spoken Language Understanding](https://ieeexplore.ieee.org/document/10448206), in Proc. of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, 2024. **CCF B**
+1. C. Zhou, X. Li, **Z. Li**, et al., “[Enhancing multimodal rumor detection with statistical image features and modal alignment via contrastive learning](#),” in *Proceedings of the Pacific Rim International Conference on Artificial Intelligence (PRICAI)*, 2024. **CCF C**.
+
+1. T. Qiu, X. Li, **Z. Li**, et al., “[Locate, enhance and fuse: a progressively optimized network for camouflaged object detection](https://doi.org/10.1007/s11042-024-19891-5),” *Multimedia Tools and Applications*, vol. xxx, no. xxx, pp. xxx-xxx, 2024. **SCI Q3 CCF C**.
+
+1. X. Wang, X. Li, **Z. Li**, “[Multimodal sentiment analysis model based on alignment prompt learning](#),” in *Proceedings of the Chinese Conference on Pattern Recognition and Computer Vision (PRCV)*, 2024. **CCF C**.
+
+1. **Z. Li**, M. W. Mak, H. Y. Lee, and H. M. L. Meng, “[Parameter-efficient fine-tuning of speaker-aware dynamic prompts for speaker verification](https://www.isca-archive.org/interspeech_2024/li24e_interspeech.pdf),” in *Proceedings of InterSpeech*, 2024. **CCF C**.
+
+1. G. Li, J. Deng, **Z. Li**, et al., “[Joint speaker features learning for audio-visual multichannel speech separation and recognition](https://arxiv.org/pdf/2406.10152),” in *Proceedings of InterSpeech*, 2024. **CCF C**.
+
+1. Z. He, J. Yu, **Z. Li**, et al., “[Cardinality estimation for property graph queries with gated learning approach on the graph database](https://doi.org/10.1007/s11042-024-19215-7),” *Multimedia Tools and Applications*, 2024. **SCI Q3 CCF C**.
+
+1. W. Wang, M. Motagh, **Z. Li**, et al., “[A framework for automated landslide dating utilizing SAR-derived parameters time-series, an enhanced transformer model, and dynamic thresholding](https://doi.org/10.1016/j.jag.2024.103795),” *International Journal of Applied Earth Observation and Geoinformation*, vol. 129, 2024. **SCI Q1 Top**.
+
+1. S. Li, X. Li, **Z. Li**, et al., “[Dual guidance enhancing camouflaged object detection via focusing boundary and localization representation](#),” in *Proceedings of IEEE International Conference on Multimedia and Expo (ICME)*, 2024. **CCF B**.
+
+1. D. Yang, X. Li, **Z. Li**, et al., “[Prompt fusion interaction transformer for aspect-based multimodal sentiment analysis](#),” in *Proceedings of IEEE International Conference on Multimedia and Expo (ICME)*, 2024. **CCF B**.
+
+1. S. Li, X. Li, **Z. Li**, et al., “[Boundary-guided fusion of multi-level features network for camouflaged object detection](https://ieeexplore.ieee.org/document/10651185),” in *Proceedings of the International Joint Conference on Neural Networks (IJCNN)*, 2024. **CCF C**.
+
+1. F. Chen, X. Li, **Z. Li**, et al., “[Multimodal rumor detection via multimodal prompt learning](https://ieeexplore.ieee.org/abstract/document/10650974),” in *Proceedings of the International Joint Conference on Neural Networks (IJCNN)*, 2024. **CCF C**.
+
+1. **Z. Li**, M. W. Mak, and H. M. L. Meng, “[Dual parameter-efficient fine-tuning for speaker representation via speaker prompt tuning and adapters](https://ieeexplore.ieee.org/abstract/document/10447795),” in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2024. **CCF B**.
+
+1. D. Wu, L. Jiang, L. Yin, K. Wang, H. Su, **Z. Li**, and H. Huang, “[Dual level intent-slot interaction for improved multi-intent spoken language understanding](https://ieeexplore.ieee.org/document/10448206),” in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2024. **CCF B**.
+
   
 📔 2023
 ==
