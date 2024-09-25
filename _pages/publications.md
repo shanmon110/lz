@@ -28,41 +28,39 @@ redirect_from:
   
 📔 2023
 ==
-* [1] **Li Zhe**, Man-Wai Mak, and Helen Mei-Ling Meng. "[Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space](https://arxiv.org/pdf/2210.16622.pdf)." Proc. of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Rhodes Island, Greece, 2023. **CCF B**
-* [2] Sheng, J., **Li Zhe**, Lam, S. K., Zhang, J., Teng, X, Zhang, Y. & Cai, J.. (2022). [Multi-view Contrastive Learning with Additive Margin for Adaptive Nasopharyngeal Carcinoma Radiotherapy Prediction](https://arxiv.org/pdf/2210.15201.pdf). Proc. of the 2023 International Conference on Multimedia Retrieval. **CCF B**
-* [3] Yan Feng, **Li Zhe**, Li Yanbing, Wushour Silamu, Knowledge-aware Image Understanding with Multi-level Visual Representation Enhancement for Visual Question Answering, Machine Learning, 1-17. **SCI Q1 CCF B**
-* [4] Shi jun, **Li Zhe**, Knowledge Transfer via Leveraging Teacher-Student Network with Visual Attention to Enhance Atmospheric Sand Image Restoration, Proc. of Chinese Conference on Pattern Recognition and Computer Vision (PRCV) 2023, **CCF C**
-* [5] Chenyu ZHOU, Xiuhong LI, **Li Zhe**, Multimodal Rumor Detection by Using Additive Angular Margin with Class-aware Attention for Hard Samples, Proc. of Chinese Conference on Pattern Recognition and Computer Vision (PRCV) 2023, **CCF C**
-* [6] Songlin LI, Xiuhong LI, **Li Zhe**, Emphasizing Boundary-Positioning and Leveraging Multi-Scale Feature Fusion for Camouflaged Object Detection, Proc. of Chinese Conference on Pattern Recognition and Computer Vision (PRCV) 2023, **CCF C**
-* [7] Guo Qinglang, Yong Liao,  **Li Zhe**, Shanyin Li, Pengyuan Zhou, and Shenglin Liang, Neighborhood-Aware Convolutional Models for Effective Link Prediction in Knowledge Graph Embedding, IJCAI Workshop, Accept, **CCF A**
-* [8] He Zhenzhen, Yu Jiong, **Li Zhe**.etc. Query cost estimation in graph databases via emphasizing query dependencies by using a neural reasoning network, Concurrency and Computation: Practice and Experience 35.23 (2023): e7817. **SCI Q2 CCF C**
-* [9] Di WU, Liting Jiang, Lili Yin, **Li Zhe**, Hao Huang, CEA-Net: A Co-interactive External Attention Network for Joint Intent Detection and Slot Filling, Neural Computing and Applications, 1-13, **SCI Q2 CCF C**
-* [10] Yan Ke, Wanghao Mo, **Li, Zhe**, Ruyi Cao, Wendong Zhang. (2023, August). [MDCN: Multi-scale Dilated Convolutional Enhanced Residual Network for Traffic Sign Detection](https://link.springer.com/chapter/10.1007/978-3-031-46661-8_39). Proc. of International Conference on Advanced Data Mining and Applications (pp. 584-597). Cham: Springer Nature Switzerland. **CCF C**
-* [11] Yang zhenyu, Wang Yu, Liu Guojing, **Li Zhe**, Wang xingang, Recommendation Model Based on Multi-grained Interaction that Fuses Users' Dynamic Interests, International Journal of Machine Learning and Cybernetics (2023): 1-15. **SCI Q1**
-* [11] Guo Q, Liao Y, **Li Zhe**, Liang S. [Multi-Modal Representation via Contrastive Learning with Attention Bottleneck Fusion and Attentive Statistics Features](https://www.mdpi.com/1099-4300/25/10/1421). Entropy. 2023; 25(10):1421. **SCI Q2**
-* [12] Guo, Q., Liao, Y., **Li Zhe**, Lin, H., & Liang, S. (2023). [Convolutional Models with Multi-Feature Fusion for Effective Link Prediction in Knowledge Graph Embedding](https://www.mdpi.com/1099-4300/25/10/1472). Entropy, 25(10), 1472. **SCI Q2**
-
+1. **Z. Li**, M. W. Mak, and H. M. L. Meng, “[Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space](https://arxiv.org/pdf/2210.16622.pdf),” in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, Rhodes Island, Greece, 2023. **CCF B**.
+1. J. Sheng, **Z. Li**, S. K. Lam, J. Zhang, X. Teng, Y. Zhang, and J. Cai, “[Multi-view Contrastive Learning with Additive Margin for Adaptive Nasopharyngeal Carcinoma Radiotherapy Prediction](https://arxiv.org/pdf/2210.15201.pdf),” in *Proceedings of the 2023 International Conference on Multimedia Retrieval*, 2022. **CCF B**.
+1. Y. Feng, **Z. Li**, Y. Li, W. Silamu, “Knowledge-aware Image Understanding with Multi-level Visual Representation Enhancement for Visual Question Answering,” *Machine Learning*, pp. 1-17, 2023. **SCI Q1 CCF B**.
+1. J. Shi, **Z. Li**, “Knowledge Transfer via Leveraging Teacher-Student Network with Visual Attention to Enhance Atmospheric Sand Image Restoration,” in *Proceedings of Chinese Conference on Pattern Recognition and Computer Vision (PRCV)*, 2023. **CCF C**.
+1. C. Zhou, X. Li, **Z. Li**, “Multimodal Rumor Detection by Using Additive Angular Margin with Class-aware Attention for Hard Samples,” in *Proceedings of Chinese Conference on Pattern Recognition and Computer Vision (PRCV)*, 2023. **CCF C**.
+1. S. Li, X. Li, **Z. Li**, “Emphasizing Boundary-Positioning and Leveraging Multi-Scale Feature Fusion for Camouflaged Object Detection,” in *Proceedings of Chinese Conference on Pattern Recognition and Computer Vision (PRCV)*, 2023. **CCF C**.
+1. Q. Guo, Y. Liao, **Z. Li**, S. Li, P. Zhou, and S. Liang, “Neighborhood-Aware Convolutional Models for Effective Link Prediction in Knowledge Graph Embedding,” in *IJCAI Workshop*, 2023. **CCF A**.
+1. Z. He, J. Yu, **Z. Li**, et al., “Query cost estimation in graph databases via emphasizing query dependencies by using a neural reasoning network,” *Concurrency and Computation: Practice and Experience*, vol. 35, no. 23, e7817, 2023. **SCI Q2 CCF C**.
+1. D. Wu, L. Jiang, L. Yin, **Z. Li**, and H. Huang, “CEA-Net: A Co-interactive External Attention Network for Joint Intent Detection and Slot Filling,” *Neural Computing and Applications*, pp. 1-13, 2023. **SCI Q2 CCF C**.
+1. K. Yan, W. Mo, **Z. Li**, R. Cao, and W. Zhang, “[MDCN: Multi-scale Dilated Convolutional Enhanced Residual Network for Traffic Sign Detection](https://link.springer.com/chapter/10.1007/978-3-031-46661-8_39),” in *Proceedings of International Conference on Advanced Data Mining and Applications*, Springer Nature Switzerland, pp. 584-597, 2023. **CCF C**.
+1. Z. Yang, Y. Wang, G. Liu, **Z. Li**, and X. Wang, “Recommendation Model Based on Multi-grained Interaction that Fuses Users' Dynamic Interests,” *International Journal of Machine Learning and Cybernetics*, pp. 1-15, 2023. **SCI Q1**.
+1. Q. Guo, Y. Liao, **Z. Li**, S. Liang, “[Multi-Modal Representation via Contrastive Learning with Attention Bottleneck Fusion and Attentive Statistics Features](https://www.mdpi.com/1099-4300/25/10/1421),” *Entropy*, vol. 25, no. 10, 2023, pp. 1421. **SCI Q2**.
+1. Q. Guo, Y. Liao, **Z. Li**, H. Lin, and S. Liang, “[Convolutional Models with Multi-Feature Fusion for Effective Link Prediction in Knowledge Graph Embedding](https://www.mdpi.com/1099-4300/25/10/1472),” *Entropy*, vol. 25, no. 10, 2023, pp. 1472. **SCI Q2**.
 
 📔 2022
 ==
-* [1] **Li Z** and Man-Wai Mak, "[Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability](http://www.eie.polyu.edu.hk/~mwmak/papers/apsipa22.pdf)", Proc. of 2022 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC) (pp. 962-967).
-* [2] WANG Huiru, LI Xiuhong, **Li Z**, MA chunming, REN Zeyu, YANG Dan. A Survey of Survey of multimodal pre-trained models[J] Journal of Computer Applications.
-* [3] MA chunming, LI Xiuhong, **Li Z**, WANG Huiru, YANG Dan. A Survey of Event Extraction[J] Journal of Computer Applications,1-20[2022-06-17]
+1. **Z. Li** and M. W. Mak, “[Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability](http://www.eie.polyu.edu.hk/~mwmak/papers/apsipa22.pdf),” in *Proceedings of the 2022 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC)*, pp. 962-967, 2022.
+1. H. Wang, X. Li, **Z. Li**, C. Ma, Z. Ren, and D. Yang, “A survey of multimodal pre-trained models,” *Journal of Computer Applications*, 2022. **[J]**
+1. C. Ma, X. Li, **Z. Li**, H. Wang, and D. Yang, “A survey of event extraction,” *Journal of Computer Applications*, pp. 1-20, 2022. **[J]**
 
 📔 2021
 ==
-* [1] Ke, Z., Sheng, J., **Li Z**, Silamu, W., & Guo, Q. [Knowledge-Guided Sentiment Analysis Via Learning From Natural Language Explanations](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9316242)[J]. IEEE Access, 9, 3570-3578. **SCI Q1**
-* [2] Ren, Z., Zhenchao, W., Zunwang, K., **Li Z**., & Wushour, S. (2021). [A survey of multimodal data fusion](http://cea.ceaj.org/CN/abstract/abstract39897.shtml)[J]. Computer Engineering and Applications, 57(18), 49-64.
-* [3]Li, y., Luan, X., Ke, Z., **Li Z**., & Wushour, S. (0). [A survey of knowledge-guided pre-trained language models](http://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0060823#1)[J]. Computer engineering, 18-33 0. https://doi.org/10.19678/j.issn.1000-3428.0060823
-* [4] LIU Wanyue, Aishan Wumaier, **Li Z**, etc. Neural Machine Translation Based on Multi-sub-word Sequence Fusion[J] Journal of Chinese Information Processing
+1. Z. Ke, J. Sheng, **Z. Li**, W. Silamu, and Q. Guo, “[Knowledge-Guided Sentiment Analysis Via Learning From Natural Language Explanations](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9316242),” *IEEE Access*, vol. 9, pp. 3570-3578, 2021. **SCI Q1**.
+1. Z. Ren, W. Zhenchao, K. Zunwang, **Z. Li**, and S. Wushour, “[A survey of multimodal data fusion](http://cea.ceaj.org/CN/abstract/abstract39897.shtml),” *Computer Engineering and Applications*, vol. 57, no. 18, pp. 49-64, 2021.
+1. Y. Li, X. Luan, Z. Ke, **Z. Li**, and S. Wushour, “[A survey of knowledge-guided pre-trained language models](http://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0060823#1),” *Computer Engineering*, pp. 18-33, 2023. [Online]. Available: https://doi.org/10.19678/j.issn.1000-3428.0060823.
+1. W. Liu, A. Wumaier, **Z. Li**, et al., “Neural machine translation based on multi-sub-word sequence fusion,” *Journal of Chinese Information Processing*, 2023. **[J]**
 
 📔 2020
 ==
-* [1] **Li Z**, Li X, Sheng J, et al. [AgglutiFiT: Efficient Low-Resource Agglutinative Language Model Fine-Tuning](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9164940)[J]. IEEE Access, 2020, 8: 148489-148499. **SCI Q1**
-* [2] **Li Z**, Maimaiti M, Sheng J, et al. [An Empirical Study on Deep Neural Network Models for Chinese Dialogue Generation](https://www.mdpi.com/2073-8994/12/11/1756/htm)[J]. Symmetry-Basel, 2020, 12(11): 1756. **SCI Q2**
-* [3] Li X, **Li Z**, Sheng J, et al. [Low-Resource Text Classification via Cross-lingual Language Model Fine-tuning](https://aclanthology.org/2020.ccl-1.92.pdf)[C]// Proc. of the 19th Chinese National Conference on Computational Linguistics. 2020: 994-1005.
-* [4] Yu Q, **Li Z**, Sheng J, et al. [YuQ: A Chinese-Uyghur Medical Domain Neural Machine Translation Dataset Towards Knowledge-driven](http://sc.cipsc.org.cn/mt/conference/2020/papers/T20-1004.pdf)[C], Proc. of the 16th china conference on machine translation, CCMT 2020, Hohho, China.
-* [5] Ke Z, **Li Z**, Zhou C, et al. [Rumor Detection on Social Media via Fused Semantic Information and a Propagation Heterogeneous Graph](https://www.mdpi.com/2073-8994/12/11/1806)[J]. Symmetry-Basel, 2020, 12(11): 1806. **SCI Q1**
-* [6] Sheng J, Wumaier A, **Li Z**. [POISE: Efficient Cross-Domain Chinese Named Entity Recognization via Transfer Learning](https://www.mdpi.com/2073-8994/12/10/1673)[J]. Symmetry-Basel, 2020, 12(10): 1673. **SCI Q1**
-* [7] Kong, X., Silamu, W., Qimeng, Y., & **Li Z**. (2020). [Uyghur named entity recognition via transfer learning](
-https://www.cnki.com.cn/Article/CJFDTotal-DBSZ202002010.htm)[J]. Journal of Northeast Normal University(Natural Science Edition), 52(2), 58–65.
+1. **Z. Li**, X. Li, J. Sheng, et al., “[AgglutiFiT: Efficient Low-Resource Agglutinative Language Model Fine-Tuning](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9164940),” *IEEE Access*, vol. 8, pp. 148489-148499, 2020. **SCI Q1**.
+1. **Z. Li**, M. Maimaiti, J. Sheng, et al., “[An Empirical Study on Deep Neural Network Models for Chinese Dialogue Generation](https://www.mdpi.com/2073-8994/12/11/1756/htm),” *Symmetry-Basel*, vol. 12, no. 11, p. 1756, 2020. **SCI Q2**.
+1. X. Li, **Z. Li**, J. Sheng, et al., “[Low-Resource Text Classification via Cross-lingual Language Model Fine-tuning](https://aclanthology.org/2020.ccl-1.92.pdf),” in *Proceedings of the 19th Chinese National Conference on Computational Linguistics*, pp. 994-1005, 2020. **[C]**
+1. Q. Yu, **Z. Li**, J. Sheng, et al., “[YuQ: A Chinese-Uyghur Medical Domain Neural Machine Translation Dataset Towards Knowledge-driven](http://sc.cipsc.org.cn/mt/conference/2020/papers/T20-1004.pdf),” in *Proceedings of the 16th China Conference on Machine Translation (CCMT)*, 2020. **[C]**
+1. Z. Ke, **Z. Li**, C. Zhou, et al., “[Rumor Detection on Social Media via Fused Semantic Information and a Propagation Heterogeneous Graph](https://www.mdpi.com/2073-8994/12/11/1806),” *Symmetry-Basel*, vol. 12, no. 11, p. 1806, 2020. **SCI Q1**.
+1. J. Sheng, A. Wumaier, **Z. Li**, “[POISE: Efficient Cross-Domain Chinese Named Entity Recognization via Transfer Learning](https://www.mdpi.com/2073-8994/12/10/1673),” *Symmetry-Basel*, vol. 12, no. 10, p. 1673, 2020. **SCI Q1**.
+1. X. Kong, W. Silamu, Y. Qimeng, and **Z. Li**, “[Uyghur Named Entity Recognition via Transfer Learning](https://www.cnki.com.cn/Article/CJFDTotal-DBSZ202002010.htm),” *Journal of Northeast Normal University (Natural Science Edition)*, vol. 52, no. 2, pp. 58–65, 2020.
