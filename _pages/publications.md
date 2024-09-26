@@ -52,7 +52,7 @@ redirect_from:
 ==
 1. Zunwang Ke, Jiabao Sheng, **Zhe Li**, Wushour. Silamu, and Qinglang Guo, “[Knowledge-Guided Sentiment Analysis Via Learning From Natural Language Explanations](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9316242),” *IEEE Access*, vol. 9, pp. 3570-3578, 2021. **SCI Q1**.
 1. Zeyu Ren, Zhenchao Wang, Zunwang Ke, **Zhe Li**, and Wushour Silamu, “[A survey of multimodal data fusion](http://cea.ceaj.org/CN/abstract/abstract39897.shtml),” *Computer Engineering and Applications*, vol. 57, no. 18, pp. 49-64, 2021.
-1. Yuze Li, Xin Luan, Zunwang Ke, **Zhe Li**, and Wushour Silamu, “[A survey of knowledge-guided pre-trained language models](http://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0060823#1),” *Computer Engineering*, pp. 18-33, 2023. [Online]. Available: https://doi.org/10.19678/j.issn.1000-3428.0060823.
+1. Yuze Li, Xin Luan, Zunwang Ke, **Zhe Li**, and Wushour Silamu, “[A survey of knowledge-guided pre-trained language models](http://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0060823#1),” *Computer Engineering*, pp. 18-33, 2023.
 1. Wanyue Liu, Aishan Wumaier, **Zhe Li**, Yue Han, Daren Zhang, Nian Yi. Neural Machine Translation Based on Multi-sub-word Sequence Fusion. *Journal of Chinese Information Processing*. vol. 37, no. 2, pp. 87-96, 106, 2023.
 
 📔 2020
@@ -63,4 +63,4 @@ redirect_from:
 1. Qing Yu, **Zhe Li**, Jiabao Sheng, et al., “[YuQ: A Chinese-Uyghur Medical Domain Neural Machine Translation Dataset Towards Knowledge-driven](http://sc.cipsc.org.cn/mt/conference/2020/papers/T20-1004.pdf),” in *Proceedings of the 16th China Conference on Machine Translation (CCMT)*, 2020. **[C]**
 1. Zunwang Ke, **Zhe Li**, Chenzhi Zhou, et al., “[Rumor Detection on Social Media via Fused Semantic Information and a Propagation Heterogeneous Graph](https://www.mdpi.com/2073-8994/12/11/1806),” *Symmetry-Basel*, vol. 12, no. 11, p. 1806, 2020. **SCI Q2**.
 1. Jiabao Sheng, Aishan Wumaier, **Zhe Li**, “[POISE: Efficient Cross-Domain Chinese Named Entity Recognization via Transfer Learning](https://www.mdpi.com/2073-8994/12/10/1673),” *Symmetry-Basel*, vol. 12, no. 10, p. 1673, 2020. **SCI Q2**.
-1. Xiangpeng. Kong, Wushour Silamu, Qimeng Yang, and **Zhe Li**, “[Uyghur Named Entity Recognition via Transfer Learning](https://www.cnki.com.cn/Article/CJFDTotal-DBSZ202002010.htm),” *Journal of Northeast Normal University (Natural Science Edition)*, vol. 52, no. 2, pp. 58–65, 2020.
+1. Xiangpeng, Kong, Wushour Silamu, Qimeng Yang, and **Zhe Li**, “[Uyghur Named Entity Recognition via Transfer Learning](https://www.cnki.com.cn/Article/CJFDTotal-DBSZ202002010.htm),” *Journal of Northeast Normal University (Natural Science Edition)*, vol. 52, no. 2, pp. 58–65, 2020.
