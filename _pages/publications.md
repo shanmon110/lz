@@ -11,7 +11,7 @@ redirect_from:
 
 📔 2024
 ==
-1. Chenyu Zhou, Xiuhong Li, **Zhe Li**, et al., “[Enhancing multimodal rumor detection with statistical image features and modal alignment via contrastive learning](#),” in *Proceedings of the Pacific Rim International Conference on Artificial Intelligence (PRICAI)*, 2024. **CCF C**.
+1. Chenyu Zhou, Xiuhong Li, **Zhe Li**, et al., “[Enhancing multimodal rumor detection with statistical image features and modal alignment via contrastive learning](https://link.springer.com/chapter/10.1007/978-981-96-0122-6_37),” in *Proceedings of the Pacific Rim International Conference on Artificial Intelligence (PRICAI)*, 2024. **CCF C**. **Best Student Paper Nomination**
 1. Tianchi Qiu, Xiuhong Li, **Zhe Li**, et al., “[Locate, enhance and fuse: a progressively optimized network for camouflaged object detection](https://doi.org/10.1007/s11042-024-19891-5),” *Multimedia Tools and Applications*, vol. xxx, no. xxx, pp. xxx-xxx, 2024. **SCI Q3 CCF C**.
 1. Xiaofan Wang, Xiuhong Li, **Zhe Li**, et al., “[Multimodal sentiment analysis model based on alignment prompt learning](#),” in *Proceedings of the Chinese Conference on Pattern Recognition and Computer Vision (PRCV)*, 2024. **CCF C**.
 1. **Zhe Li**, Man-Wai Mak, Hung Yi Lee, and Helen Meng, “[Parameter-efficient fine-tuning of speaker-aware dynamic prompts for speaker verification](https://www.isca-archive.org/interspeech_2024/li24e_interspeech.pdf),” in *Proceedings of InterSpeech*, 2024. **CCF C**.
