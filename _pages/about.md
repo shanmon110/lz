@@ -18,6 +18,7 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 📰 News
 ======
+04/12/2024 Our paper, *"Enhancing Multimodal Rumor Detection with Statistical Image Features and Modal Alignment via Contrastive Learning,"* received the **Best Student Paper Runner-Up Award** at PRICAI 2024.
 
 17/06/2024 [Paper Sharing Session](https://mp.weixin.qq.com/s/1rumaLXfNoLEVM9HZNT3Eg) I gave a talk on **Parameter-efficient Fine-tuning of Speaker-Aware Dynamic Prompts for Speaker Verification** at the paper share session of InterSpeech 2024.
 
