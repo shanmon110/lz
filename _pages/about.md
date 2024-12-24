@@ -7,7 +7,11 @@ redirect_from:
   - /about/
   - /about.html
 ---
-***I am currently on the job market. If there are any internship opportunities, feel free to contact me at lizhe.li@connect.polyu.hk.***
+<span style="font-size: 18px; color: #007acc; font-weight: bold;">
+I am currently on the job market. If there are any internship opportunities, feel free to contact me at 
+<a href="mailto:lizhe.li@connect.polyu.hk" style="color: #ff5722;">lizhe.li@connect.polyu.hk</a>.
+</span>
+
 
 👨‍🎓 Biography
 ======
@@ -33,8 +37,6 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 - **03/12/2023** I gave a talk on **Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples**, The International Doctoral Forum 2023, Hong Kong SAR, Dec 2023
 
 - **15/05/2023** [Paper Sharing Session](https://www.bilibili.com/video/BV1y8411S7Qg?t=3.8) I gave a talk on **Discriminative Speaker Representation via Contrastive Learning with Class-Aware Attention in Angular Space** at the paper presentation session of ICASSP 2023.
-
-- **11/09/2022** [Speaker of Participant Talk] I delivered an oral report about **Speaker Representation Learning via Contrastive Loss with Maximal Speaker Separability** in APSIPA ASC 2022.
 
 - **01/07/2022** [Speaker of Participant Talk](https://www.bilibili.com/video/BV18S4y1p7xY?p=8&vd_source=72429a47df312126433e0bb950f77049&t=0.9) I take a shared talk about speaker verification as *Speaker of Participant talk* in Odyssey-CNSRC Workshop 2022.
 
