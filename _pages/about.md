@@ -7,6 +7,8 @@ redirect_from:
   - /about/
   - /about.html
 ---
+***I am currently on the job market. If there are any internship opportunities, feel free to contact me at lizhe.li@connect.polyu.hk.***
+
 👨‍🎓 Biography
 ======
 I am currently a visiting PhD researcher at 🇺🇸 [Stanford University](https://profiles.stanford.edu/332001). Additionally, I am pursuing my PhD at the 🇭🇰 Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/). My research focuses on robust speaker representation learning and machine learning.
@@ -18,9 +20,11 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 📰 News
 ======
-04/12/2024 Our paper, *"Enhancing Multimodal Rumor Detection with Statistical Image Features and Modal Alignment via Contrastive Learning,"* received the **Best Student Paper Runner-Up Award** at PRICAI 2024.
+- **21/12/2024**: 4 papers have been accepted to ICASSP 2025—see you in Hyderabad, India 🇮🇳!
 
-17/06/2024 [Paper Sharing Session](https://mp.weixin.qq.com/s/1rumaLXfNoLEVM9HZNT3Eg) I gave a talk on **Parameter-efficient Fine-tuning of Speaker-Aware Dynamic Prompts for Speaker Verification** at the paper share session of InterSpeech 2024.
+- **04/12/2024**: Our paper, *"Enhancing Multimodal Rumor Detection with Statistical Image Features and Modal Alignment via Contrastive Learning,"* received the **Best Student Paper Runner-Up Award** at PRICAI 2024.
+
+- **17/06/2024** [Paper Sharing Session](https://mp.weixin.qq.com/s/1rumaLXfNoLEVM9HZNT3Eg) I gave a talk on **Parameter-efficient Fine-tuning of Speaker-Aware Dynamic Prompts for Speaker Verification** at the paper share session of InterSpeech 2024.
 
 03/04/2024 [Paper Sharing Session](https://www.bilibili.com/video/BV17T42127Wd?t=47.1) I gave a talk on **Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters** at the paper share session of ICASSP 2024.
 
