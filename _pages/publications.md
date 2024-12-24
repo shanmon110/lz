@@ -11,6 +11,10 @@ redirect_from:
 
 📔 2024
 ==
+1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, Spectral-Aware Low-Rank Adaptation for Speaker Verification, in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2024. **CCF B**.
+1. Zezhong Jin, Youzhi Tu, **Zhe Li**, Zilong Huang, Chongxin Gan, and Man-Wai Mak,  Denoising Student Features with Diffusion Models for Knowledge Distillation in Speaker Verification, in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2024. **CCF B**.
+1. Ivan Villa-Renteria, Mason Wang, Zachary Shah, **Zhe Li**, Soohyun Kim, Neelesh Ramachandran, and Mert Pilanci, Subtractive Training for Music Stem Insertion using Diffusion Models, in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2024. **CCF B**.
+1. Liting Jiang, Di Wu, **Zhe Li**, Shuangyong Song, Yanbing Li, and Hao Huang, Utterance as A Bridge: Few-shot Joint Learning of Empathy Detection and Empathy Intent Classification, in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2024. **CCF B**.
 1. Chenyu Zhou, Xiuhong Li, **Zhe Li**, et al., “[Enhancing multimodal rumor detection with statistical image features and modal alignment via contrastive learning](https://link.springer.com/chapter/10.1007/978-981-96-0122-6_37),” in *Proceedings of the Pacific Rim International Conference on Artificial Intelligence (PRICAI)*, 2024. **CCF C**. **Best Student Paper Nomination**
 1. Tianchi Qiu, Xiuhong Li, **Zhe Li**, et al., “[Locate, enhance and fuse: a progressively optimized network for camouflaged object detection](https://doi.org/10.1007/s11042-024-19891-5),” *Multimedia Tools and Applications*, vol. xxx, no. xxx, pp. xxx-xxx, 2024. **SCI Q3 CCF C**.
 1. Xiaofan Wang, Xiuhong Li, **Zhe Li**, et al., “[Multimodal sentiment analysis model based on alignment prompt learning](#),” in *Proceedings of the Chinese Conference on Pattern Recognition and Computer Vision (PRCV)*, 2024. **CCF C**.
