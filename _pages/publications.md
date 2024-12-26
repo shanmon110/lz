@@ -8,6 +8,7 @@ redirect_from:
 ---
 
 {% include base_path %}
+
 📔 2025
 ==
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, Spectral-Aware Low-Rank Adaptation for Speaker Verification, in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
