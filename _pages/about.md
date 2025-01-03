@@ -17,7 +17,7 @@ I am currently on the job market. If there are any internship opportunities, fee
 ======
 My research focuses on **robust speaker representation learning** and **machine learning**.
 
-I am currently a visiting PhD researcher at 🇺🇸 [Stanford University](https://profiles.stanford.edu/332001). Additionally, I am pursuing my PhD at the 🇭🇰 Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/).
+I am currently a visiting PhD researcher at 🇺🇸 [Stanford University](https://profiles.stanford.edu/332001) under the supervision of [Prof.Mert Planci](https://stanford.edu/~pilanci/).  Additionally, I am pursuing my PhD at the 🇭🇰 Hong Kong Polytechnic University, and my supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/).
 
 I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multilingual Information Technology at Xinjiang University. My supervisor is [Prof. Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), the Academician of the Chinese Academy of Engineering. My research interests are Natural Language Processing(NLP) and multilingual public opinion analysis, especially in Uyghur. I have been exploring some works related to Uyghur NLP since September 2018. I am working on NLP between Low-Resource minority Languages (LRLs) and Morphologically Rich minority Languages (MRLs). I was working on identifying sensitive and harmful information in social media posts made in low-resource languages (e.g., Uyghur).
 
