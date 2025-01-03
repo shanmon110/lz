@@ -15,7 +15,9 @@ I am currently on the job market. If there are any internship opportunities, fee
 
 👨‍🎓 Biography
 ======
-I am currently a visiting PhD researcher at 🇺🇸 [Stanford University](https://profiles.stanford.edu/332001). Additionally, I am pursuing my PhD at the 🇭🇰 Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/). My research focuses on robust speaker representation learning and machine learning.
+My research focuses on **robust speaker representation learning** and **machine learning**.
+
+I am currently a visiting PhD researcher at 🇺🇸 [Stanford University](https://profiles.stanford.edu/332001). Additionally, I am pursuing my PhD at the 🇭🇰 Hong Kong Polytechnic University. My supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/).
 
 I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multilingual Information Technology at Xinjiang University. My supervisor is [Prof. Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), the Academician of the Chinese Academy of Engineering. My research interests are Natural Language Processing(NLP) and multilingual public opinion analysis, especially in Uyghur. I have been exploring some works related to Uyghur NLP since September 2018. I am working on NLP between Low-Resource minority Languages (LRLs) and Morphologically Rich minority Languages (MRLs). I was working on identifying sensitive and harmful information in social media posts made in low-resource languages (e.g., Uyghur).
 
@@ -24,9 +26,9 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 📰 News
 ======
-- **21/12/2024**: 4 papers have been accepted to ICASSP 2025—see you in Hyderabad, India 🇮🇳!
+- **21/12/2024**: 🎉 4 papers have been accepted to ICASSP 2025—see you in Hyderabad, India 🇮🇳!
 
-- **04/12/2024**: Our paper, *"Enhancing Multimodal Rumor Detection with Statistical Image Features and Modal Alignment via Contrastive Learning,"* received the <span style="color: red;">**Best Student Paper Runner-Up Award**</span> at PRICAI 2024.
+- **04/12/2024**: 🎉 Our paper, *"Enhancing Multimodal Rumor Detection with Statistical Image Features and Modal Alignment via Contrastive Learning,"* received the <span style="color: red;">**Best Student Paper Runner-Up Award**</span> at PRICAI 2024.
 
 - **17/06/2024** [Paper Sharing Session](https://mp.weixin.qq.com/s/1rumaLXfNoLEVM9HZNT3Eg) I gave a talk on **Parameter-efficient Fine-tuning of Speaker-Aware Dynamic Prompts for Speaker Verification** at the paper share session of InterSpeech 2024.
 
