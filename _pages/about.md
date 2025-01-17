@@ -7,10 +7,6 @@ redirect_from:
   - /about/
   - /about.html
 ---
-<span style="font-size: 18px; color: #007acc; font-weight: bold;">
-I am currently on the job market. If there are any internship opportunities, feel free to contact me at 
-<a href="mailto:lizhe.li@connect.polyu.hk" style="color: #ff5722;">lizhe.li@connect.polyu.hk</a>.
-</span>
 
 
 👨‍🎓 Biography
@@ -26,6 +22,8 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 📰 News
 ======
+- 🌯 I will join Microsoft Research Asia (**MSRA**) for an internship in Feb. 2025, focusing on multimodal large models for healthcare.
+  
 - **21/12/2024**: 🎉 4 papers have been accepted to ICASSP 2025—see you in Hyderabad, India 🇮🇳!
 
 - **04/12/2024**: 🎉 Our paper, *"Enhancing Multimodal Rumor Detection with Statistical Image Features and Modal Alignment via Contrastive Learning,"* received the <span style="color: red;">**Best Student Paper Runner-Up Award**</span> at PRICAI 2024.
