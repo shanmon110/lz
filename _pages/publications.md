@@ -11,10 +11,10 @@ redirect_from:
 
 📔 2025
 ==
-1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, Spectral-Aware Low-Rank Adaptation for Speaker Verification, in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
-1. Zezhong Jin, Youzhi Tu, **Zhe Li**, Zilong Huang, Chongxin Gan, and Man-Wai Mak,  Denoising Student Features with Diffusion Models for Knowledge Distillation in Speaker Verification, in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
-1. Liting Jiang, Di Wu, **Zhe Li**, Shuangyong Song, Yanbing Li, and Hao Huang, Utterance as A Bridge: Few-shot Joint Learning of Empathy Detection and Empathy Intent Classification, in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
-1. Ivan Villa-Renteria, Mason Wang, Zachary Shah, **Zhe Li**, Soohyun Kim, Neelesh Ramachandran, and Mert Pilanci, Subtractive Training for Music Stem Insertion using Diffusion Models, in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
+1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, "[Spectral-Aware Low-Rank Adaptation for Speaker Verification](https://arxiv.org/abs/2501.03829)," in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
+1. Zezhong Jin, Youzhi Tu, **Zhe Li**, Zilong Huang, Chongxin Gan, and Man-Wai Mak, "[Denoising Student Features with Diffusion Models for Knowledge Distillation in Speaker Verification](#)", in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
+1. Liting Jiang, Di Wu, **Zhe Li**, Shuangyong Song, Yanbing Li, and Hao Huang, "[Utterance as A Bridge: Few-shot Joint Learning of Empathy Detection and Empathy Intent Classification](#)", in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
+1. Ivan Villa-Renteria, Mason Wang, Zachary Shah, **Zhe Li**, Soohyun Kim, Neelesh Ramachandran, and Mert Pilanci, "[Subtractive Training for Music Stem Insertion using Diffusion Models](https://arxiv.org/abs/2406.19328)," in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
 
 📔 2024
 ==
