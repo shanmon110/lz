@@ -22,9 +22,9 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 📰 News
 ======
-- 🌯 I will join Microsoft Research Asia (**MSRA**) for an internship in Feb. 2025, focusing on multimodal large models for healthcare.
+- **11/Feb./2025** 🧑🏻‍💻 I join Microsoft Research Asia (**MSRA**) for an internship, focusing on multimodal large models for healthcare.
   
-- **21/12/2024**: 🎉 4 papers have been accepted to ICASSP 2025—see you in Hyderabad, India 🇮🇳!
+- **21/Dec./2024**: 🎉 4 papers have been accepted to ICASSP 2025—see you in Hyderabad, India 🇮🇳!
 
 - **04/12/2024**: 🎉 Our paper, *"Enhancing Multimodal Rumor Detection with Statistical Image Features and Modal Alignment via Contrastive Learning,"* received the <span style="color: red;">**Best Student Paper Runner-Up Award**</span> at PRICAI 2024.
 
