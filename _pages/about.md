@@ -11,9 +11,9 @@ redirect_from:
 
 👨‍🎓 Biography
 ======
-My research focuses on **robust speaker representation learning** and **machine learning**.
+My research focuses on **medical large language models** and **robust speaker representation learning**.
 
-I am currently a visiting PhD researcher at 🇺🇸 [Stanford University](https://profiles.stanford.edu/332001) under the supervision of [Prof.Mert Planci](https://stanford.edu/~pilanci/).  Additionally, I am pursuing my PhD at the 🇭🇰 Hong Kong Polytechnic University, and my supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/).
+Currently, I am interning at **Microsoft Research Asia (MSRA)** under the supervision of [Dr. Shujie Liu](https://www.microsoft.com/en-us/research/people/shujliu/), I am also a visiting PhD researcher at 🇺🇸 [Stanford University](https://profiles.stanford.edu/332001) under the supervision of [Prof.Mert Planci](https://stanford.edu/~pilanci/).  Additionally, I am pursuing my PhD at the 🇭🇰 Hong Kong Polytechnic University, and my supervisor is [Prof.Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/).
 
 I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multilingual Information Technology at Xinjiang University. My supervisor is [Prof. Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), the Academician of the Chinese Academy of Engineering. My research interests are Natural Language Processing(NLP) and multilingual public opinion analysis, especially in Uyghur. I have been exploring some works related to Uyghur NLP since September 2018. I am working on NLP between Low-Resource minority Languages (LRLs) and Morphologically Rich minority Languages (MRLs). I was working on identifying sensitive and harmful information in social media posts made in low-resource languages (e.g., Uyghur).
 
@@ -22,6 +22,8 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 📰 News
 ======
+- **04/March/2025** [Paper Sharing Session](https://mp.weixin.qq.com/s/2ju6s77tFD-fhD43D7cDDA) I gave a talk on **Spectral-Aware Low-Rank Adaptation for Speaker Verification** at the paper share session of ICASSP 2025.
+
 - **11/Feb./2025** 🧑🏻‍💻 I join Microsoft Research Asia (**MSRA**) for an internship, focusing on multimodal large models for healthcare.
   
 - **21/Dec./2024**: 🎉 4 papers have been accepted to ICASSP 2025—see you in Hyderabad, India 🇮🇳!
