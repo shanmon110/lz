@@ -9,6 +9,13 @@ redirect_from:
 
 {% include base_path %}
 
+**Papers Under Review**
+
+1. **Zhe Li**, Man-Wai Mak, Jen-Tzung Chien, Mert Pilanci, Zezhong Jin, and Helen Meng, *"Disentangling Speaker and Content in Pre-trained Speech Models with Latent Diffusion for Robust Speaker Verification,"* in *Proceedings of Interspeech*, Rotterdam, Netherlands, 2025.
+1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, and Helen Meng, *"Mutual Information-Enhanced Contrastive Learning with Margin for Maximal Speaker Separability,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
+1. **Zhe Li**, Man-Wai Mak, Jen-Tzung Chien, Mert Pilanci, Zezhong Jin, and Helen Meng, *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
+1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, *"Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
+
 📔 2025
 ==
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, "[Spectral-Aware Low-Rank Adaptation for Speaker Verification](https://arxiv.org/abs/2501.03829)," in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
