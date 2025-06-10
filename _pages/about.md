@@ -24,11 +24,13 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 📰 News
 ======
+- **19/May/2025**: 🎉 2 papers have been accepted to InterSpeech 2025—see you in Rotterdam, Netherlands!
+  
 - **04/March/2025** [Paper Sharing Session](https://mp.weixin.qq.com/s/2ju6s77tFD-fhD43D7cDDA) I gave a talk on **Spectral-Aware Low-Rank Adaptation for Speaker Verification** at the paper share session of ICASSP 2025.
 
 - **11/Feb./2025** 🧑🏻‍💻 I join Microsoft Research Asia (**MSRA**) for an internship, focusing on multimodal large models for healthcare.
   
-- **21/Dec./2024**: 🎉 4 papers have been accepted to ICASSP 2025—see you in Hyderabad, India 🇮🇳!
+- **21/Dec./2024**: 🎉 4 papers have been accepted to ICASSP 2025—see you in Hyderabad, India!
 
 - **04/Dec./2024**: 🎉 Our paper, *"Enhancing Multimodal Rumor Detection with Statistical Image Features and Modal Alignment via Contrastive Learning,"* received the <span style="color: red;">**Best Student Paper Runner-Up Award**</span> at PRICAI 2024.
 
