@@ -10,14 +10,14 @@ redirect_from:
 {% include base_path %}
 
 **Papers Under Review**
-
-1. **Zhe Li**, Man-Wai Mak, Jen-Tzung Chien, Mert Pilanci, Zezhong Jin, and Helen Meng, *"Disentangling Speaker and Content in Pre-trained Speech Models with Latent Diffusion for Robust Speaker Verification,"* in *Proceedings of Interspeech*, Rotterdam, Netherlands, 2025.
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, and Helen Meng, *"Mutual Information-Enhanced Contrastive Learning with Margin for Maximal Speaker Separability,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
 1. **Zhe Li**, Man-Wai Mak, Jen-Tzung Chien, Mert Pilanci, Zezhong Jin, and Helen Meng, *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, *"Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
 
 📔 2025
 ==
+1. **Zhe Li**, Man-Wai Mak, Jen-Tzung Chien, Mert Pilanci, Zezhong Jin, and Helen Meng, *"Disentangling Speaker and Content in Pre-trained Speech Models with Latent Diffusion for Robust Speaker Verification,"* in *Proceedings of Interspeech*, Rotterdam, Netherlands, 2025.
+1.* Chong-xin Gan, **Zhe Li**, Zezhong Jin, Zilong Huang, Man-Wai Mak, Kong Aik Lee, *IDIR: Identifying and Distilling Informative Relations for Speaker Verification*, *Proceedings of InterSpeech*, Rotterdam, Netherlands, 2025.
 1. Tiquan Gu, Zhenzhen He, **Zhe Li**, and Yaling Wan, "Information-assisted and sentiment relation-driven for aspect-based sentiment analysis," *Expert Systems with Applications*, vol. 278, p. 127308, 2025. **SCI Q1 CCF C**.
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, "[Spectral-Aware Low-Rank Adaptation for Speaker Verification](https://arxiv.org/abs/2501.03829)," in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
 1. Zezhong Jin, Youzhi Tu, **Zhe Li**, Zilong Huang, Chongxin Gan, and Man-Wai Mak, "[Denoising Student Features with Diffusion Models for Knowledge Distillation in Speaker Verification](#)", in *Proceedings of IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, 2025. **CCF B**.
