@@ -24,6 +24,8 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 📰 News
 ======
+- **14/June/2025**: 🎉 Finally! Our paper *"Mutual Information-Enhanced Contrastive Learning with Margin for Maximal Speaker Separability"* has been accepted by the top-tier journal **IEEE/ACM Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Grateful thanks to Prof. Mak!
+- 
 - **19/May/2025**: 🎉 2 papers have been accepted to InterSpeech 2025—see you in Rotterdam, Netherlands!
   
 - **04/March/2025** [Paper Sharing Session](https://mp.weixin.qq.com/s/2ju6s77tFD-fhD43D7cDDA) I gave a talk on **Spectral-Aware Low-Rank Adaptation for Speaker Verification** at the paper share session of ICASSP 2025.
