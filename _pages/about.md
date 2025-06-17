@@ -25,7 +25,7 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 📰 News
 ======
 - **18/June/2025**: 🎉 1 paper has been accepted to MICCAI 2025—see you in Daejeon, South Korea!
-- 
+
 - **14/June/2025**: 🎉 Finally! Our paper *"Mutual Information-Enhanced Contrastive Learning with Margin for Maximal Speaker Separability"* has been accepted by the top-tier journal **IEEE/ACM Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Grateful thanks to Prof. Mak!
 
 - **19/May/2025**: 🎉 2 papers have been accepted to InterSpeech 2025—see you in Rotterdam, Netherlands!
