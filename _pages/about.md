@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-<span style="color: red;">**I am currently on the job market, looking for postdoctoral opportunities. If you are interested, please feel free to email me at lizhe.li@connect.polyu.hk.**
+<span style="color: red;">**I am currently on the job market. If you are interested, please feel free to email me at lizhe.li@connect.polyu.hk.**
 </span>
 
 👨‍🎓 Biography
