@@ -15,6 +15,7 @@ redirect_from:
 
 📔 2025
 ==
+1. Zezhong Jin, Shubhang Desai, Xu Chen, Biyi Fang, Zhuoyi Huang, **Zhe Li**, Chong-Xin Gan, Xiao Tu, Man-Wai Mak, Yan Lu, Shujie Liu.  **TrInk: Ink Generation with Transformer Network.** *Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing (EMNLP 2025), Main Conference.*
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, and Helen Meng, *"Mutual Information-Enhanced Contrastive Learning with Margin for Maximal Speaker Separability,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*. **SCI Q1 Top**.
 1. Jiabao Sheng, **Zhe Li**, Jiang Zhang, Saikit Lam, Zhi Chen, Lei Xing, and Jing Cai, “Boosting Generalizability in NPC ART Prediction via Multi-Omics Feature Mapping,” presented at the *Proc. of International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI)*, Daejeon, South Korea, Sep. 2025.
 1. **Zhe Li**, Man-Wai Mak, Jen-Tzung Chien, Mert Pilanci, Zezhong Jin, and Helen Meng, *"Disentangling Speaker and Content in Pre-trained Speech Models with Latent Diffusion for Robust Speaker Verification,"* in *Proceedings of Interspeech*, Rotterdam, Netherlands, 2025. **CCF C**
