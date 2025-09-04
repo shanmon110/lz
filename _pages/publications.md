@@ -10,11 +10,11 @@ redirect_from:
 {% include base_path %}
 
 **Papers Under Review**
-1. **Zhe Li**, Man-Wai Mak, Jen-Tzung Chien, Mert Pilanci, Zezhong Jin, and Helen Meng, *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
-1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, *"Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
+1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, *"Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification,"* in *IEEE Transactions on Audio, Speech and Language Processing*.
 
 📔 2025
 ==
+1. **Zhe Li**, Man-Wai Mak, Jen-Tzung Chien, Mert Pilanci, Zezhong Jin, and Helen Meng, *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
 1. Zezhong Jin, Shubhang Desai, Xu Chen, Biyi Fang, Zhuoyi Huang, **Zhe Li**, Chong-Xin Gan, Xiao Tu, Man-Wai Mak, Yan Lu, Shujie Liu.  **TrInk: Ink Generation with Transformer Network.** *Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing (EMNLP 2025), Main Conference.*
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, and Helen Meng, *"Mutual Information-Enhanced Contrastive Learning with Margin for Maximal Speaker Separability,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*. **SCI Q1 Top**.
 1. Jiabao Sheng, **Zhe Li**, Jiang Zhang, Saikit Lam, Zhi Chen, Lei Xing, and Jing Cai, “Boosting Generalizability in NPC ART Prediction via Multi-Omics Feature Mapping,” presented at the *Proc. of International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI)*, Daejeon, South Korea, Sep. 2025.
