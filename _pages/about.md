@@ -24,6 +24,8 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 📰 News
 ======
+- **04/September/2025**: 🎉 Our paper *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification,"* has been accepted by the top-tier journal **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Prof. Mak!
+
 - **20/August/2025**: 🎉 1 paper has been accepted to EMNLP 2025—see you in Suzhou, China!
 
 - **18/June/2025**: 🎉 1 paper has been accepted to MICCAI 2025—see you in Daejeon, South Korea!
