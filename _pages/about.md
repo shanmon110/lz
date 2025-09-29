@@ -24,6 +24,8 @@ I have received my master's degree in 🇨🇳 Xinjiang Key Laboratory of Multil
 
 📰 News
 ======
+- **29/September/2025**: 🎉 Our paper *"WhisMultiNet: Advancing End-to-End Speech Topic Classification with Whisper and MultiGateGNN"* has been accepted by the flagship journal **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Xiaozhe QI!
+  
 - **04/September/2025**: 🎉 Our paper *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification,"* has been accepted by the flagship journal **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Prof. Mak!
 
 - **20/August/2025**: 🎉 1 paper has been accepted to EMNLP 2025—see you in Suzhou, China!
