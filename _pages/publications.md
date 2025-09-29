@@ -14,6 +14,7 @@ redirect_from:
 
 📔 2025
 ==
+1. Xiaozhe Qi, Liang He, **Zhe Li**, et al., *"WhisMultiNet: Advancing End-to-End Speech Topic Classification with Whisper and MultiGateGNN"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
 1. **Zhe Li**, Man-Wai Mak, Jen-Tzung Chien, Mert Pilanci, Zezhong Jin, and Helen Meng, *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
 1. Zezhong Jin, Shubhang Desai, Xu Chen, Biyi Fang, Zhuoyi Huang, **Zhe Li**, Chong-Xin Gan, Xiao Tu, Man-Wai Mak, Yan Lu, Shujie Liu.  **TrInk: Ink Generation with Transformer Network.** *Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing (EMNLP 2025), Main Conference.*
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, and Helen Meng, *"Mutual Information-Enhanced Contrastive Learning with Margin for Maximal Speaker Separability,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*. **SCI Q1 Top**.
