@@ -51,7 +51,13 @@ My research focuses on **speech large language models (LLMs)** 🧠 and **robust
 
 ## 📰 News
 
+### 🏆 2026
+- **Jan 2026** — 🎉 Two papers accepted to **ICASSP 2026** — see you in Barcelona, Spain!
+
+---
+
 ### 🏆 2025
+- **Dec 2025** — 🎉 *My First Tutorial!* Our tutorial **[Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e)** has been accepted by **IEEE ICME 2026** — see you in Bangkok, Thailand 🇹🇭 (July 5–9, 2026)!
 - **29 Sep 2025** — 🎉 Our paper *"WhisMultiNet: Advancing End-to-End Speech Topic Classification with Whisper and MultiGateGNN"* has been accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Xiaozhe Qi!
 - **04 Sep 2025** — 🎉 Our paper *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Prof. Mak!
 - **20 Aug 2025** — 🎉 One paper accepted to **EMNLP 2025** — see you in Suzhou, China!
