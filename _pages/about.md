@@ -47,8 +47,7 @@ My research focuses on **speech large language models (LLMs)** 🧠 and **robust
 
 ---
 
-**“You are more than what you have become !”**
-
+***“You are more than what you have become!”***
 
 ## 📰 News
 
