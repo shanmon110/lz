@@ -29,7 +29,7 @@ My research focuses on **speech large language models (LLMs)** 🧠 and **robust
   Supervised by [Prof. Mert Pilanci](https://stanford.edu/~pilanci/)  
   *Optimization theory • Efficient adaptation • Spectral methods*  
 
-- 🎓 **PhD in Department of Electrical and Electronic Engineering**, [The Hong Kong Polytechnic University (PolyU)](https://www.polyu.edu.hk/) 🇭🇰  
+- 🎓 **PhD in Electrical and Electronic Engineering**, [The Hong Kong Polytechnic University (PolyU)](https://www.polyu.edu.hk/) 🇭🇰  
   Supervised by [Prof. Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/)  
   *Speaker representation • Speaker Verification*  
 
@@ -47,22 +47,23 @@ My research focuses on **speech large language models (LLMs)** 🧠 and **robust
 
 ---
 
-**You are more than what you have become!**
+*“You are more than what you have become.”*
+
 
 ## 📰 News
 
 ### 🏆 2026
 - **Jan 2026** — 🎉 Our paper *"Towards A Unified Perspective on Parameter-Efficient Fine Tuning for Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Prof. Mak!
-- **Jan 2026** — 🎉 Two papers accepted to **ICASSP 2026** — see you in Barcelona, Spain!
+- **Jan 2026** — 🎉 Two papers accepted to **ICASSP 2026** — see you in Barcelona, Spain ! 🇪🇸
 
 ---
 
 ### 🏆 2025
-- **Dec 2025** — 🎉 *My First Tutorial!* Our tutorial **[Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e)** has been accepted by **IEEE ICME 2026** — see you in Bangkok, Thailand 🇹🇭 (July 5–9, 2026)!
+- **Dec 2025** — 🎉 *My First Tutorial!* Our tutorial **[Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e)** has been accepted by **IEEE ICME 2026** — see you in Bangkok, Thailand (July 5–9, 2026)! 🇹🇭
 - **29 Sep 2025** — 🎉 Our paper *"WhisMultiNet: Advancing End-to-End Speech Topic Classification with Whisper and MultiGateGNN"* has been accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Xiaozhe Qi!
 - **04 Sep 2025** — 🎉 Our paper *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Prof. Mak!
-- **20 Aug 2025** — 🎉 One paper accepted to **EMNLP 2025** — see you in Suzhou, China!
-- **18 Jun 2025** — 🎉 One paper accepted to **MICCAI 2025** — see you in Daejeon, South Korea!
+- **20 Aug 2025** — 🎉 One paper accepted to **EMNLP 2025** — see you in Suzhou, China! 🇨🇳
+- **18 Jun 2025** — 🎉 One paper accepted to **MICCAI 2025** — see you in Daejeon, South Korea! 🇰🇷
 - **14 Jun 2025** — 🎉 Our paper *"Mutual Information-Enhanced Contrastive Learning with Margin for Maximal Speaker Separability"* accepted by **IEEE/ACM T-ASLP**. Thanks to Prof. Mak!
 - **19 May 2025** — 🎉 Two papers accepted to **Interspeech 2025** — see you in Rotterdam, Netherlands!
 - **04 Mar 2025** — 🧑🏻‍🏫 [Paper Sharing Session](https://mp.weixin.qq.com/s/2ju6s77tFD-fhD43D7cDDA): I gave a talk on *Spectral-Aware Low-Rank Adaptation for Speaker Verification* (ICASSP 2025).
