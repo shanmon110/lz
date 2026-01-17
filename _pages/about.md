@@ -58,20 +58,20 @@ My research focuses on **speech large language models (LLMs)** 🧠 and **robust
 ---
 
 ### 🏆 2025
-- **Dec 2025** — 🎉 *My First Tutorial!* Our tutorial **[Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e)** has been accepted by **IEEE ICME 2026** — see you in Bangkok, Thailand (July 5–9, 2026)! 🇹🇭
+- **Dec 2025** — 🎉 *My First Tutorial!* Our tutorial **[Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e)** has been accepted by **IEEE ICME 2026** — see you in Bangkok, Thailand 🇹🇭 (July 5–9, 2026)!
 - **29 Sep 2025** — 🎉 Our paper *"WhisMultiNet: Advancing End-to-End Speech Topic Classification with Whisper and MultiGateGNN"* has been accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Xiaozhe Qi!
 - **04 Sep 2025** — 🎉 Our paper *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Prof. Mak!
-- **20 Aug 2025** — 🎉 One paper accepted to **EMNLP 2025** — see you in Suzhou, China! 🇨🇳
-- **18 Jun 2025** — 🎉 One paper accepted to **MICCAI 2025** — see you in Daejeon, South Korea! 🇰🇷
+- **20 Aug 2025** — 🎉 One paper accepted to **EMNLP 2025** — see you in Suzhou, China 🇨🇳! 
+- **18 Jun 2025** — 🎉 One paper accepted to **MICCAI 2025** — see you in Daejeon, South Korea 🇰🇷! 
 - **14 Jun 2025** — 🎉 Our paper *"Mutual Information-Enhanced Contrastive Learning with Margin for Maximal Speaker Separability"* accepted by **IEEE/ACM T-ASLP**. Thanks to Prof. Mak!
-- **19 May 2025** — 🎉 Two papers accepted to **Interspeech 2025** — see you in Rotterdam, Netherlands!
+- **19 May 2025** — 🎉 Two papers accepted to **Interspeech 2025** — see you in Rotterdam, Netherland 🇳🇱!
 - **04 Mar 2025** — 🧑🏻‍🏫 [Paper Sharing Session](https://mp.weixin.qq.com/s/2ju6s77tFD-fhD43D7cDDA): I gave a talk on *Spectral-Aware Low-Rank Adaptation for Speaker Verification* (ICASSP 2025).
 - **11 Feb 2025** — 🧑🏻‍💻 Joined **Microsoft Research Asia (MSRA)** as a Research Intern, focusing on multimodal large models for healthcare.
 
 ---
 
 ### 🏆 2024
-- **21 Dec 2024** — 🎉 Four papers accepted to **ICASSP 2025** — see you in Hyderabad, India!
+- **21 Dec 2024** — 🎉 Four papers accepted to **ICASSP 2025** — see you in Hyderabad, India 🇮🇳!
 - **04 Dec 2024** — 🏅 *Enhancing Multimodal Rumor Detection with Statistical Image Features and Modal Alignment via Contrastive Learning* received **Best Student Paper Runner-Up Award** 🥈 at **PRICAI 2024**.
 - **17 Jun 2024** — 🧑🏻‍🏫 [Paper Sharing Session](https://mp.weixin.qq.com/s/1rumaLXfNoLEVM9HZNT3Eg): *Parameter-efficient Fine-tuning of Speaker-Aware Dynamic Prompts for Speaker Verification* (Interspeech 2024).
 - **03 Apr 2024** — 🧑🏻‍🏫 [Paper Sharing Session](https://www.bilibili.com/video/BV17T42127Wd?t=47.1): *Dual Parameter-Efficient Fine-Tuning for Speaker Representation via Speaker Prompt Tuning and Adapters* (ICASSP 2024).
@@ -79,8 +79,8 @@ My research focuses on **speech large language models (LLMs)** 🧠 and **robust
 ---
 
 ### 🎤 2023
-- **08 Dec 2023** — Presented *Maximal Speaker Separability via Robust Speaker Representation Learning* at **NCMMSC 2023**, Soochow, China.  
-- **03 Dec 2023** — Presented *Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples* at **International Doctoral Forum 2023**, Hong Kong SAR.
+- **08 Dec 2023** — Presented *Maximal Speaker Separability via Robust Speaker Representation Learning* at **NCMMSC 2023**, Soochow, China 🇨🇳.  
+- **03 Dec 2023** — Presented *Maximal Speaker Separability via Contrastive Learning with Angular Margin and Class-Aware Attention for Hard Samples* at **International Doctoral Forum 2023**, Hong Kong SAR 🇭🇰.
 
 ---
 
