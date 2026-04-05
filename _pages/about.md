@@ -52,7 +52,8 @@ My research focuses on **speech large language models (LLMs)** 🧠 and **robust
 ## 📰 News
 
 ### 🏆 2026
-- **Jan 2026** — 🎉 Our paper *"Towards A Unified Perspective on Parameter-Efficient Fine Tuning for Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Prof. Mak!
+- **Apr. 2026** — 🎉 Our paper *"Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Dr. Jin!
+- **Mar. 2026** — 🎉 Our paper *"Towards A Unified Perspective on Parameter-Efficient Fine Tuning for Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Prof. Mak!
 - **Jan 2026** — 🎉 Two papers accepted to **ICASSP 2026** — see you in Barcelona, Spain ! 🇪🇸
 
 ---
