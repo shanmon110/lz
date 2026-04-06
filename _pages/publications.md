@@ -10,11 +10,12 @@ redirect_from:
 {% include base_path %}
 
 📔 2026
+1. Zezhong Jin, Youzhi TU, **Zhe Li**, Man-Wai Mak, and Kong Aik Lee *"Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification,"* in *IEEE Transactions on Audio, Speech and Language Processing*. (Accepted to appear)
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, *"Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification,"* in *IEEE Transactions on Audio, Speech and Language Processing*. (Accepted to appear)
-2. Zezhong Jin, Shujie Liu, **Zhe Li**, Chong-Xin Gan, Zilong Huang, Man-Wai Mak, and Kong Aik Lee,
+1. Zezhong Jin, Shujie Liu, **Zhe Li**, Chong-Xin Gan, Zilong Huang, Man-Wai Mak, and Kong Aik Lee,
    *“Distilling Attention Knowledge for Speaker Verification,”*
    in *Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2026)*, Barcelona, Spain. (Accepted to appear)
-3. Liting Jiang, Di Wu, **Zhe Li**, Yanbing Li, and Hao Huang,
+1. Liting Jiang, Di Wu, **Zhe Li**, Yanbing Li, and Hao Huang,
    *“2I-Instruct: Generative Joint Empathy Detection and Empathy Intent Classification via Inter-Task and Inter-Instance Interactions,”*
    in *Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2026)*, Barcelona, Spain. (Accepted to appear)
 
