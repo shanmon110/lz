@@ -10,7 +10,7 @@ redirect_from:
 
 👨‍🎓 Biography
 ======
-I am **Dr. Zhe Li (李哲)**, currently a **Postdoctoral Fellow** at the **The University of Hong Kong (HKU)**.  
+I am **Dr. Zhe Li (李哲)**, currently a **Postdoctoral Fellow** at **The University of Hong Kong (HKU)**.  
 
 My research focuses on **speech large language models (LLMs)** 🧠 and **robust speaker representation learning** 🔊, with a broader interest in **multimodal AI for healthcare** 🩺.
 
@@ -53,7 +53,7 @@ My research focuses on **speech large language models (LLMs)** 🧠 and **robust
 
 ### 🏆 2026
 - **Apr. 2026** — 🎉 Our paper *"Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Dr. Jin!
-- **Apr. 2025** — 🎉 Our tutorial **Speech Large Language Models for Under-Resourced Languages** has been accepted by **InterSpeech 2026** — see you in September 27 – October 1 Sydney, Australia 🇦🇺!
+- **Apr. 2026** — 🎉 Our tutorial **Speech Large Language Models for Under-Resourced Languages** has been accepted by **InterSpeech 2026** — see you in September 27 – October 1, Sydney, Australia 🇦🇺!
 - **Mar. 2026** — 🎉 Our  paper *"Towards A Unified Perspective on Parameter-Efficient Fine Tuning for Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Prof. Mak!
 - **Jan 2026** — 🎉 Two papers accepted to **ICASSP 2026** — see you in 4-8 May 2026, Barcelona, Spain! 🇪🇸
 
