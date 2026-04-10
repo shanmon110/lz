@@ -17,9 +17,9 @@ My research focuses on **speech large language models (LLMs)** 🧠 and **robust
 ---
 ## 🔬 Research Interests
 
-- 🔊 **Speaker Representation Learning** – disentanglement, cross-lingual robustness, and PEFT strategies  
-- 🩺 **Multimodal AI for Healthcare** – speech, text, and imaging fusion for disease prediction  
-- 🌏 **Low-Resource & Multilingual NLP** – Uyghur, morphologically rich languages, and cross-lingual transfer  
+* 🗣️ **Speech Large Language Models (Speech LLMs)** – efficient fine-tuning, post-training alignment, and speech-based healthcare applications
+* 🔊 **Speech Signal Processing** – speaker representation learning, accent recognition, and robust speech modeling
+* 🩺 **Multimodal and Deep Learning** – multimodal representation learning, cross-modal fusion
 
 ---
 
