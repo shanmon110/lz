@@ -10,20 +10,18 @@ redirect_from:
 
 👨‍🎓 Biography
 ======
-I am **Dr. Zhe Li (李哲)**, currently a **Postdoctoral Fellow** at **The University of Hong Kong (HKU)**.  
+Dr. Zhe Li is a Postdoctoral Fellow at The University of Hong Kong (HKU). His research focuses on speech large language models (Speech LLMs) and robust speaker representation learning, with broader interests in multimodal AI for healthcare applications. He received his Ph.D. degree from the Department of Electrical and Electronic Engineering at The Hong Kong Polytechnic University (PolyU). He was a research intern at Microsoft Research Asia (MSRA) and previously conducted international collaborative research as a visiting student scholar with the Department of Electrical Engineering, Stanford University. As a key contributor, he received the 2020 Excellent Science and Technology Achievement Award from the Chinese Association for Artificial Intelligence, and his co-authored paper received the Best Student Paper Runner-Up Award at PRICAI 2024.
 
-My research focuses on **speech large language models (LLMs)** 🧠 and **robust speaker representation learning** 🔊, with a broader interest in **multimodal AI for healthcare** 🩺.
+***“You are more than what you have become!”***
 
 ---
 ## 🔬 Research Interests
 
-* 🗣️ **Speech Large Language Models (Speech LLMs)** – efficient fine-tuning, post-training alignment, and speech-based healthcare applications
-* 🔊 **Speech Signal Processing** – speaker representation learning, accent recognition, and robust speech modeling
+* 🧠 **Speech Large Language Models (Speech LLMs)** – efficient fine-tuning, post-training alignment, and speech-based healthcare applications
+* 🗣️ **Speech Signal Processing** – speaker representation learning, accent recognition, and robust speech modeling
 * 🩺 **Multimodal and Deep Learning** – multimodal representation learning, cross-modal fusion
 
 ---
-
-***“You are more than what you have become!”***
 
 ## 📰 News
 
