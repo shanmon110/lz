@@ -15,30 +15,6 @@ I am **Dr. Zhe Li (李哲)**, currently a **Postdoctoral Fellow** at **The Unive
 My research focuses on **speech large language models (LLMs)** 🧠 and **robust speaker representation learning** 🔊, with a broader interest in **multimodal AI for healthcare** 🩺.
 
 ---
-
-## 💼 Research Experience
-
-- 🎓 **Postdoctoral Fellow**, [The University of Hong Kong (HKU)](https://www.hku.hk/)  
-  *Medical AI • Speech-Language Models • Multimodal Learning*  
-
-- 💻 **Research Intern**, [Microsoft Research Asia (MSRA)](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/)  
-  Supervised by [Dr. Shujie Liu](https://www.microsoft.com/en-us/research/people/shujliu/)  
-  *LLM fine-tuning • Speech reasoning models • Multilingual adaptation*  
-
-- 🧮 **Visiting PhD Researcher**, [Stanford University](https://profiles.stanford.edu/332001) 🇺🇸  
-  Supervised by [Prof. Mert Pilanci](https://stanford.edu/~pilanci/)  
-  *Optimization theory • Efficient adaptation • Spectral methods*  
-
-- 🎓 **PhD in Electrical and Electronic Engineering**, [The Hong Kong Polytechnic University (PolyU)](https://www.polyu.edu.hk/) 🇭🇰  
-  Supervised by [Prof. Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/)  
-  *Speaker representation • Speaker Verification*  
-
-- 🎓 **MSc in Software Engineering**, [Xinjiang University](https://www.xju.edu.cn/) 🇨🇳  
-  Supervised by [Prof. Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), Academician of the Chinese Academy of Engineering  
-  *Low-resource NLP • Uyghur language modeling • Harmful content detection*  
-
----
-
 ## 🔬 Research Interests
 
 - 🔊 **Speaker Representation Learning** – disentanglement, cross-lingual robustness, and PEFT strategies  
@@ -94,7 +70,28 @@ My research focuses on **speech large language models (LLMs)** 🧠 and **robust
 - **29 Oct 2020** — [Video](https://hub.baai.ac.cn/view/3391): Uploaded **CCL 2020** oral presentation.  
 - **11 Oct 2020** — [Video](https://www.bilibili.com/video/BV1PD4y197ma?p=6): Uploaded **CCMT 2020** oral presentation.  
 
+## 💼 Research Experience
 
+- 🎓 **Postdoctoral Fellow**, [The University of Hong Kong (HKU)](https://www.hku.hk/)  
+  *Medical AI • Speech-Language Models • Multimodal Learning*  
+
+- 💻 **Research Intern**, [Microsoft Research Asia (MSRA)](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/)  
+  Supervised by [Dr. Shujie Liu](https://www.microsoft.com/en-us/research/people/shujliu/)  
+  *LLM fine-tuning • Speech reasoning models • Multilingual adaptation*  
+
+- 🧮 **Visiting PhD Researcher**, [Stanford University](https://profiles.stanford.edu/332001) 🇺🇸  
+  Supervised by [Prof. Mert Pilanci](https://stanford.edu/~pilanci/)  
+  *Optimization theory • Efficient adaptation • Spectral methods*  
+
+- 🎓 **PhD in Electrical and Electronic Engineering**, [The Hong Kong Polytechnic University (PolyU)](https://www.polyu.edu.hk/) 🇭🇰  
+  Supervised by [Prof. Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/)  
+  *Speaker representation • Speaker Verification*  
+
+- 🎓 **MSc in Software Engineering**, [Xinjiang University](https://www.xju.edu.cn/) 🇨🇳  
+  Supervised by [Prof. Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), Academician of the Chinese Academy of Engineering  
+  *Low-resource NLP • Uyghur language modeling • Harmful content detection*  
+
+---
 <p align="center">
   <a href="https://clustrmaps.com/site/1bnha">
     <img src="https://clustrmaps.com/map_v2.png?cl=ffffff&w=300&t=tt&d=OAgNznmdz5Fw3L7FYL-Pj_2xqMjFZiO76BaC6AWvMzs" style="display:none;" alt="Hidden Visit Tracker">
