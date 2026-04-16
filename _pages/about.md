@@ -70,8 +70,9 @@ Dr. Zhe Li is a Postdoctoral Fellow at The University of Hong Kong (HKU). His re
 
 ## 💼 Research Experience
 
-- 🎓 **Postdoctoral Fellow**, [The University of Hong Kong (HKU)](https://www.hku.hk/)  
-  *Medical AI • Speech-Language Models • Multimodal Learning*  
+- 🎓 **Postdoctoral Fellow**, [The University of Hong Kong (HKU)](https://www.hku.hk/)
+  Supervised by [Prof. Ricky Chan](https://english.hku.hk/people/Faculty/72/Dr_Ricky_Chan)  
+  *Speech-Language Models • Post-training • Multimodal Learning*  
 
 - 💻 **Research Intern**, [Microsoft Research Asia (MSRA)](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/)  
   Supervised by [Dr. Shujie Liu](https://www.microsoft.com/en-us/research/people/shujliu/)  
