@@ -70,25 +70,30 @@ Dr. Zhe Li is a Postdoctoral Fellow at The University of Hong Kong (HKU). His re
 
 ## 💼 Research Experience
 
-- 🎓 **Postdoctoral Fellow**, [The University of Hong Kong (HKU)](https://www.hku.hk/) 🇭🇰
-  Supervised by [Prof. Ricky Chan](https://english.hku.hk/people/Faculty/72/Dr_Ricky_Chan)  
-  *Speech-Language Models • Post-training • Multimodal Learning*  
+### 🎓 Postdoctoral Fellow  
+[The University of Hong Kong (HKU)](https://www.hku.hk/) 🇭🇰  
+Supervised by [Prof. Ricky Chan](https://english.hku.hk/people/Faculty/72/Dr_Ricky_Chan)  
+*Speech-Language Models · Post-training · Multimodal Learning*
 
-- 💻 **Research Intern**, [Microsoft Research Asia (MSRA)](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/) 🇭🇰 
-  Supervised by [Dr. Shujie Liu](https://www.microsoft.com/en-us/research/people/shujliu/)  
-  *LLM fine-tuning • Speech reasoning models • Multilingual adaptation*  
+### 💻 Research Intern  
+[Microsoft Research Asia (MSRA)](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/) 🇭🇰  
+Supervised by [Dr. Shujie Liu](https://www.microsoft.com/en-us/research/people/shujliu/)  
+*LLM Fine-tuning · Speech Reasoning Models · Multilingual Adaptation*
 
-- 🧮 **Visiting PhD Researcher**, [Stanford University](https://profiles.stanford.edu/332001) 🇺🇸  
-  Supervised by [Prof. Mert Pilanci](https://stanford.edu/~pilanci/)  
-  *Optimization theory • Efficient adaptation • Spectral methods*  
+### 🧮 Visiting PhD Researcher  
+[Stanford University](https://profiles.stanford.edu/332001) 🇺🇸  
+Supervised by [Prof. Mert Pilanci](https://stanford.edu/~pilanci/)  
+*Optimization Theory · Efficient Adaptation · Spectral Methods*
 
-- 🎓 **PhD in Electrical and Electronic Engineering**, [The Hong Kong Polytechnic University (PolyU)](https://www.polyu.edu.hk/) 🇭🇰  
-  Supervised by [Prof. Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/)  
-  *Speaker representation • Speaker Verification*  
+### 🎓 PhD in Electrical and Electronic Engineering  
+[The Hong Kong Polytechnic University (PolyU)](https://www.polyu.edu.hk/) 🇭🇰  
+Supervised by [Prof. Man-Wai Mak](http://www.eie.polyu.edu.hk/~mwmak/)  
+*Speaker Representation · Speaker Verification*
 
-- 🎓 **MSc in Software Engineering**, [Xinjiang University](https://www.xju.edu.cn/) 🇨🇳  
-  Supervised by [Prof. Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), Academician of the Chinese Academy of Engineering  
-  *Low-resource NLP • Uyghur language modeling • Harmful content detection*  
+### 🎓 MSc in Software Engineering  
+[Xinjiang University](https://www.xju.edu.cn/) 🇨🇳  
+Supervised by [Prof. Wushour Silamu](http://it.xju.edu.cn/info/1142/1361.htm), Academician of the Chinese Academy of Engineering  
+*Low-resource NLP · Uyghur Language Modeling · Harmful Content Detection*
 
 ---
 <p align="center">
