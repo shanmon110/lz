@@ -10,9 +10,9 @@ redirect_from:
 {% include base_path %}
 
 📔 2026
-1. Meirong Song, Ru Gao, Zhe Li, Langhua Shi, Qianshan Wang, Rong Yao, and Haifang Li, *“DB-SMGA: Dual-Branch Sequential Multi-Granularity Attention for Speech Depression Detection,”* **IEEE Signal Processing Letters**, (Accepted to appear).
+1. Meirong Song, Ru Gao, Zhe Li, Langhua Shi, Qianshan Wang, Rong Yao, and Haifang Li, *“DB-SMGA: Dual-Branch Sequential Multi-Granularity Attention for Speech Depression Detection,”* *IEEE Signal Processing Letters*, (Accepted to appear).
 1. Zezhong Jin, Youzhi Tu, Zhe Li, Man-Wai Mak, and Kong Aik Lee, [*“Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682072), *IEEE Transactions on Audio, Speech, and Language Processing*, 2026.
-1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung-Yi Lee, and Helen Meng, [*“Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682068), *IEEE/ACM Transactions on Audio, Speech, and Language Processing*, 2026.
+1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung-Yi Lee, and Helen Meng, [*“Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682068), *IEEE Transactions on Audio, Speech, and Language Processing*, 2026.
 1. Zezhong Jin, Shujie Liu, **Zhe Li**, Chong-Xin Gan, Zilong Huang, Man-Wai Mak, and Kong Aik Lee,
    *“Distilling Attention Knowledge for Speaker Verification,”*
    in *Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2026)*, Barcelona, Spain. (Accepted to appear)
