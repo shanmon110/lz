@@ -10,8 +10,9 @@ redirect_from:
 {% include base_path %}
 
 📔 2026
-1. Zezhong Jin, Youzhi TU, **Zhe Li**, Man-Wai Mak, and Kong Aik Lee *"Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification,"* in *IEEE Transactions on Audio, Speech and Language Processing*. (Accepted to appear)
-1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung Yi Lee, and Helen Meng, *"Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification,"* in *IEEE Transactions on Audio, Speech and Language Processing*. (Accepted to appear)
+1. Meirong Song, Ru Gao, Zhe Li, Langhua Shi, Qianshan Wang, Rong Yao, and Haifang Li, *“DB-SMGA: Dual-Branch Sequential Multi-Granularity Attention for Speech Depression Detection,”* **IEEE Signal Processing Letters**, (Accepted to appear).
+1. Zezhong Jin, Youzhi Tu, Zhe Li, Man-Wai Mak, and Kong Aik Lee, [*“Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682072), *IEEE Transactions on Audio, Speech, and Language Processing*, 2026.
+1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung-Yi Lee, and Helen Meng, [*“Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682068), *IEEE/ACM Transactions on Audio, Speech, and Language Processing*, 2026.
 1. Zezhong Jin, Shujie Liu, **Zhe Li**, Chong-Xin Gan, Zilong Huang, Man-Wai Mak, and Kong Aik Lee,
    *“Distilling Attention Knowledge for Speaker Verification,”*
    in *Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2026)*, Barcelona, Spain. (Accepted to appear)
@@ -22,7 +23,7 @@ redirect_from:
 
 📔 2025
 ==
-1. Xiaozhe Qi, Liang He, **Zhe Li**, et al., *"WhisMultiNet: Advancing End-to-End Speech Topic Classification with Whisper and MultiGateGNN"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
+1. Xiaozhe Qi, Liang He, **Zhe Li**, et al., [*“WhisMultiNet: Advancing End-to-End Speech Topic Classification with Whisper and MultiGateGNN”*](https://ieeexplore.ieee.org/document/11217408), *IEEE Transactions on Audio, Speech, and Language Processing*, vol. 33, pp. 4697–4711, 2025.
 1. **Zhe Li**, Man-Wai Mak, Jen-Tzung Chien, Mert Pilanci, Zezhong Jin, and Helen Meng, *"Disentangling Speech Representations Learning with Latent Diffusion for Speaker Verification,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*.
 1. Zezhong Jin, Shubhang Desai, Xu Chen, Biyi Fang, Zhuoyi Huang, **Zhe Li**,  Gan, Xiao Tu, Man-Wai Mak, Yan Lu, Shujie Liu.  **TrInk: Ink Generation with Transformer Network.** *Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing (EMNLP 2025), Main Conference.*
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, and Helen Meng, *"Mutual Information-Enhanced Contrastive Learning with Margin for Maximal Speaker Separability,"* in *IEEE/ACM Transactions on Audio, Speech and Language Processing*. **SCI Q1 Top**.
