@@ -26,6 +26,7 @@ Dr. Zhe Li is a Postdoctoral Fellow at The University of Hong Kong (HKU). His re
 ## 📰 News
 
 ### 🏆 2026
+- **Apr. 2026** Our paper *“DB-SMGA: Dual-Branch Sequential Multi-Granularity Attention for Speech Depression Detection”* has been accepted for publication in *IEEE Signal Processing Letters (SPL)*. Congratulations to Dr. Meirong Song for her excellent work!
 - **Apr. 2026** — 🎉 Our paper *"Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Dr. Jin!
 - **Apr. 2026** — 🎉 Our tutorial **Speech Large Language Models for Under-Resourced Languages** has been accepted by **InterSpeech 2026** — see you in September 27 – October 1, Sydney, Australia 🇦🇺!
 - **Mar. 2026** — 🎉 Our  paper *"Towards A Unified Perspective on Parameter-Efficient Fine Tuning for Speaker Verification"* accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Prof. Mak!
