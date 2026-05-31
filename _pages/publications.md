@@ -10,15 +10,11 @@ redirect_from:
 {% include base_path %}
 
 📔 2026
-1. Meirong Song, Ru Gao, Zhe Li, Langhua Shi, Qianshan Wang, Rong Yao, and Haifang Li, *“DB-SMGA: Dual-Branch Sequential Multi-Granularity Attention for Speech Depression Detection,”* *IEEE Signal Processing Letters*, (Accepted to appear).
-1. Zezhong Jin, Youzhi Tu, Zhe Li, Man-Wai Mak, and Kong Aik Lee, [*“Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682072), *IEEE Transactions on Audio, Speech, and Language Processing*, 2026.
-1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung-Yi Lee, and Helen Meng, [*“Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682068), *IEEE Transactions on Audio, Speech, and Language Processing*, 2026.
-1. Zezhong Jin, Shujie Liu, **Zhe Li**, Chong-Xin Gan, Zilong Huang, Man-Wai Mak, and Kong Aik Lee,
-   *“Distilling Attention Knowledge for Speaker Verification,”*
-   in *Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2026)*, Barcelona, Spain. (Accepted to appear)
-1. Liting Jiang, Di Wu, **Zhe Li**, Yanbing Li, and Hao Huang,
-   *“2I-Instruct: Generative Joint Empathy Detection and Empathy Intent Classification via Inter-Task and Inter-Instance Interactions,”*
-   in *Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2026)*, Barcelona, Spain. (Accepted to appear)
+1. Meirong Song, Ru Gao, Zhe Li, Langhua Shi, Qianshan Wang, Rong Yao, and Haifang Li, *“[DB-SMGA: Dual-Branch Sequential Multi-Granularity Attention for Speech Depression Detection](https://ieeexplore.ieee.org/abstract/document/11494505),”* *IEEE Signal Processing Letters*, vol. 33, pp. 1811-1815, 2026.
+1. Zezhong Jin, Youzhi Tu, Zhe Li, Man-Wai Mak, and Kong Aik Lee, [*“Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682072), *IEEE Transactions on Audio, Speech, and Language Processing*, vol. 34, pp. 2101-2114, 2026.
+1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung-Yi Lee, and Helen Meng, [*“Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682068), *IEEE Transactions on Audio, Speech, and Language Processing*, vol. 34, pp. 2276-2289, 2026.
+1. Zezhong Jin, Shujie Liu, **Zhe Li**, Chong-Xin Gan, Zilong Huang, Man-Wai Mak, and Kong Aik Lee, *“[Distilling Attention Knowledge for Speaker Verification](https://ieeexplore.ieee.org/abstract/document/11464971),”* in *Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2026)*, Barcelona, Spain, pp. 16447-16451, 2026
+1. Liting Jiang, Di Wu, **Zhe Li**, Yanbing Li, and Hao Huang, *“[2I-Instruct: Generative Joint Empathy Detection and Empathy Intent Classification via Inter-Task and Inter-Instance Interactions](https://ieeexplore.ieee.org/document/11463039),”* in *Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2026)*, Barcelona, Spain, pp. 18097-18101, 2026
 
 
 📔 2025
