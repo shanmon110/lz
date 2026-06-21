@@ -10,6 +10,10 @@ redirect_from:
 {% include base_path %}
 
 📔 2026
+1. Yaxuan Qiu, **Zhe Li**, Mieradilijiang Maimaiti, Zunwang Ke, and Wushour Silamu, *“Mixture of Spectral Experts for Audio Deepfake Detection,”* in *Proceedings of Interspeech 2026*, Sydney, Australia, 2026.
+1. Siqing Qin, **Zhe Li**, Kong Aik Lee, and Man-Wai Mak, *“Domain-Adaptive Dual-Gating Mixture of Experts for Generalizable Speech Deepfake Detection,”* in *Proceedings of Interspeech 2026*, Sydney, Australia, 2026.
+1. Zezhong Jin, Xiaoyu Wang, **Zhe Li**, Chong-Xin Gan, Zilong Huang, Man-Wai Mak, and Kong Aik Lee, *“Beyond Residual Connections: Manifold-Constrained Hyper-Connections for Robust Speaker Representation Learning,”* in *Proceedings of Interspeech 2026*, Sydney, Australia, 2026.
+1. Zilong Huang, Kong Aik Lee, Junjie Li, **Zhe Li**, and Man-Wai Mak, *“EmoEUS: Uncertainty Supervision for Multimodal Emotion Recognition in Conversation,”* in *Proceedings of Interspeech 2026*, Sydney, Australia, 2026.
 1. Meirong Song, Ru Gao, Zhe Li, Langhua Shi, Qianshan Wang, Rong Yao, and Haifang Li, *“[DB-SMGA: Dual-Branch Sequential Multi-Granularity Attention for Speech Depression Detection](https://ieeexplore.ieee.org/abstract/document/11494505),”* *IEEE Signal Processing Letters*, vol. 33, pp. 1811-1815, 2026.
 1. Zezhong Jin, Youzhi Tu, Zhe Li, Man-Wai Mak, and Kong Aik Lee, [*“Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682072), *IEEE Transactions on Audio, Speech, and Language Processing*, vol. 34, pp. 2101-2114, 2026.
 1. **Zhe Li**, Man-Wai Mak, Mert Pilanci, Hung-Yi Lee, and Helen Meng, [*“Towards a Unified View of Parameter-Efficient Speech Pretrained Models for Speaker Verification”*](https://doi.org/10.1109/TASLPRO.2026.3682068), *IEEE Transactions on Audio, Speech, and Language Processing*, vol. 34, pp. 2276-2289, 2026.
