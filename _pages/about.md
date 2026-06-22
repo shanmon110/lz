@@ -95,6 +95,6 @@ Dr. Zhe Li is a Postdoctoral Fellow at **The University of Hong Kong (HKU)**. Hi
 ---
 <p align="center">
   <a href="https://clustrmaps.com/site/1bnha">
-    <img src="https://clustrmaps.com/map_v2.png?cl=ffffff&w=300&t=tt&d=OAgNznmdz5Fw3L7FYL-Pj_2xqMjFZiO76BaC6AWvMzs" style="display:none;" alt="Hidden Visit Tracker">
+    <img src="//mapmyvisitors.com/map.js?d=uoMrsGmpyzgA7C4N6iyAfoGFxg6h05OV6CRPNfONJI0&cl=ffffff&w=a" style="display:none;" alt="Hidden Visit Tracker">
   </a>
 </p>
