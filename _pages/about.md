@@ -19,7 +19,8 @@ Dr. Zhe Li is a Postdoctoral Fellow at **The University of Hong Kong (HKU)**. Hi
 ## 📰 News
 
 ### 🏆 2026
-
+* **Jul. 2026** 🎉 Our paper *“Towards Robust Remote Sensing Visual Question Answering with Spectral Expert Adaptation and Group-Relative Optimization”* has been accepted for publication in **Neural Networks**. 
+* **Jul. 2026** 🎉 Our paper *“STEP: Semantic-Guided Two-Stage Framework with Skeleton-Conditioned Prompting for Skeleton-Based Action Recognition”* has been accepted to **PRCV 2026**. Kudos to Zheng Cui for leading this work!
 - **Jun. 2026** 🎉 4 papers have been accepted to Interspeech 2026! Many thanks to all collaborators and co-authors for their great work — see you on September 27–October 1 in Sydney, Australia! 🇦🇺
 - **Apr. 2026** 🎉 Our paper *“DB-SMGA: Dual-Branch Sequential Multi-Granularity Attention for Speech Depression Detection”* has been accepted for publication in **IEEE Signal Processing Letters (SPL)**. Congratulations to Dr. Meirong Song for her excellent work!
 - **Apr. 2026** 🎉 Our paper *“Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification”* has been accepted by **IEEE Transactions on Audio, Speech, and Language Processing (T-ASLP)**! Thanks to Dr. Jin!
