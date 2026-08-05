@@ -32,7 +32,7 @@ test("buildVisit maps a real inbound Request into the visit schema", () => {
     method: "GET",
     host: "www.lizhe.link",
     path: "/notes/hello",
-    queryString: "tag=web&lang=en",
+    queryString: "",
     referrer: "https://example.com/article",
     userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     browserSummary: "Chrome 124 on macOS",
@@ -77,8 +77,8 @@ test("buildVisit truncates every bounded string at complete Unicode code points"
   }).toEqual({
     host: "h".repeat(253),
     path: `/${"p".repeat(2047)}`,
-    queryString: "q".repeat(2048),
-    referrer: "r".repeat(2048),
+    queryString: "",
+    referrer: "",
     userAgent: "u".repeat(1024),
     browserSummary: "Unknown",
     region: emoji.repeat(128),
@@ -86,4 +86,25 @@ test("buildVisit truncates every bounded string at complete Unicode code points"
     colo: `${emoji}HK`,
     cfRay: "c".repeat(64)
   });
+});
+
+test("buildVisit retains only a referrer origin and path", () => {
+  const inbound = requestWithCf("https://lizhe.link/notes/privacy?access_token=request-token", {
+    "CF-Connecting-IP": "203.0.113.57",
+    Referer: "https://username:password@referrer.example:8443/return/path?token=referrer-token#fragment"
+  });
+
+  const result = buildVisit(inbound, new Date("2026-08-06T00:00:00.000Z"));
+
+  expect(result.queryString).toBe("");
+  expect(result.referrer).toBe("https://referrer.example:8443/return/path");
+});
+
+test("buildVisit drops a malformed referrer", () => {
+  const inbound = requestWithCf("https://lizhe.link/notes/privacy", {
+    "CF-Connecting-IP": "203.0.113.58",
+    Referer: "not a URL"
+  });
+
+  expect(buildVisit(inbound, new Date("2026-08-06T00:00:00.000Z")).referrer).toBe("");
 });

@@ -91,6 +91,54 @@ test("does not schedule an asset visit", async () => {
   expect(rows.results).toHaveLength(0);
 });
 
+test("does not persist URL, form, or referrer credential sentinels", async () => {
+  const { ctx, pending } = executionContext();
+  const inbound = new Request(
+    "https://lizhe.link/notes/privacy?access_token=access-token-sentinel&form_field=form-sentinel",
+    {
+      headers: {
+        Accept: "text/html",
+        "CF-Connecting-IP": "203.0.113.55",
+        Referer: "https://userinfo-sentinel:password-sentinel@referrer.example/return?query-sentinel=value#fragment-sentinel"
+      }
+    }
+  );
+
+  await handlePublicRequest(inbound, publicEnv(env.DB), ctx, async () => new Response("origin"));
+  await Promise.all(pending);
+
+  const row = await env.DB.prepare("SELECT * FROM visits").first<Record<string, unknown>>();
+  expect(row).not.toBeNull();
+  const storedRow = JSON.stringify(row);
+  for (const sentinel of [
+    "access-token-sentinel",
+    "form-sentinel",
+    "userinfo-sentinel",
+    "password-sentinel",
+    "query-sentinel",
+    "fragment-sentinel"
+  ]) {
+    expect(storedRow).not.toContain(sentinel);
+  }
+});
+
+test("does not persist an exact Cloudflare internal path", async () => {
+  const { ctx, pending } = executionContext();
+
+  await handlePublicRequest(
+    new Request("https://lizhe.link/cdn-cgi", {
+      headers: { Accept: "text/html", "CF-Connecting-IP": "203.0.113.56" }
+    }),
+    publicEnv(env.DB),
+    ctx,
+    async () => new Response("origin")
+  );
+  await Promise.all(pending);
+
+  const rows = await env.DB.prepare("SELECT id FROM visits").all();
+  expect(rows.results).toHaveLength(0);
+});
+
 test("returns an unchanged origin response when D1 rejects the visit write", async () => {
   const rejectingDb = {
     prepare(): D1PreparedStatement {

@@ -22,6 +22,7 @@ test.each([
   ["rejects feed extensions", request("/feed.rss", { headers: { "Sec-Fetch-Dest": "document" } }), false],
   ["rejects manifest assets", request("/site.webmanifest", { headers: { "Sec-Fetch-Dest": "document" } }), false],
   ["rejects extensionless service-worker resources", request("/service-worker", { headers: { "Sec-Fetch-Dest": "document" } }), false],
+  ["rejects the exact Cloudflare internal path", request("/cdn-cgi", { headers: { "Sec-Fetch-Dest": "document" } }), false],
   ["rejects Cloudflare internal paths", request("/cdn-cgi/trace", { headers: { "Sec-Fetch-Dest": "document" } }), false],
   ["rejects health checks", request("/healthz", { headers: { "Sec-Fetch-Dest": "document" } }), false],
   ["rejects non-HTML Accept headers", request("/api/feed", { headers: { Accept: "application/json" } }), false]

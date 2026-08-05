@@ -73,8 +73,8 @@ The `visits` table contains:
 | `method` | HTTP method, expected to be `GET` for stored page visits |
 | `host` | Requested host |
 | `path` | URL path without query parameters |
-| `query_string` | Raw query string, length-limited before storage |
-| `referrer` | Referrer URL, length-limited before storage |
+| `query_string` | Always blank; query parameter names and values are never stored |
+| `referrer` | Sanitized referrer scheme, host, optional port, and pathname; userinfo, query, and fragment are removed |
 | `user_agent` | Raw user agent, length-limited before storage |
 | `browser_summary` | Derived browser/device summary for display |
 | `country` | Cloudflare-provided country code |
@@ -85,7 +85,7 @@ The `visits` table contains:
 | `cf_ray` | Cloudflare request identifier when available |
 | `is_suspected_bot` | Heuristic flag derived from the user agent |
 
-No request cookies, authorization headers, form bodies, email addresses, or other page content are stored. Query strings and referrers are stored because they are part of the approved design, but the implementation must cap their lengths and document that sensitive query parameters should not be used on the public site.
+No request cookies, authorization headers, form bodies, email addresses, or other page content are stored. Query strings are intentionally blank for every visit. Referrers retain only scheme, host, optional port, and pathname; userinfo, query, and fragment are removed, and malformed referrers are stored as empty strings.
 
 Indexes cover `visited_at_utc`, `ip_address`, `country`, `path`, and `is_suspected_bot` to support the approved filters. The schema has a migration history so deployment and rollback do not depend on manual dashboard edits.
 

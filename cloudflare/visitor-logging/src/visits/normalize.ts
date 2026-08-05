@@ -9,6 +9,18 @@ function optionalString(value: unknown, maximum: number): string | null {
   return typeof value === "string" ? truncateCodePoints(value, maximum) : null;
 }
 
+function sanitizeReferrer(value: string | null): string {
+  if (value === null) return "";
+
+  try {
+    const url = new URL(value);
+    if (url.hostname.length === 0) return "";
+    return truncateCodePoints(`${url.protocol}//${url.host}${url.pathname}`, 2_048);
+  } catch {
+    return "";
+  }
+}
+
 export function buildVisit(request: Request, now: Date): VisitInput {
   const url = new URL(request.url);
   const cf = request.cf as Record<string, unknown> | undefined;
@@ -21,8 +33,8 @@ export function buildVisit(request: Request, now: Date): VisitInput {
     method: request.method,
     host: truncateCodePoints(url.host, 253),
     path: truncateCodePoints(url.pathname, 2_048),
-    queryString: truncateCodePoints(url.search.startsWith("?") ? url.search.slice(1) : url.search, 2_048),
-    referrer: truncateCodePoints(request.headers.get("Referer") ?? "", 2_048),
+    queryString: "",
+    referrer: sanitizeReferrer(request.headers.get("Referer")),
     userAgent,
     browserSummary: truncateCodePoints(agent.browserSummary, 160),
     country: typeof cf?.country === "string" ? cf.country : null,

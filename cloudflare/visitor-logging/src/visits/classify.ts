@@ -14,7 +14,7 @@ export function isDocumentVisit(request: Request): boolean {
   const url = new URL(request.url);
   const path = url.pathname;
   if (url.hostname === "logs.lizhe.link") return false;
-  if (path === "/healthz" || path.startsWith("/healthz/") || path.startsWith("/cdn-cgi/")) {
+  if (path === "/healthz" || path.startsWith("/healthz/") || path === "/cdn-cgi" || path.startsWith("/cdn-cgi/")) {
     return false;
   }
   if (path === "/service-worker" || path.startsWith("/service-worker/")) return false;
