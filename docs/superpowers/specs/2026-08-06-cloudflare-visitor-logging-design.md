@@ -1,7 +1,7 @@
 # Cloudflare Visitor Logging Design
 
 Date: 2026-08-06  
-Status: Approved in conversation; awaiting written-spec review
+Status: Approved
 
 ## Context
 
@@ -191,4 +191,3 @@ The design targets the Cloudflare Workers Free plan and D1 free allowances. It d
 - [Cloudflare Access policies](https://developers.cloudflare.com/cloudflare-one/access-controls/policies/)
 - [Cloudflare one-time PIN login](https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/one-time-pin/)
 - [Hong Kong PCPD online behavioural tracking guidance](https://www.pcpd.org.hk/english/resources_centre/publications/files/online_tracking_e.pdf)
-
