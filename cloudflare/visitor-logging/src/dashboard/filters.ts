@@ -27,6 +27,7 @@ const TEXT_LIMITS = {
 
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 const DAY_MS = 24 * 60 * 60 * 1000;
+const MAX_PAGE = 10_000;
 
 function parseDate(name: "from" | "to", value: string | null): string | undefined {
   if (value === null || value === "") {
@@ -92,8 +93,10 @@ function parsePage(value: string | null): number {
     throw new DashboardFilterError("page must be a positive integer");
   }
   const page = Number(value);
-  if (!Number.isSafeInteger(page)) {
-    throw new DashboardFilterError("page must be a positive integer");
+  if (!Number.isSafeInteger(page) || page > MAX_PAGE) {
+    throw new DashboardFilterError(
+      `page must be a positive integer no greater than ${MAX_PAGE}`
+    );
   }
   return page;
 }

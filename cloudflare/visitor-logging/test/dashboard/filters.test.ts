@@ -24,7 +24,8 @@ const invalidFilterCases: Array<{
   { query: { bots: "sometimes" }, label: "unsupported bot mode" },
   { query: { page: "0" }, label: "zero page" },
   { query: { page: "1.5" }, label: "fractional page" },
-  { query: { page: "word" }, label: "non-numeric page" }
+  { query: { page: "word" }, label: "non-numeric page" },
+  { query: { page: "10001" }, label: "page above maximum" }
 ];
 
 describe("parseDashboardFilters", () => {
@@ -54,6 +55,15 @@ describe("parseDashboardFilters", () => {
     expect(parseDashboardFilters(new URLSearchParams())).toEqual({
       bots: "exclude",
       page: 1
+    });
+  });
+
+  test("accepts page 10000 as the largest dashboard page", () => {
+    expect(
+      parseDashboardFilters(new URLSearchParams({ page: "10000" }))
+    ).toEqual({
+      bots: "exclude",
+      page: 10000
     });
   });
 
