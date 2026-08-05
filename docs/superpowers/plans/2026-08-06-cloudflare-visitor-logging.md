@@ -59,7 +59,7 @@
 - Create: `cloudflare/visitor-logging/src/visits/repository.ts`
 - Create: `cloudflare/visitor-logging/test/visits/repository.test.ts`
 
-- [ ] RED: Write D1-backed tests that prove an inserted row can be read back, all approved nullable Cloudflare fields survive, rows are returned newest-first, and values are bound rather than interpolated. The mutation each test catches is a missing/wrong column, wrong order, or unsafe statement construction.
+- [ ] RED: Write D1-backed tests that prove an inserted row can be read back, all approved nullable Cloudflare fields survive, and values are bound rather than interpolated. The mutation each test catches is a missing/wrong column or unsafe statement construction. Newest-first reads belong to Task 6, which owns repository query ordering and filtering.
 - [ ] Verify RED fails because the migration/repository does not exist.
 - [ ] Create `visits` with `id INTEGER PRIMARY KEY AUTOINCREMENT`; non-null `visited_at_utc`, `ip_address`, `method`, `host`, `path`, `query_string`, `referrer`, `user_agent`, `browser_summary`, and `is_suspected_bot`; nullable `country`, `region`, `city`, `asn`, `colo`, and `cf_ray`. Constrain `is_suspected_bot` to `0` or `1`.
 - [ ] Create indexes on `visited_at_utc`, `ip_address`, `country`, `path`, and the compound pair `(is_suspected_bot, visited_at_utc)`.

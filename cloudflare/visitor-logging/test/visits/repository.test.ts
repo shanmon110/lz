@@ -88,17 +88,3 @@ test("insertVisit preserves data containing SQL syntax through bound values", as
   const row = await env.DB.prepare("SELECT path FROM visits").first<{ path: string }>();
   expect(row).toEqual({ path });
 });
-
-test("rows are returned newest first", async () => {
-  await insertVisit(env.DB, createVisit({ visitedAtUtc: "2026-08-06T00:00:00.000Z" }));
-  await insertVisit(env.DB, createVisit({ visitedAtUtc: "2026-08-06T00:01:00.000Z" }));
-
-  const result = await env.DB.prepare(
-    "SELECT visited_at_utc FROM visits ORDER BY visited_at_utc DESC, id DESC"
-  ).all<{ visited_at_utc: string }>();
-
-  expect(result.results).toEqual([
-    { visited_at_utc: "2026-08-06T00:01:00.000Z" },
-    { visited_at_utc: "2026-08-06T00:00:00.000Z" }
-  ]);
-});
