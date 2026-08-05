@@ -4,25 +4,28 @@ import {
 } from "@cloudflare/vitest-pool-workers";
 import { defineConfig } from "vitest/config";
 
-const migrations = await readD1Migrations("./migrations");
+export default defineConfig(async () => {
+  const migrations = await readD1Migrations("./migrations");
 
-export default defineConfig({
-  plugins: [
-    cloudflareTest({
-      wrangler: {
-        configPath: "./wrangler.jsonc"
-      },
-      miniflare: {
-        d1Databases: {
-          DB: "visitor-logging-test"
+  return {
+    plugins: [
+      cloudflareTest({
+        wrangler: {
+          configPath: "./wrangler.jsonc"
+        },
+        miniflare: {
+          compatibilityDate: "2026-08-05",
+          d1Databases: {
+            DB: "visitor-logging-test"
+          }
         }
-      }
-    })
-  ],
-  test: {
-    provide: {
-      migrations
-    },
-    setupFiles: ["./test/apply-migrations.ts"]
-  }
+      })
+    ],
+    test: {
+      provide: {
+        migrations
+      },
+      setupFiles: ["./test/apply-migrations.ts"]
+    }
+  };
 });
