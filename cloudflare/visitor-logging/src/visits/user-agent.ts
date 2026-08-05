@@ -26,7 +26,7 @@ function browserSummary(userAgent: string): string {
   if (/curl\//i.test(userAgent)) return "curl";
 
   const device = platform(userAgent);
-  const mobile = /Mobile/i.test(userAgent) ? "Mobile " : "";
+  const formFactor = /iPad|Tablet/i.test(userAgent) ? "Tablet " : /Mobile/i.test(userAgent) ? "Mobile " : "";
   const candidates: Array<[string, RegExp]> = [
     ["Edge", /Edg\/([\d]+)/i],
     ["Chrome", /(?:Chrome|CriOS)\/([\d]+)/i],
@@ -35,7 +35,7 @@ function browserSummary(userAgent: string): string {
   ];
   for (const [browser, pattern] of candidates) {
     const version = majorVersion(userAgent, pattern);
-    if (version !== undefined) return `${mobile}${browser} ${version} on ${device}`;
+    if (version !== undefined) return `${formFactor}${browser} ${version} on ${device}`;
   }
   return "Unknown";
 }
