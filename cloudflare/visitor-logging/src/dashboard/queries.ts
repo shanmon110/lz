@@ -3,6 +3,7 @@ import { getHongKongDateRange, getSummaryTimeRanges } from "./time";
 import type { VisitRow } from "../visits/types";
 
 const PAGE_SIZE = 50;
+export const MAX_EXPORT_ROWS = 5_000;
 
 interface VisitDatabaseRow {
   id: number;
@@ -138,6 +139,27 @@ export async function getVisitPage(
     pageSize: PAGE_SIZE,
     hasNext: result.results.length > PAGE_SIZE
   };
+}
+
+export async function getVisitsForExport(
+  db: D1Database,
+  filters: DashboardFilters
+): Promise<VisitRow[]> {
+  const where = buildWhere(filters);
+  const result = await db
+    .prepare(
+      `SELECT
+        id, visited_at_utc, ip_address, method, host, path, query_string,
+        referrer, user_agent, browser_summary, country, region, city, asn,
+        colo, cf_ray, is_suspected_bot
+      FROM visits${where.sql}
+      ORDER BY visited_at_utc DESC, id DESC
+      LIMIT ?`
+    )
+    .bind(...where.values, MAX_EXPORT_ROWS)
+    .all<VisitDatabaseRow>();
+
+  return result.results.map(toVisitRow);
 }
 
 async function countRange(
