@@ -13,6 +13,11 @@ import {
   getVisitsForExport,
   getVisitPage
 } from "./queries";
+import {
+  dashboardCssResponse,
+  dashboardPageResponse,
+  dashboardScriptResponse
+} from "./page";
 
 export interface DashboardRequestOptions {
   keySet?: JWTVerifyGetKey;
@@ -57,6 +62,15 @@ async function routeAuthenticatedRequest(
   }
 
   const url = new URL(request.url);
+  if (url.pathname === "/") {
+    return dashboardPageResponse();
+  }
+  if (url.pathname === "/app.css") {
+    return dashboardCssResponse();
+  }
+  if (url.pathname === "/app.js") {
+    return dashboardScriptResponse();
+  }
   if (url.pathname === "/api/summary") {
     return jsonResponse(await getDashboardSummary(env.DB, now));
   }
