@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lizhe-visitor-logging",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-06",
+  "workers_dev": true,
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "triggers": {
+    "crons": ["15 16 * * *"]
+  }
+}

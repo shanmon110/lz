@@ -1,2 +1,3 @@
 _site/
-
+/cloudflare/visitor-logging/.private/
+/cloudflare/visitor-logging/node_modules/
