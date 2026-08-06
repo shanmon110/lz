@@ -5,10 +5,13 @@ import {
   cpSync,
   existsSync,
   mkdtempSync,
+  mkdirSync,
+  readdirSync,
   readFileSync,
   rmSync,
   statSync,
-  symlinkSync
+  symlinkSync,
+  writeFileSync
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve, sep } from "node:path";
@@ -24,6 +27,7 @@ const validEnvironment = {
   CF_TEAM_DOMAIN: "https://lizhe.cloudflareaccess.com",
   CF_POLICY_AUD: "visitor-logging-dashboard"
 };
+const skillsCacheFixture = JSON.stringify({ lastUpdate: Date.now(), skillNames: [] });
 
 const temporaryDirectories: string[] = [];
 
@@ -41,6 +45,15 @@ function metadata(path: string): { size: number; mtimeMs: number } | undefined {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return undefined;
     throw error;
   }
+}
+
+function inventory(root: string, current = root): string[] {
+  if (!existsSync(current)) return [];
+  return readdirSync(current, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(current, entry.name);
+    const name = `${relative(root, path)}${entry.isDirectory() ? "/" : ""}`;
+    return entry.isDirectory() ? [name, ...inventory(root, path)] : [name];
+  });
 }
 
 function runGenerator(
@@ -88,14 +101,42 @@ function isolatedProject(): string {
   return projectRoot;
 }
 
-function runWrangler(projectRoot: string, args: string[]) {
-  const environment = { ...process.env };
+function runWrangler(
+  projectRoot: string,
+  args: string[],
+  inheritedEnvironment: NodeJS.ProcessEnv = process.env
+) {
+  const environment = { ...inheritedEnvironment };
+  const profileRoot = join(projectRoot, ".wrangler-test-profile");
+  const xdgConfigHome = join(profileRoot, "xdg-config");
+  const wranglerConfig = join(xdgConfigHome, ".wrangler");
+  const temp = join(profileRoot, "tmp");
+  mkdirSync(wranglerConfig, { recursive: true });
+  mkdirSync(temp, { recursive: true });
+  writeFileSync(
+    join(wranglerConfig, "cloudflare-skills-repo-cache.json"),
+    skillsCacheFixture,
+    "utf8"
+  );
+
   delete environment.CLOUDFLARE_API_TOKEN;
   delete environment.CLOUDFLARE_ACCOUNT_ID;
+  environment.HOME = join(profileRoot, "home");
+  environment.USERPROFILE = join(profileRoot, "user-profile");
+  environment.XDG_CONFIG_HOME = xdgConfigHome;
+  environment.XDG_CACHE_HOME = join(profileRoot, "xdg-cache");
+  environment.APPDATA = join(profileRoot, "app-data");
+  environment.LOCALAPPDATA = join(profileRoot, "local-app-data");
+  environment.TMPDIR = temp;
+  environment.TEMP = temp;
+  environment.TMP = temp;
+  environment.CI = "true";
   environment.NO_COLOR = "1";
-  environment.WRANGLER_LOG_PATH = join(projectRoot, ".wrangler-logs");
+  environment.WRANGLER_CACHE_DIR = join(profileRoot, "wrangler-cache");
+  environment.WRANGLER_LOG_PATH = join(profileRoot, "logs");
+  environment.WRANGLER_SEND_ERROR_REPORTS = "false";
   environment.WRANGLER_SEND_METRICS = "false";
-  return spawnSync(process.execPath, [wranglerCli, ...args], {
+  return spawnSync(process.execPath, [wranglerCli, "--install-skills=false", ...args], {
     cwd: projectRoot,
     encoding: "utf8",
     env: environment
@@ -105,6 +146,7 @@ function runWrangler(projectRoot: string, args: string[]) {
 afterEach(() => {
   for (const directory of temporaryDirectories.splice(0)) {
     rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false, `temporary directory was not removed: ${directory}`);
   }
 });
 
@@ -239,6 +281,84 @@ test("the default private config exposes repository migrations to local Wrangler
 
   assert.equal(migrationList.status, 0, `${migrationList.stdout}${migrationList.stderr}`);
   assert.match(`${migrationList.stdout}${migrationList.stderr}`, /0001_create_visits\.sql/);
+});
+
+test("real Wrangler checks stay inside their owned tree and work without network", () => {
+  const projectRoot = isolatedProject();
+  const sentinelRoot = join(dirname(projectRoot), "sentinel-profile");
+  const inheritedProfile = {
+    HOME: join(sentinelRoot, "home"),
+    USERPROFILE: join(sentinelRoot, "user-profile"),
+    XDG_CONFIG_HOME: join(sentinelRoot, "xdg-config"),
+    XDG_CACHE_HOME: join(sentinelRoot, "xdg-cache"),
+    APPDATA: join(sentinelRoot, "app-data"),
+    LOCALAPPDATA: join(sentinelRoot, "local-app-data"),
+    WRANGLER_CACHE_DIR: join(sentinelRoot, "wrangler-cache"),
+    CODEX_THREAD_ID: "offline-hermeticity-sentinel",
+    CLOUDFLARE_API_BASE_URL: "http://127.0.0.1:1",
+    HTTP_PROXY: "http://127.0.0.1:1",
+    HTTPS_PROXY: "http://127.0.0.1:1",
+    ALL_PROXY: "http://127.0.0.1:1",
+    NO_PROXY: "",
+    http_proxy: "http://127.0.0.1:1",
+    https_proxy: "http://127.0.0.1:1",
+    all_proxy: "http://127.0.0.1:1",
+    no_proxy: "",
+    NODE_USE_ENV_PROXY: "1"
+  };
+  const sentinelEnvironment = { ...process.env, ...inheritedProfile };
+  const generation = runGenerator(undefined, {}, projectRoot);
+  assert.equal(generation.status, 0, generation.stderr);
+  const dryRun = runWrangler(
+    projectRoot,
+    [
+      "deploy",
+      "--dry-run",
+      "--outdir",
+      join(projectRoot, ".wrangler-offline-dry-run"),
+      "--config",
+      ".private/wrangler.production.jsonc"
+    ],
+    sentinelEnvironment
+  );
+  const skillsCachePath = join(
+    projectRoot,
+    ".wrangler-test-profile",
+    "xdg-config",
+    ".wrangler",
+    "cloudflare-skills-repo-cache.json"
+  );
+  assert.equal(readFileSync(skillsCachePath, "utf8"), skillsCacheFixture);
+  const migrationList = runWrangler(
+    projectRoot,
+    [
+      "d1",
+      "migrations",
+      "list",
+      "DB",
+      "--local",
+      "--persist-to",
+      join(projectRoot, ".wrangler-offline-local-state"),
+      "--config",
+      ".private/wrangler.production.jsonc"
+    ],
+    sentinelEnvironment
+  );
+
+  assert.equal(dryRun.status, 0, `${dryRun.stdout}${dryRun.stderr}`);
+  assert.equal(migrationList.status, 0, `${migrationList.stdout}${migrationList.stderr}`);
+  assert.match(`${migrationList.stdout}${migrationList.stderr}`, /0001_create_visits\.sql/);
+  assert.equal(readFileSync(skillsCachePath, "utf8"), skillsCacheFixture);
+  assert.deepEqual(inventory(sentinelRoot), []);
+  const ownedProfileInventory = inventory(join(projectRoot, ".wrangler-test-profile"));
+  assert.ok(
+    ownedProfileInventory.some((path) => path.endsWith("cloudflare-skills-repo-cache.json")),
+    "the owned profile must contain the local skills cache fixture"
+  );
+  assert.ok(
+    ownedProfileInventory.some((path) => path.endsWith("metrics.json")),
+    "Wrangler metrics state must stay inside the owned profile"
+  );
 });
 
 test("an explicit output path leaves the default private config untouched", () => {
