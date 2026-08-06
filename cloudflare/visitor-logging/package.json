@@ -4,15 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run --exclude test/render-production-config.test.ts && npm run test:production-config",
+    "test:production-config": "node --test test/render-production-config.test.ts",
+    "test:watch": "vitest --exclude test/render-production-config.test.ts",
     "typecheck": "tsc --noEmit && tsc --noEmit -p test/tsconfig.json",
     "check": "npm run typecheck && npm test && npm run verify:dashboard-bundle",
     "verify:dashboard-bundle": "node scripts/verify-dashboard-bundle.mjs",
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
+    "config:production": "node scripts/render-production-config.mjs",
+    "deploy": "wrangler deploy --config .private/wrangler.production.jsonc",
     "d1:migrate:local": "wrangler d1 migrations apply DB --local",
-    "d1:migrate:remote": "wrangler d1 migrations apply DB --remote"
+    "d1:migrate:remote": "wrangler d1 migrations apply DB --remote --config .private/wrangler.production.jsonc"
   },
   "dependencies": {
     "jose": "6.2.8"
@@ -20,6 +22,7 @@
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "0.20.2",
     "@cloudflare/workers-types": "5.20260804.1",
+    "@types/node": "^24.13.3",
     "typescript": "7.0.2",
     "vitest": "4.1.10",
     "wrangler": "4.119.0"
