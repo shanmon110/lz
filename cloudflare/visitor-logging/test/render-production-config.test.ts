@@ -205,7 +205,7 @@ test("writes strict JSON with the production route, binding, vars, and cron cont
   assert.deepEqual(config.d1_databases, [
     {
       binding: "DB",
-      database_name: "lizhe-visitor-logging",
+      database_name: "lizhe-visitor-logs",
       database_id: validEnvironment.CF_D1_DATABASE_ID,
       migrations_dir: relative(dirname(output), join(packageRoot, "migrations"))
         .split(sep)

@@ -58,7 +58,7 @@ function productionConfig(output) {
     d1_databases: [
       {
         binding: "DB",
-        database_name: "lizhe-visitor-logging",
+        database_name: "lizhe-visitor-logs",
         database_id: databaseId,
         migrations_dir: configRelativePath(output, join(packageRoot, "migrations"))
       }
