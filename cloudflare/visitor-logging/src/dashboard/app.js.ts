@@ -1,7 +1,10 @@
-function createDashboardHelpers() {
-  const filterKeys = ["from", "to", "ip", "country", "path", "bots"] as const;
+export const DASHBOARD_SCRIPT = `(() => {
+  "use strict";
 
-  function filterParams(search: string): URLSearchParams {
+  const filterKeys = ["from", "to", "ip", "country", "path", "bots"];
+  const byId = (id) => document.getElementById(id);
+
+  function filterParams(search) {
     const source = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
     const result = new URLSearchParams();
     for (const key of filterKeys) {
@@ -12,15 +15,11 @@ function createDashboardHelpers() {
     return result;
   }
 
-  function formatDashboardValue(
-    value: string | number | null | undefined
-  ): string {
+  function formatDashboardValue(value) {
     return value === null || value === undefined || value === "" ? "—" : String(value);
   }
 
-  function formatHongKongTimestamp(
-    value: string | null | undefined
-  ): string {
+  function formatHongKongTimestamp(value) {
     if (!value) return "—";
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return "—";
@@ -35,58 +34,26 @@ function createDashboardHelpers() {
       hourCycle: "h23"
     }).formatToParts(date);
     const byType = new Map(parts.map((part) => [part.type, part.value]));
-    return `${byType.get("year")}-${byType.get("month")}-${byType.get("day")} ${byType.get("hour")}:${byType.get("minute")}:${byType.get("second")} HKT`;
+    return byType.get("year") + "-" + byType.get("month") + "-" + byType.get("day") +
+      " " + byType.get("hour") + ":" + byType.get("minute") + ":" + byType.get("second") + " HKT";
   }
 
-  function buildPaginationUrl(search: string, page: number): string {
+  function buildPaginationUrl(search, page) {
     const params = filterParams(search);
     params.set("page", String(page));
-    return `/?${params.toString()}`;
+    return "/?" + params.toString();
   }
 
-  function buildBotToggleUrl(search: string, includeBots: boolean): string {
+  function buildBotToggleUrl(search, includeBots) {
     const params = filterParams(search);
     params.set("bots", includeBots ? "include" : "exclude");
     params.set("page", "1");
-    return `/?${params.toString()}`;
+    return "/?" + params.toString();
   }
 
-  function buildCsvUrl(search: string): string {
-    return `/api/export.csv?${filterParams(search).toString()}`;
+  function buildCsvUrl(search) {
+    return "/api/export.csv?" + filterParams(search).toString();
   }
-
-  return {
-    buildBotToggleUrl,
-    buildCsvUrl,
-    buildPaginationUrl,
-    filterParams,
-    formatDashboardValue,
-    formatHongKongTimestamp
-  };
-}
-
-export const {
-  buildBotToggleUrl,
-  buildCsvUrl,
-  buildPaginationUrl,
-  formatDashboardValue,
-  formatHongKongTimestamp
-} = createDashboardHelpers();
-
-const DASHBOARD_HELPERS_SOURCE = createDashboardHelpers.toString();
-
-export const DASHBOARD_SCRIPT = `(() => {
-  "use strict";
-
-  const {
-    buildBotToggleUrl,
-    buildCsvUrl,
-    buildPaginationUrl,
-    filterParams,
-    formatDashboardValue,
-    formatHongKongTimestamp
-  } = (${DASHBOARD_HELPERS_SOURCE})();
-  const byId = (id) => document.getElementById(id);
 
   function pageNumber(params) {
     const value = Number(params.get("page") || "1");

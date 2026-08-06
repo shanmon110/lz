@@ -1,14 +1,6 @@
 import { DASHBOARD_CSS } from "./app.css";
 import { DASHBOARD_SCRIPT } from "./app.js";
 
-export {
-  buildBotToggleUrl,
-  buildCsvUrl,
-  buildPaginationUrl,
-  formatDashboardValue,
-  formatHongKongTimestamp
-} from "./app.js";
-
 export const DASHBOARD_CONTENT_SECURITY_POLICY =
   "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-src 'none'; frame-ancestors 'none'";
 

@@ -226,6 +226,25 @@ const VISITS_RESPONSE = {
       colo: "HKG",
       cfRay: "ray-91",
       isSuspectedBot: true
+    },
+    {
+      id: 92,
+      visitedAtUtc: "",
+      ipAddress: "",
+      method: "GET",
+      host: "lizhe.link",
+      path: "",
+      queryString: "",
+      referrer: "",
+      userAgent: "",
+      browserSummary: "",
+      country: null,
+      region: null,
+      city: null,
+      asn: null,
+      colo: null,
+      cfRay: null,
+      isSuspectedBot: false
     }
   ],
   page: 3,
@@ -321,7 +340,7 @@ describe("delivered browser program", () => {
     );
 
     await vi.waitFor(() => {
-      expect(runtime.document.element("visit-rows").children).toHaveLength(1);
+      expect(runtime.document.element("visit-rows").children).toHaveLength(2);
     });
 
     expect(runtime.fetchCalls).toEqual([
@@ -355,7 +374,13 @@ describe("delivered browser program", () => {
       "Browser <iframe>",
       "Suspected bot"
     ]);
-    expect(runtime.document.createdTags).toEqual(["tr", "td", "td", "td", "td", "td", "td", "td"]);
+    const emptyCells = runtime.document.element("visit-rows").children[1].children;
+    expect(emptyCells.map((cell) => cell.textContent)).toEqual([
+      "—", "—", "—", "—", "—", "—", "—"
+    ]);
+    expect(
+      runtime.document.createdTags.filter((tag) => tag !== "tr" && tag !== "td")
+    ).toEqual([]);
     expect(cells[6].className).toBe("bot-marker");
   });
 
@@ -422,62 +447,7 @@ describe("delivered browser program", () => {
     await runtime.document.element("retry-button").dispatch("click");
 
     expect(runtime.document.element("error-state").hidden).toBe(true);
-    expect(runtime.document.element("visit-rows").children).toHaveLength(1);
+    expect(runtime.document.element("visit-rows").children).toHaveLength(2);
     expect(runtime.fetchCalls).toHaveLength(4);
-  });
-});
-
-describe("dashboard presentation helpers", () => {
-  test("formats an instant as a fixed Hong Kong timestamp", async () => {
-    const { formatHongKongTimestamp } = await import("../../src/dashboard/page");
-
-    expect(formatHongKongTimestamp("2026-08-06T16:30:05.000Z")).toBe(
-      "2026-08-07 00:30:05 HKT"
-    );
-  });
-
-  test.each([null, undefined, ""])(
-    "renders the empty value %s as an em dash",
-    async (value) => {
-      const { formatDashboardValue } = await import("../../src/dashboard/page");
-
-      expect(formatDashboardValue(value)).toBe("—");
-    }
-  );
-
-  test("changes page while preserving active filters", async () => {
-    const { buildPaginationUrl } = await import("../../src/dashboard/page");
-
-    expect(
-      buildPaginationUrl(
-        "?from=2026-08-01&to=2026-08-06&country=HK&path=%2Fnotes&bots=include&page=3",
-        2
-      )
-    ).toBe(
-      "/?from=2026-08-01&to=2026-08-06&country=HK&path=%2Fnotes&bots=include&page=2"
-    );
-  });
-
-  test("turns suspected bots on or off and returns to the first page", async () => {
-    const { buildBotToggleUrl } = await import("../../src/dashboard/page");
-
-    expect(buildBotToggleUrl("?country=HK&page=8", true)).toBe(
-      "/?country=HK&bots=include&page=1"
-    );
-    expect(
-      buildBotToggleUrl("?country=HK&bots=include&page=8", false)
-    ).toBe("/?country=HK&bots=exclude&page=1");
-  });
-
-  test("builds a CSV URL from filters without carrying pagination or unknown parameters", async () => {
-    const { buildCsvUrl } = await import("../../src/dashboard/page");
-
-    expect(
-      buildCsvUrl(
-        "?from=2026-08-01&to=2026-08-06&ip=203.0.113.7&country=HK&path=%2Fnotes&bots=only&page=9&debug=true"
-      )
-    ).toBe(
-      "/api/export.csv?from=2026-08-01&to=2026-08-06&ip=203.0.113.7&country=HK&path=%2Fnotes&bots=only"
-    );
   });
 });
