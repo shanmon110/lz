@@ -1,7 +1,13 @@
 import { DASHBOARD_CSS } from "./app.css";
 import { DASHBOARD_SCRIPT } from "./app.js";
 
-const FILTER_KEYS = ["from", "to", "ip", "country", "path", "bots"] as const;
+export {
+  buildBotToggleUrl,
+  buildCsvUrl,
+  buildPaginationUrl,
+  formatDashboardValue,
+  formatHongKongTimestamp
+} from "./app.js";
 
 export const DASHBOARD_CONTENT_SECURITY_POLICY =
   "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-src 'none'; frame-ancestors 'none'";
@@ -108,71 +114,6 @@ const DASHBOARD_HTML = `<!doctype html>
   </main>
 </body>
 </html>`;
-
-function filterParams(search: string): URLSearchParams {
-  const source = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
-  const result = new URLSearchParams();
-
-  for (const key of FILTER_KEYS) {
-    const value = source.get(key);
-    if (value) {
-      result.set(key, value);
-    }
-  }
-  if (!result.has("bots")) {
-    result.set("bots", "exclude");
-  }
-
-  return result;
-}
-
-function dashboardUrl(params: URLSearchParams): string {
-  return `/?${params.toString()}`;
-}
-
-export function formatDashboardValue(
-  value: string | number | null | undefined
-): string {
-  return value === null || value === undefined || value === "" ? "—" : String(value);
-}
-
-export function formatHongKongTimestamp(value: string | null | undefined): string {
-  if (!value) return "—";
-
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "—";
-
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Asia/Hong_Kong",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hourCycle: "h23"
-  }).formatToParts(date);
-  const byType = new Map(parts.map((part) => [part.type, part.value]));
-
-  return `${byType.get("year")}-${byType.get("month")}-${byType.get("day")} ${byType.get("hour")}:${byType.get("minute")}:${byType.get("second")} HKT`;
-}
-
-export function buildPaginationUrl(search: string, page: number): string {
-  const params = filterParams(search);
-  params.set("page", String(page));
-  return dashboardUrl(params);
-}
-
-export function buildBotToggleUrl(search: string, includeBots: boolean): string {
-  const params = filterParams(search);
-  params.set("bots", includeBots ? "include" : "exclude");
-  params.set("page", "1");
-  return dashboardUrl(params);
-}
-
-export function buildCsvUrl(search: string): string {
-  return `/api/export.csv?${filterParams(search).toString()}`;
-}
 
 function dashboardResponse(body: string, contentType: string): Response {
   return new Response(body, {

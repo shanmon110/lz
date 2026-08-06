@@ -1,14 +1,10 @@
-export const DASHBOARD_SCRIPT = `(() => {
-  "use strict";
+function createDashboardHelpers() {
+  const filterKeys = ["from", "to", "ip", "country", "path", "bots"] as const;
 
-  const FILTER_KEYS = ["from", "to", "ip", "country", "path", "bots"];
-  const EMPTY = "—";
-  const byId = (id) => document.getElementById(id);
-
-  function filterParams(search) {
+  function filterParams(search: string): URLSearchParams {
     const source = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
     const result = new URLSearchParams();
-    for (const key of FILTER_KEYS) {
+    for (const key of filterKeys) {
       const value = source.get(key);
       if (value) result.set(key, value);
     }
@@ -16,14 +12,18 @@ export const DASHBOARD_SCRIPT = `(() => {
     return result;
   }
 
-  function displayValue(value) {
-    return value === null || value === undefined || value === "" ? EMPTY : String(value);
+  function formatDashboardValue(
+    value: string | number | null | undefined
+  ): string {
+    return value === null || value === undefined || value === "" ? "—" : String(value);
   }
 
-  function hongKongTimestamp(value) {
-    if (!value) return EMPTY;
+  function formatHongKongTimestamp(
+    value: string | null | undefined
+  ): string {
+    if (!value) return "—";
     const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return EMPTY;
+    if (Number.isNaN(date.getTime())) return "—";
     const parts = new Intl.DateTimeFormat("en-CA", {
       timeZone: "Asia/Hong_Kong",
       year: "numeric",
@@ -35,9 +35,58 @@ export const DASHBOARD_SCRIPT = `(() => {
       hourCycle: "h23"
     }).formatToParts(date);
     const byType = new Map(parts.map((part) => [part.type, part.value]));
-    return byType.get("year") + "-" + byType.get("month") + "-" + byType.get("day") +
-      " " + byType.get("hour") + ":" + byType.get("minute") + ":" + byType.get("second") + " HKT";
+    return `${byType.get("year")}-${byType.get("month")}-${byType.get("day")} ${byType.get("hour")}:${byType.get("minute")}:${byType.get("second")} HKT`;
   }
+
+  function buildPaginationUrl(search: string, page: number): string {
+    const params = filterParams(search);
+    params.set("page", String(page));
+    return `/?${params.toString()}`;
+  }
+
+  function buildBotToggleUrl(search: string, includeBots: boolean): string {
+    const params = filterParams(search);
+    params.set("bots", includeBots ? "include" : "exclude");
+    params.set("page", "1");
+    return `/?${params.toString()}`;
+  }
+
+  function buildCsvUrl(search: string): string {
+    return `/api/export.csv?${filterParams(search).toString()}`;
+  }
+
+  return {
+    buildBotToggleUrl,
+    buildCsvUrl,
+    buildPaginationUrl,
+    filterParams,
+    formatDashboardValue,
+    formatHongKongTimestamp
+  };
+}
+
+export const {
+  buildBotToggleUrl,
+  buildCsvUrl,
+  buildPaginationUrl,
+  formatDashboardValue,
+  formatHongKongTimestamp
+} = createDashboardHelpers();
+
+const DASHBOARD_HELPERS_SOURCE = createDashboardHelpers.toString();
+
+export const DASHBOARD_SCRIPT = `(() => {
+  "use strict";
+
+  const {
+    buildBotToggleUrl,
+    buildCsvUrl,
+    buildPaginationUrl,
+    filterParams,
+    formatDashboardValue,
+    formatHongKongTimestamp
+  } = (${DASHBOARD_HELPERS_SOURCE})();
+  const byId = (id) => document.getElementById(id);
 
   function pageNumber(params) {
     const value = Number(params.get("page") || "1");
@@ -45,13 +94,11 @@ export const DASHBOARD_SCRIPT = `(() => {
   }
 
   function pageUrl(params, page) {
-    const next = filterParams(params.toString());
-    next.set("page", String(page));
-    return "/?" + next.toString();
+    return buildPaginationUrl(params.toString(), page);
   }
 
   function csvUrl(params) {
-    return "/api/export.csv?" + filterParams(params.toString()).toString();
+    return buildCsvUrl(params.toString());
   }
 
   function visitsUrl(params) {
@@ -70,13 +117,13 @@ export const DASHBOARD_SCRIPT = `(() => {
   }
 
   function setSummary(prefix, count) {
-    byId(prefix + "-total").textContent = displayValue(count.totalVisits);
-    byId(prefix + "-distinct").textContent = displayValue(count.distinctNetworkAddresses);
+    byId(prefix + "-total").textContent = formatDashboardValue(count.totalVisits);
+    byId(prefix + "-distinct").textContent = formatDashboardValue(count.distinctNetworkAddresses);
   }
 
   function tableCell(value, className) {
     const cell = document.createElement("td");
-    cell.textContent = displayValue(value);
+    cell.textContent = formatDashboardValue(value);
     if (className) cell.className = className;
     return cell;
   }
@@ -87,7 +134,7 @@ export const DASHBOARD_SCRIPT = `(() => {
 
   function location(visit) {
     const values = [visit.country, visit.city].filter((value) => value !== null && value !== "");
-    return values.length ? values.join(" · ") : EMPTY;
+    return values.length ? values.join(" · ") : formatDashboardValue(null);
   }
 
   function renderRows(items, botsIncluded) {
@@ -106,7 +153,7 @@ export const DASHBOARD_SCRIPT = `(() => {
     for (const visit of items) {
       const row = document.createElement("tr");
       row.append(
-        tableCell(hongKongTimestamp(visit.visitedAtUtc), "time-cell"),
+        tableCell(formatHongKongTimestamp(visit.visitedAtUtc), "time-cell"),
         tableCell(visit.ipAddress, "ip-cell"),
         tableCell(location(visit)),
         tableCell(fullPath(visit)),
@@ -114,7 +161,7 @@ export const DASHBOARD_SCRIPT = `(() => {
         tableCell(visit.browserSummary)
       );
       const botCell = tableCell(
-        botsIncluded && visit.isSuspectedBot ? "Suspected bot" : EMPTY,
+        botsIncluded && visit.isSuspectedBot ? "Suspected bot" : formatDashboardValue(null),
         botsIncluded && visit.isSuspectedBot ? "bot-marker" : ""
       );
       row.append(botCell);
@@ -137,9 +184,9 @@ export const DASHBOARD_SCRIPT = `(() => {
       const value = byId(name + "-filter").value.trim();
       if (value) query.set(name, value);
     }
-    query.set("bots", byId("bots-filter").checked ? "include" : "exclude");
-    query.set("page", "1");
-    window.location.assign("/?" + query.toString());
+    window.location.assign(
+      buildBotToggleUrl(query.toString(), byId("bots-filter").checked)
+    );
   }
 
   function showError() {
