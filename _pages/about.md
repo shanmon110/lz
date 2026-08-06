@@ -94,8 +94,3 @@ Dr. Zhe Li is a Postdoctoral Fellow at **The University of Hong Kong (HKU)**. Hi
   *Low-resource NLP · Uyghur Language Modeling · Harmful Content Detection*
 
 ---
-<p align="center">
-  <a href="https://hits.sh/lizhe.link/" title="Visitor statistics">
-    <img src="https://hits.sh/lizhe.link.svg?view=today-total&amp;style=flat-square&amp;label=VISITORS&amp;color=2f80ed&amp;labelColor=555" alt="Visitor counter">
-  </a>
-</p>
