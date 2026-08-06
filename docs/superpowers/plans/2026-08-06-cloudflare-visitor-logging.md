@@ -19,7 +19,7 @@
 - Dashboard and API responses use `Cache-Control: no-store`, deny framing, and use a CSP without `unsafe-inline`. Render all visit values with DOM `textContent`, never untrusted `innerHTML`.
 - Query SQL uses bound parameters and fixed sort order. Page size is 50. CSV export is capped at 5,000 rows and neutralizes spreadsheet-formula prefixes.
 - Display dashboard time in `Asia/Hong_Kong`; persist timestamps in UTC with millisecond precision.
-- Query string, referrer, and user agent are length-limited before insert. Raw IPs and Cloudflare identifiers must never be written to console, CI, or deployment logs.
+- Query strings are intentionally blank before insert. Referrers retain only scheme, host, optional port, and pathname; strip userinfo, query, and fragment, and store malformed referrers as empty strings. User agents are length-limited before insert. Raw IPs and Cloudflare identifiers must never be written to console, CI, or deployment logs.
 - Do not commit Cloudflare account IDs, zone IDs, D1 database IDs, Access audience values, API tokens, DNS snapshots, or deployment credentials. Keep them under the ignored `cloudflare/visitor-logging/.private/` directory or in the authenticated Wrangler/browser session.
 - Stay on Cloudflare's free plan. Never enable a paid plan or automatic paid upgrade.
 - Follow strict red-green-refactor for every behavior change. Configuration and human prose do not need artificial source-text tests; verify their consuming behavior instead.
@@ -59,7 +59,7 @@
 - Create: `cloudflare/visitor-logging/src/visits/repository.ts`
 - Create: `cloudflare/visitor-logging/test/visits/repository.test.ts`
 
-- [ ] RED: Write D1-backed tests that prove an inserted row can be read back, all approved nullable Cloudflare fields survive, rows are returned newest-first, and values are bound rather than interpolated. The mutation each test catches is a missing/wrong column, wrong order, or unsafe statement construction.
+- [ ] RED: Write D1-backed tests that prove an inserted row can be read back, all approved nullable Cloudflare fields survive, and values are bound rather than interpolated. The mutation each test catches is a missing/wrong column or unsafe statement construction. Newest-first reads belong to Task 6, which owns repository query ordering and filtering.
 - [ ] Verify RED fails because the migration/repository does not exist.
 - [ ] Create `visits` with `id INTEGER PRIMARY KEY AUTOINCREMENT`; non-null `visited_at_utc`, `ip_address`, `method`, `host`, `path`, `query_string`, `referrer`, `user_agent`, `browser_summary`, and `is_suspected_bot`; nullable `country`, `region`, `city`, `asn`, `colo`, and `cf_ray`. Constrain `is_suspected_bot` to `0` or `1`.
 - [ ] Create indexes on `visited_at_utc`, `ip_address`, `country`, `path`, and the compound pair `(is_suspected_bot, visited_at_utc)`.
@@ -103,12 +103,12 @@ CREATE TABLE visits (
 - Create: `cloudflare/visitor-logging/test/visits/user-agent.test.ts`
 
 - [ ] RED: Add literal table tests for `isDocumentVisit(request)` covering `GET` plus `Sec-Fetch-Dest: document`, HTML `Accept` fallback, non-GET methods, asset extensions, `/cdn-cgi/`, `/healthz`, and a non-HTML `Accept` header.
-- [ ] RED: Add tests for `buildVisit(request, now)` using a controlled inbound request with `CF-Connecting-IP`, `CF-Ray`, a complete `request.cf` fixture, referrer, query, and user agent. Assert the exact normalized object and hard length boundaries.
+- [ ] RED: Add tests for `buildVisit(request, now)` using a controlled inbound request with `CF-Connecting-IP`, `CF-Ray`, a complete `request.cf` fixture, referrer, query, and user agent. Assert the exact normalized object, an intentionally blank query string, sanitized referrer origin/path, malformed-referrer fallback, and hard length boundaries.
 - [ ] RED: Add browser/device and suspected-bot fixtures for Chrome, Edge, Firefox, Safari, mobile, curl, crawler, and unknown agents.
 - [ ] Verify each new test file fails for the missing behavior.
 - [ ] Implement extension exclusion for images, styles, scripts, maps, fonts, media, archives, office files, PDFs, feeds, and manifest/service-worker assets. Paths remain case-insensitive for extension matching.
-- [ ] Generate timestamps with `now.toISOString()`. Take the client IP only from `CF-Connecting-IP`; use `request.cf` for location/network metadata. Store URL path separately from the query.
-- [ ] Enforce these maximum lengths: host 253, path 2,048, query 2,048, referrer 2,048, user agent 1,024, browser summary 160, region 128, city 128, colo 3, and CF Ray 64. Truncate by JavaScript code points, not partial UTF-16 surrogate pairs.
+- [ ] Generate timestamps with `now.toISOString()`. Take the client IP only from `CF-Connecting-IP`; use `request.cf` for location/network metadata. Store URL path separately, persist an empty query string, and sanitize referrers to scheme, host, optional port, and pathname only.
+- [ ] Enforce these maximum lengths: host 253, path 2,048, sanitized referrer 2,048, user agent 1,024, browser summary 160, region 128, city 128, colo 3, and CF Ray 64. Truncate by JavaScript code points, not partial UTF-16 surrogate pairs.
 - [ ] Use a documented best-effort bot expression covering common bot/crawler/spider/headless and command-line clients. Label output as a suspected-bot heuristic, not verified Bot Management.
 - [ ] GREEN: Run the three focused files, then `npm run check`.
 - [ ] Commit: `feat: classify and normalize page visits`

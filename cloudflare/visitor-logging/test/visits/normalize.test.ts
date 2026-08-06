@@ -1,0 +1,110 @@
+import { expect, test } from "vitest";
+
+import { buildVisit } from "../../src/visits/normalize";
+
+function requestWithCf(
+  url: string,
+  headers: HeadersInit,
+  cf: Pick<IncomingRequestCfProperties, "asn" | "city" | "colo" | "country" | "region"> = {
+    asn: 13335,
+    city: "Hong Kong",
+    colo: "HKG",
+    country: "HK",
+    region: "Hong Kong"
+  }
+): Request {
+  const inbound = new Request(url, { headers });
+  Object.defineProperty(inbound, "cf", { value: cf });
+  return inbound;
+}
+
+test("buildVisit maps a real inbound Request into the visit schema", () => {
+  const inbound = requestWithCf("https://www.lizhe.link/notes/hello?tag=web&lang=en", {
+    "CF-Connecting-IP": "203.0.113.42",
+    "CF-Ray": "8abcdef012345678-HKG",
+    Referer: "https://example.com/article",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+  });
+
+  expect(buildVisit(inbound, new Date("2026-08-06T12:34:56.789Z"))).toEqual({
+    visitedAtUtc: "2026-08-06T12:34:56.789Z",
+    ipAddress: "203.0.113.42",
+    method: "GET",
+    host: "www.lizhe.link",
+    path: "/notes/hello",
+    queryString: "",
+    referrer: "https://example.com/article",
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    browserSummary: "Chrome 124 on macOS",
+    country: "HK",
+    region: "Hong Kong",
+    city: "Hong Kong",
+    asn: 13335,
+    colo: "HKG",
+    cfRay: "8abcdef012345678-HKG",
+    isSuspectedBot: false
+  });
+});
+
+test("buildVisit truncates every bounded string at complete Unicode code points", () => {
+  const emoji = "😀";
+  const inbound = requestWithCf(`https://${"h".repeat(254)}/${"p".repeat(2049)}?${"q".repeat(2049)}`, {
+    "CF-Connecting-IP": "198.51.100.8",
+    "CF-Ray": "c".repeat(65),
+    Referer: "r".repeat(2049),
+    "User-Agent": "u".repeat(1025)
+  }, {
+      asn: 64512,
+      city: emoji.repeat(129),
+      colo: `${emoji}HKG`,
+      country: "US",
+      region: emoji.repeat(129)
+    } satisfies Pick<IncomingRequestCfProperties, "asn" | "city" | "colo" | "country" | "region">);
+
+  const result = buildVisit(inbound, new Date("2026-08-06T00:00:00.000Z"));
+
+  expect({
+    host: result.host,
+    path: result.path,
+    queryString: result.queryString,
+    referrer: result.referrer,
+    userAgent: result.userAgent,
+    browserSummary: result.browserSummary,
+    region: result.region,
+    city: result.city,
+    colo: result.colo,
+    cfRay: result.cfRay
+  }).toEqual({
+    host: "h".repeat(253),
+    path: `/${"p".repeat(2047)}`,
+    queryString: "",
+    referrer: "",
+    userAgent: "u".repeat(1024),
+    browserSummary: "Unknown",
+    region: emoji.repeat(128),
+    city: emoji.repeat(128),
+    colo: `${emoji}HK`,
+    cfRay: "c".repeat(64)
+  });
+});
+
+test("buildVisit retains only a referrer origin and path", () => {
+  const inbound = requestWithCf("https://lizhe.link/notes/privacy?access_token=request-token", {
+    "CF-Connecting-IP": "203.0.113.57",
+    Referer: "https://username:password@referrer.example:8443/return/path?token=referrer-token#fragment"
+  });
+
+  const result = buildVisit(inbound, new Date("2026-08-06T00:00:00.000Z"));
+
+  expect(result.queryString).toBe("");
+  expect(result.referrer).toBe("https://referrer.example:8443/return/path");
+});
+
+test("buildVisit drops a malformed referrer", () => {
+  const inbound = requestWithCf("https://lizhe.link/notes/privacy", {
+    "CF-Connecting-IP": "203.0.113.58",
+    Referer: "not a URL"
+  });
+
+  expect(buildVisit(inbound, new Date("2026-08-06T00:00:00.000Z")).referrer).toBe("");
+});
