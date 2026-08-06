@@ -1,15 +1,23 @@
 /// <reference types="node" />
 
 import assert from "node:assert/strict";
-import { existsSync, mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
+import {
+  cpSync,
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  statSync,
+  symlinkSync
+} from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import { afterEach, test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const generator = join(packageRoot, "scripts", "render-production-config.mjs");
+const wranglerCli = join(packageRoot, "node_modules", "wrangler", "bin", "wrangler.js");
 const defaultOutput = join(packageRoot, ".private", "wrangler.production.jsonc");
 const validEnvironment = {
   CF_D1_DATABASE_ID: "123e4567-e89b-42d3-a456-426614174000",
@@ -36,8 +44,9 @@ function metadata(path: string): { size: number; mtimeMs: number } | undefined {
 }
 
 function runGenerator(
-  output: string,
-  overrides: Partial<Record<keyof typeof validEnvironment, string | undefined>> = {}
+  output?: string,
+  overrides: Partial<Record<keyof typeof validEnvironment, string | undefined>> = {},
+  projectRoot = packageRoot
 ) {
   const environment: NodeJS.ProcessEnv = { ...process.env };
   for (const name of Object.keys(validEnvironment) as Array<keyof typeof validEnvironment>) {
@@ -46,8 +55,48 @@ function runGenerator(
     else environment[name] = value;
   }
 
-  return spawnSync(process.execPath, [generator, output], {
-    cwd: packageRoot,
+  return spawnSync(
+    process.execPath,
+    [join(projectRoot, "scripts", "render-production-config.mjs"), ...(output ? [output] : [])],
+    {
+      cwd: projectRoot,
+      encoding: "utf8",
+      env: environment
+    }
+  );
+}
+
+function isolatedProject(): string {
+  const temporaryDirectory = mkdtempSync(join(tmpdir(), "visitor-logging-project-"));
+  temporaryDirectories.push(temporaryDirectory);
+  const projectRoot = join(temporaryDirectory, "project");
+  const excludedTopLevelEntries = new Set([".private", ".wrangler", "dist", "node_modules"]);
+
+  cpSync(packageRoot, projectRoot, {
+    recursive: true,
+    filter(source) {
+      const pathFromRoot = relative(packageRoot, source);
+      const topLevelEntry = pathFromRoot.split(sep)[0];
+      return !excludedTopLevelEntries.has(topLevelEntry);
+    }
+  });
+  symlinkSync(
+    join(packageRoot, "node_modules"),
+    join(projectRoot, "node_modules"),
+    process.platform === "win32" ? "junction" : "dir"
+  );
+  return projectRoot;
+}
+
+function runWrangler(projectRoot: string, args: string[]) {
+  const environment = { ...process.env };
+  delete environment.CLOUDFLARE_API_TOKEN;
+  delete environment.CLOUDFLARE_ACCOUNT_ID;
+  environment.NO_COLOR = "1";
+  environment.WRANGLER_LOG_PATH = join(projectRoot, ".wrangler-logs");
+  environment.WRANGLER_SEND_METRICS = "false";
+  return spawnSync(process.execPath, [wranglerCli, ...args], {
+    cwd: projectRoot,
     encoding: "utf8",
     env: environment
   });
@@ -66,6 +115,21 @@ const invalidCases = [
   ["non-HTTPS team domain", { CF_TEAM_DOMAIN: "http://team.cloudflareaccess.com" }],
   ["lookalike team domain", { CF_TEAM_DOMAIN: "https://team.cloudflareaccess.com.example.com" }],
   ["team-domain URL with credentials", { CF_TEAM_DOMAIN: "https://user@team.cloudflareaccess.com" }],
+  ["team-domain URL with a port", { CF_TEAM_DOMAIN: "https://team.cloudflareaccess.com:443" }],
+  ["team-domain URL with a path", { CF_TEAM_DOMAIN: "https://team.cloudflareaccess.com/cdn-cgi" }],
+  ["team-domain URL with a query", { CF_TEAM_DOMAIN: "https://team.cloudflareaccess.com?x=1" }],
+  ["team-domain URL with a fragment", { CF_TEAM_DOMAIN: "https://team.cloudflareaccess.com#x" }],
+  ["empty team label", { CF_TEAM_DOMAIN: "https://.cloudflareaccess.com" }],
+  ["double-label separator", { CF_TEAM_DOMAIN: "https://evil..cloudflareaccess.com" }],
+  ["extra team label", { CF_TEAM_DOMAIN: "https://evil.team.cloudflareaccess.com" }],
+  ["noncanonical HTTPS syntax", { CF_TEAM_DOMAIN: "https:team.cloudflareaccess.com" }],
+  ["empty query marker", { CF_TEAM_DOMAIN: "https://team.cloudflareaccess.com?" }],
+  ["leading-hyphen team label", { CF_TEAM_DOMAIN: "https://-team.cloudflareaccess.com" }],
+  ["trailing-hyphen team label", { CF_TEAM_DOMAIN: "https://team-.cloudflareaccess.com" }],
+  ["underscore team label", { CF_TEAM_DOMAIN: "https://team_name.cloudflareaccess.com" }],
+  ["overlong team label", { CF_TEAM_DOMAIN: `https://${"a".repeat(64)}.cloudflareaccess.com` }],
+  ["leading whitespace", { CF_TEAM_DOMAIN: " https://team.cloudflareaccess.com" }],
+  ["trailing control character", { CF_TEAM_DOMAIN: "https://team.cloudflareaccess.com\n" }],
   ["missing Access audience", { CF_POLICY_AUD: undefined }],
   ["blank Access audience", { CF_POLICY_AUD: "   " }]
 ] as const;
@@ -100,7 +164,10 @@ test("writes strict JSON with the production route, binding, vars, and cron cont
     {
       binding: "DB",
       database_name: "lizhe-visitor-logging",
-      database_id: validEnvironment.CF_D1_DATABASE_ID
+      database_id: validEnvironment.CF_D1_DATABASE_ID,
+      migrations_dir: relative(dirname(output), join(packageRoot, "migrations"))
+        .split(sep)
+        .join("/")
     }
   ]);
   assert.deepEqual(config.vars, {
@@ -111,9 +178,67 @@ test("writes strict JSON with the production route, binding, vars, and cron cont
     POLICY_AUD: validEnvironment.CF_POLICY_AUD
   });
   assert.deepEqual(config.triggers, { crons: ["15 16 * * *"] });
+  assert.equal(resolve(dirname(output), config.main), join(packageRoot, "src", "index.ts"));
+  assert.equal(
+    resolve(dirname(output), config.$schema),
+    join(packageRoot, "node_modules", "wrangler", "config-schema.json")
+  );
+  assert.equal(
+    resolve(dirname(output), config.d1_databases[0].migrations_dir),
+    join(packageRoot, "migrations")
+  );
   for (const value of Object.values(validEnvironment)) {
     assert.equal(`${result.stdout}${result.stderr}`.includes(value), false);
   }
+});
+
+test("normalizes one trailing slash on a canonical team domain", () => {
+  const output = temporaryOutput();
+  const result = runGenerator(output, {
+    CF_TEAM_DOMAIN: "https://team.cloudflareaccess.com/"
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  const config = JSON.parse(readFileSync(output, "utf8"));
+  assert.equal(config.vars.TEAM_DOMAIN, "https://team.cloudflareaccess.com");
+});
+
+test("the default private config passes a real Wrangler deploy dry-run", () => {
+  const projectRoot = isolatedProject();
+  const generation = runGenerator(undefined, {}, projectRoot);
+  assert.equal(generation.status, 0, generation.stderr);
+
+  const dryRun = runWrangler(projectRoot, [
+    "deploy",
+    "--dry-run",
+    "--outdir",
+    join(projectRoot, ".wrangler-dry-run"),
+    "--config",
+    ".private/wrangler.production.jsonc"
+  ]);
+
+  assert.equal(dryRun.status, 0, `${dryRun.stdout}${dryRun.stderr}`);
+});
+
+test("the default private config exposes repository migrations to local Wrangler", () => {
+  const projectRoot = isolatedProject();
+  const generation = runGenerator(undefined, {}, projectRoot);
+  assert.equal(generation.status, 0, generation.stderr);
+
+  const migrationList = runWrangler(projectRoot, [
+    "d1",
+    "migrations",
+    "list",
+    "DB",
+    "--local",
+    "--persist-to",
+    join(projectRoot, ".wrangler-local-state"),
+    "--config",
+    ".private/wrangler.production.jsonc"
+  ]);
+
+  assert.equal(migrationList.status, 0, `${migrationList.stdout}${migrationList.stderr}`);
+  assert.match(`${migrationList.stdout}${migrationList.stderr}`, /0001_create_visits\.sql/);
 });
 
 test("an explicit output path leaves the default private config untouched", () => {

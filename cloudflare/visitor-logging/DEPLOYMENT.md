@@ -31,6 +31,12 @@ export CF_POLICY_AUD='<Access application audience>'
 npm run config:production
 ```
 
+`CF_TEAM_DOMAIN` must use the canonical
+`https://<team-name>.cloudflareaccess.com` form with one lowercase DNS label.
+A single trailing slash is accepted and normalized away; ports, paths, query
+strings, fragments, credentials, extra labels, and alternate URL syntax are
+rejected.
+
 The generator validates every input before it creates the parent directory or
 writes `.private/wrangler.production.jsonc`. It is silent on success and never
 prints supplied values.
