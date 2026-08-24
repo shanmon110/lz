@@ -108,3 +108,21 @@ test("buildVisit drops a malformed referrer", () => {
 
   expect(buildVisit(inbound, new Date("2026-08-06T00:00:00.000Z")).referrer).toBe("");
 });
+
+test.each([
+  "/wp-trackback.php",
+  "/wp-includes/",
+  "/wp-content/plugins/core-plugin/include.php",
+  "/tinyfilemanager.php",
+  "/.env",
+  "/robots.txt"
+])("buildVisit marks scanner path %s as a suspected bot despite a browser user agent", (path) => {
+  const inbound = requestWithCf(`https://lizhe.link${path}`, {
+    "CF-Connecting-IP": "20.240.128.207",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36"
+  });
+
+  expect(
+    buildVisit(inbound, new Date("2026-08-24T14:08:57.000Z")).isSuspectedBot
+  ).toBe(true);
+});

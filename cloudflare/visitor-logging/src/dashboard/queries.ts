@@ -5,6 +5,35 @@ import type { VisitRow } from "../visits/types";
 const PAGE_SIZE = 50;
 export const MAX_EXPORT_ROWS = 5_000;
 
+function scannerPathSql(pathColumn: string): string {
+  return `(LOWER(${pathColumn}) LIKE '/wp-%'
+    OR LOWER(${pathColumn}) LIKE '/wp/%'
+    OR LOWER(${pathColumn}) LIKE '%.php'
+    OR LOWER(${pathColumn}) LIKE '%.php/%'
+    OR LOWER(${pathColumn}) = '/.env'
+    OR LOWER(${pathColumn}) LIKE '/.env.%'
+    OR LOWER(${pathColumn}) = '/.git'
+    OR LOWER(${pathColumn}) LIKE '/.git/%'
+    OR LOWER(${pathColumn}) = '/robots.txt')`;
+}
+
+function effectiveBotSql(tableName = "visits"): string {
+  return `(${tableName}.is_suspected_bot = 1
+    OR ${scannerPathSql(`${tableName}.path`)}
+    OR EXISTS (
+      SELECT 1
+      FROM visits AS scanner_probe
+      WHERE scanner_probe.ip_address = ${tableName}.ip_address
+        AND ABS(
+          unixepoch(scanner_probe.visited_at_utc) -
+          unixepoch(${tableName}.visited_at_utc)
+        ) <= 60
+        AND ${scannerPathSql("scanner_probe.path")}
+      GROUP BY scanner_probe.ip_address
+      HAVING COUNT(DISTINCT LOWER(scanner_probe.path)) >= 4
+    ))`;
+}
+
 interface VisitDatabaseRow {
   id: number;
   visited_at_utc: string;
@@ -60,9 +89,9 @@ function buildWhere(filters: DashboardFilters): {
   const values: Array<string | number> = [];
 
   if (filters.bots === "exclude") {
-    fragments.push("is_suspected_bot = 0");
+    fragments.push(`NOT ${effectiveBotSql()}`);
   } else if (filters.bots === "only") {
-    fragments.push("is_suspected_bot = 1");
+    fragments.push(effectiveBotSql());
   }
 
   if (filters.from) {
@@ -125,7 +154,8 @@ export async function getVisitPage(
       `SELECT
         id, visited_at_utc, ip_address, method, host, path, query_string,
         referrer, user_agent, browser_summary, country, region, city, asn,
-        colo, cf_ray, is_suspected_bot
+        colo, cf_ray,
+        CASE WHEN ${effectiveBotSql()} THEN 1 ELSE 0 END AS is_suspected_bot
       FROM visits${where.sql}
       ORDER BY visited_at_utc DESC, id DESC
       LIMIT ? OFFSET ?`
@@ -151,7 +181,8 @@ export async function getVisitsForExport(
       `SELECT
         id, visited_at_utc, ip_address, method, host, path, query_string,
         referrer, user_agent, browser_summary, country, region, city, asn,
-        colo, cf_ray, is_suspected_bot
+        colo, cf_ray,
+        CASE WHEN ${effectiveBotSql()} THEN 1 ELSE 0 END AS is_suspected_bot
       FROM visits${where.sql}
       ORDER BY visited_at_utc DESC, id DESC
       LIMIT ?`
@@ -173,7 +204,7 @@ async function countRange(
         COUNT(*) AS total_visits,
         COUNT(DISTINCT ip_address) AS distinct_network_addresses
       FROM visits
-      WHERE is_suspected_bot = 0
+      WHERE NOT ${effectiveBotSql()}
         AND visited_at_utc >= ?
         AND visited_at_utc <= ?`
     )

@@ -4,7 +4,8 @@ import { beforeEach, describe, expect, test } from "vitest";
 import { parseDashboardFilters } from "../../src/dashboard/filters";
 import {
   getDashboardSummary,
-  getVisitPage
+  getVisitPage,
+  getVisitsForExport
 } from "../../src/dashboard/queries";
 import { insertVisit } from "../../src/visits/repository";
 import type { VisitInput } from "../../src/visits/types";
@@ -112,6 +113,128 @@ describe("getVisitPage", () => {
         (item) => item.path
       )
     ).toEqual(["/bot"]);
+  });
+
+  test("treats historical scanner paths as suspected bots in every bot mode", async () => {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        path: "/notes/human",
+        visitedAtUtc: "2026-08-24T14:08:58.000Z"
+      })
+    );
+    await insertVisit(
+      env.DB,
+      createVisit({
+        path: "/wp-content/plugins/core-plugin/include.php",
+        visitedAtUtc: "2026-08-24T14:08:57.000Z",
+        userAgent: "Mozilla/5.0 Chrome/120.0.0.0",
+        isSuspectedBot: false
+      })
+    );
+    await insertVisit(
+      env.DB,
+      createVisit({
+        path: "/robots.txt",
+        visitedAtUtc: "2026-08-24T14:08:56.000Z",
+        userAgent: "Mozilla/5.0 Chrome/120.0.0.0",
+        isSuspectedBot: false
+      })
+    );
+
+    expect(
+      (await getVisitPage(env.DB, filters())).items.map((item) => item.path)
+    ).toEqual(["/notes/human"]);
+    expect(
+      (
+        await getVisitPage(env.DB, filters({ bots: "include" }))
+      ).items.map((item) => [item.path, item.isSuspectedBot])
+    ).toEqual([
+      ["/notes/human", false],
+      ["/wp-content/plugins/core-plugin/include.php", true],
+      ["/robots.txt", true]
+    ]);
+    expect(
+      (await getVisitPage(env.DB, filters({ bots: "only" }))).items.map(
+        (item) => item.path
+      )
+    ).toEqual([
+      "/wp-content/plugins/core-plugin/include.php",
+      "/robots.txt"
+    ]);
+  });
+
+  test("classifies an entire same-IP probe burst so incidental paths do not leak through", async () => {
+    const scannerIp = "20.240.128.207";
+    const burst: Array<[string, string]> = [
+      ["2026-08-24T14:08:57.000Z", "/wp-trackback.php"],
+      ["2026-08-24T14:08:56.000Z", "/wp-includes/"],
+      ["2026-08-24T14:08:55.000Z", "/tinyfilemanager.php"],
+      ["2026-08-24T14:08:54.000Z", "/.env"],
+      ["2026-08-24T14:08:53.000Z", "/assets/"]
+    ];
+
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "203.0.113.42",
+        path: "/notes/real-visitor",
+        visitedAtUtc: "2026-08-24T14:08:58.000Z"
+      })
+    );
+    for (const [visitedAtUtc, path] of burst) {
+      await insertVisit(
+        env.DB,
+        createVisit({
+          ipAddress: scannerIp,
+          path,
+          visitedAtUtc,
+          userAgent: "Mozilla/5.0 Chrome/120.0.0.0",
+          isSuspectedBot: false
+        })
+      );
+    }
+
+    expect(
+      (await getVisitPage(env.DB, filters())).items.map((item) => item.path)
+    ).toEqual(["/notes/real-visitor"]);
+    expect(
+      (
+        await getVisitPage(
+          env.DB,
+          filters({ bots: "include", ip: scannerIp })
+        )
+      ).items.map((item) => [item.path, item.isSuspectedBot])
+    ).toEqual(burst.map(([, path]) => [path, true]));
+    expect(
+      (
+        await getVisitPage(env.DB, filters({ bots: "only", ip: scannerIp }))
+      ).items.map((item) => item.path)
+    ).toEqual(burst.map(([, path]) => path));
+  });
+
+  test("does not classify rapid browsing of ordinary pages as a scanner burst", async () => {
+    const ordinaryPaths = [
+      "/",
+      "/about/",
+      "/publications/",
+      "/notes/visitor-logging/"
+    ];
+    for (const [index, path] of ordinaryPaths.entries()) {
+      await insertVisit(
+        env.DB,
+        createVisit({
+          path,
+          visitedAtUtc: new Date(
+            Date.parse("2026-08-24T14:10:00.000Z") - index * 1000
+          ).toISOString()
+        })
+      );
+    }
+
+    expect(
+      (await getVisitPage(env.DB, filters())).items.map((item) => item.path)
+    ).toEqual(ordinaryPaths);
   });
 
   test("filters literal exact and partial IP, country, and path values", async () => {
@@ -256,4 +379,59 @@ test("getDashboardSummary counts visits and distinct network addresses in each w
     sevenDays: { totalVisits: 4, distinctNetworkAddresses: 2 },
     thirtyDays: { totalVisits: 6, distinctNetworkAddresses: 3 }
   });
+});
+
+test("getDashboardSummary excludes historical scanner bursts from visit totals", async () => {
+  await insertVisit(
+    env.DB,
+    createVisit({
+      ipAddress: "203.0.113.42",
+      path: "/notes/real-visitor",
+      visitedAtUtc: "2026-08-24T14:09:00.000Z"
+    })
+  );
+  for (const [index, path] of [
+    "/wp-trackback.php",
+    "/wp-includes/",
+    "/tinyfilemanager.php",
+    "/.env",
+    "/assets/"
+  ].entries()) {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "20.240.128.207",
+        path,
+        visitedAtUtc: new Date(
+          Date.parse("2026-08-24T14:08:57.000Z") - index * 1000
+        ).toISOString(),
+        isSuspectedBot: false
+      })
+    );
+  }
+
+  expect(
+    await getDashboardSummary(env.DB, new Date("2026-08-24T15:00:00.000Z"))
+  ).toEqual({
+    today: { totalVisits: 1, distinctNetworkAddresses: 1 },
+    sevenDays: { totalVisits: 1, distinctNetworkAddresses: 1 },
+    thirtyDays: { totalVisits: 1, distinctNetworkAddresses: 1 }
+  });
+});
+
+test("getVisitsForExport exposes the effective bot flag for historical scanners", async () => {
+  await insertVisit(
+    env.DB,
+    createVisit({
+      path: "/xmlrpc.php",
+      userAgent: "Mozilla/5.0 Chrome/120.0.0.0",
+      isSuspectedBot: false
+    })
+  );
+
+  expect(
+    (
+      await getVisitsForExport(env.DB, filters({ bots: "include" }))
+    ).map((item) => [item.path, item.isSuspectedBot])
+  ).toEqual([["/xmlrpc.php", true]]);
 });
