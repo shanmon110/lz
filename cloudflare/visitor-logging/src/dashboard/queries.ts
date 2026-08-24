@@ -17,6 +17,29 @@ function scannerPathSql(pathColumn: string): string {
     OR LOWER(${pathColumn}) = '/robots.txt')`;
 }
 
+function knownSiteReferrerSql(referrerColumn: string): string {
+  return `(LOWER(${referrerColumn}) LIKE 'https://lizhe.link/%'
+    OR LOWER(${referrerColumn}) LIKE 'https://shanmon110.github.io/lz/%')`;
+}
+
+function automatedBrowserSql(tableName = "visits"): string {
+  return `(${tableName}.asn = 31898
+    AND ${knownSiteReferrerSql(`${tableName}.referrer`)}
+    AND EXISTS (
+      SELECT 1
+      FROM visits AS automated_browser_pair
+      WHERE automated_browser_pair.ip_address = ${tableName}.ip_address
+        AND automated_browser_pair.path = ${tableName}.path
+        AND automated_browser_pair.asn = 31898
+        AND ${knownSiteReferrerSql("automated_browser_pair.referrer")}
+        AND automated_browser_pair.referrer <> ${tableName}.referrer
+        AND ABS(
+          unixepoch(automated_browser_pair.visited_at_utc) -
+          unixepoch(${tableName}.visited_at_utc)
+        ) <= 1
+    ))`;
+}
+
 function effectiveBotSql(tableName = "visits"): string {
   return `(${tableName}.is_suspected_bot = 1
     OR ${scannerPathSql(`${tableName}.path`)}
@@ -31,7 +54,8 @@ function effectiveBotSql(tableName = "visits"): string {
         AND ${scannerPathSql("scanner_probe.path")}
       GROUP BY scanner_probe.ip_address
       HAVING COUNT(DISTINCT LOWER(scanner_probe.path)) >= 4
-    ))`;
+    )
+    OR ${automatedBrowserSql(tableName)})`;
 }
 
 interface VisitDatabaseRow {
@@ -52,6 +76,7 @@ interface VisitDatabaseRow {
   colo: string | null;
   cf_ray: string | null;
   is_suspected_bot: number;
+  bot_reason: "automated-browser" | null;
 }
 
 export interface VisitPage {
@@ -139,7 +164,8 @@ function toVisitRow(row: VisitDatabaseRow): VisitRow {
     asn: row.asn,
     colo: row.colo,
     cfRay: row.cf_ray,
-    isSuspectedBot: row.is_suspected_bot === 1
+    isSuspectedBot: row.is_suspected_bot === 1,
+    botReason: row.bot_reason
   };
 }
 
@@ -155,7 +181,8 @@ export async function getVisitPage(
         id, visited_at_utc, ip_address, method, host, path, query_string,
         referrer, user_agent, browser_summary, country, region, city, asn,
         colo, cf_ray,
-        CASE WHEN ${effectiveBotSql()} THEN 1 ELSE 0 END AS is_suspected_bot
+        CASE WHEN ${effectiveBotSql()} THEN 1 ELSE 0 END AS is_suspected_bot,
+        CASE WHEN ${automatedBrowserSql()} THEN 'automated-browser' ELSE NULL END AS bot_reason
       FROM visits${where.sql}
       ORDER BY visited_at_utc DESC, id DESC
       LIMIT ? OFFSET ?`
@@ -182,7 +209,8 @@ export async function getVisitsForExport(
         id, visited_at_utc, ip_address, method, host, path, query_string,
         referrer, user_agent, browser_summary, country, region, city, asn,
         colo, cf_ray,
-        CASE WHEN ${effectiveBotSql()} THEN 1 ELSE 0 END AS is_suspected_bot
+        CASE WHEN ${effectiveBotSql()} THEN 1 ELSE 0 END AS is_suspected_bot,
+        CASE WHEN ${automatedBrowserSql()} THEN 'automated-browser' ELSE NULL END AS bot_reason
       FROM visits${where.sql}
       ORDER BY visited_at_utc DESC, id DESC
       LIMIT ?`

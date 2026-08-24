@@ -237,6 +237,65 @@ describe("getVisitPage", () => {
     ).toEqual(ordinaryPaths);
   });
 
+  test("classifies matching Oracle Cloud duplicate navigations as automated browsing", async () => {
+    const automatedIp = "129.146.61.66";
+    const timestamp = "2026-08-25T01:59:15.000Z";
+    for (const referrer of [
+      "https://lizhe.link/markdown_generator",
+      "https://shanmon110.github.io/lz/markdown_generator"
+    ]) {
+      await insertVisit(
+        env.DB,
+        createVisit({
+          ipAddress: automatedIp,
+          path: "/markdown_generator/",
+          referrer,
+          asn: 31898,
+          visitedAtUtc: timestamp,
+          isSuspectedBot: false
+        })
+      );
+    }
+
+    expect(
+      (await getVisitPage(env.DB, filters({ ip: automatedIp }))).items
+    ).toEqual([]);
+    expect(
+      (
+        await getVisitPage(
+          env.DB,
+          filters({ bots: "include", ip: automatedIp })
+        )
+      ).items.map((item) => [item.isSuspectedBot, item.botReason])
+    ).toEqual([
+      [true, "automated-browser"],
+      [true, "automated-browser"]
+    ]);
+  });
+
+  test("does not classify duplicate browser visits outside the Oracle link-checker pattern", async () => {
+    const timestamp = "2026-08-25T01:59:15.000Z";
+    for (const referrer of [
+      "https://lizhe.link/markdown_generator",
+      "https://shanmon110.github.io/lz/markdown_generator"
+    ]) {
+      await insertVisit(
+        env.DB,
+        createVisit({
+          ipAddress: "203.0.113.9",
+          path: "/markdown_generator/",
+          referrer,
+          asn: 13335,
+          visitedAtUtc: timestamp
+        })
+      );
+    }
+
+    expect(
+      (await getVisitPage(env.DB, filters({ ip: "203.0.113.9" }))).items
+    ).toHaveLength(2);
+  });
+
   test("filters literal exact and partial IP, country, and path values", async () => {
     await insertVisit(
       env.DB,

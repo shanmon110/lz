@@ -128,7 +128,11 @@ export const DASHBOARD_SCRIPT = `(() => {
         tableCell(visit.browserSummary)
       );
       const botCell = tableCell(
-        botsIncluded && visit.isSuspectedBot ? "Suspected bot" : formatDashboardValue(null),
+        botsIncluded && visit.isSuspectedBot
+          ? visit.botReason === "automated-browser"
+            ? "Likely automated browsing"
+            : "Suspected bot"
+          : formatDashboardValue(null),
         botsIncluded && visit.isSuspectedBot ? "bot-marker" : ""
       );
       row.append(botCell);
