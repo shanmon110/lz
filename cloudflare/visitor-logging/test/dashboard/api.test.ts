@@ -130,10 +130,10 @@ describe("Access gate", () => {
 });
 
 test("returns JSON summary and visit pages from real D1", async () => {
-  await insertVisit(env.DB, createVisit({ path: "/notes/hk" }));
+  await insertVisit(env.DB, createVisit({ path: "/publications/" }));
   await insertVisit(
     env.DB,
-    createVisit({ country: "US", path: "/notes/us", visitedAtUtc: "2026-08-06T16:01:00.000Z" })
+    createVisit({ country: "US", path: "/talks/", visitedAtUtc: "2026-08-06T16:01:00.000Z" })
   );
   const token = await accessToken();
 
@@ -152,7 +152,7 @@ test("returns JSON summary and visit pages from real D1", async () => {
   expect(visits.headers.get("Content-Type")).toBe("application/json; charset=utf-8");
   expect(await visits.json()).toEqual({
     hasNext: false,
-    items: [expect.objectContaining({ country: "HK", path: "/notes/hk" })],
+    items: [expect.objectContaining({ country: "HK", path: "/publications/" })],
     page: 1,
     pageSize: 50
   });
@@ -160,12 +160,12 @@ test("returns JSON summary and visit pages from real D1", async () => {
 });
 
 test("exports real D1 rows using the active filters independently of page", async () => {
-  await insertVisit(env.DB, createVisit({ country: "HK", path: "/human-hk" }));
+  await insertVisit(env.DB, createVisit({ country: "HK", path: "/teaching/" }));
   await insertVisit(
     env.DB,
-    createVisit({ country: "HK", isSuspectedBot: true, path: "/bot-hk" })
+    createVisit({ country: "HK", isSuspectedBot: true, path: "/markdown/" })
   );
-  await insertVisit(env.DB, createVisit({ country: "US", path: "/human-us" }));
+  await insertVisit(env.DB, createVisit({ country: "US", path: "/publications/" }));
 
   const response = await dashboardRequest(
     "/api/export.csv?country=HK&bots=only&page=2",
@@ -178,9 +178,9 @@ test("exports real D1 rows using the active filters independently of page", asyn
   expect(response.headers.get("Content-Disposition")).toBe(
     'attachment; filename="lizhe-visitor-logs-2026-08-07.csv"'
   );
-  expect(body).toContain("/bot-hk");
-  expect(body).not.toContain("/human-hk");
-  expect(body).not.toContain("/human-us");
+  expect(body).toContain("/markdown/");
+  expect(body).not.toContain("/teaching/");
+  expect(body).not.toContain("/publications/");
   expectSecurityHeaders(response);
 });
 

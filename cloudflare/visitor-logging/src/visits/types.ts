@@ -39,5 +39,5 @@ export interface VisitRow {
   colo: string | null;
   cfRay: string | null;
   isSuspectedBot: boolean;
-  botReason: "automated-browser" | null;
+  botReason: "automated-browser" | "unlisted-page" | null;
 }

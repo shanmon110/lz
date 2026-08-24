@@ -131,6 +131,8 @@ export const DASHBOARD_SCRIPT = `(() => {
         botsIncluded && visit.isSuspectedBot
           ? visit.botReason === "automated-browser"
             ? "Likely automated browsing"
+            : visit.botReason === "unlisted-page"
+              ? "Unlisted page"
             : "Suspected bot"
           : formatDashboardValue(null),
         botsIncluded && visit.isSuspectedBot ? "bot-marker" : ""

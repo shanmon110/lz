@@ -53,7 +53,7 @@ describe("getVisitPage", () => {
       );
     }
 
-    const first = await getVisitPage(env.DB, filters());
+    const first = await getVisitPage(env.DB, filters({ bots: "include" }));
     expect(first.page).toBe(1);
     expect(first.pageSize).toBe(50);
     expect(first.hasNext).toBe(true);
@@ -61,7 +61,10 @@ describe("getVisitPage", () => {
     expect(first.items[0]?.path).toBe("/visit-50");
     expect(first.items[49]?.path).toBe("/visit-1");
 
-    const second = await getVisitPage(env.DB, filters({ page: "2" }));
+    const second = await getVisitPage(
+      env.DB,
+      filters({ bots: "include", page: "2" })
+    );
     expect(second).toEqual({
       items: [
         expect.objectContaining({
@@ -79,7 +82,7 @@ describe("getVisitPage", () => {
     await insertVisit(env.DB, createVisit({ path: "/inserted-first" }));
     await insertVisit(env.DB, createVisit({ path: "/inserted-second" }));
 
-    const result = await getVisitPage(env.DB, filters());
+    const result = await getVisitPage(env.DB, filters({ bots: "include" }));
     expect(result.items.map((item) => item.path)).toEqual([
       "/inserted-second",
       "/inserted-first"
@@ -89,12 +92,12 @@ describe("getVisitPage", () => {
   test("excludes suspected bots by default and supports include and only modes", async () => {
     await insertVisit(
       env.DB,
-      createVisit({ path: "/human", visitedAtUtc: "2026-08-05T16:00:00.000Z" })
+      createVisit({ path: "/", visitedAtUtc: "2026-08-05T16:00:00.000Z" })
     );
     await insertVisit(
       env.DB,
       createVisit({
-        path: "/bot",
+        path: "/publications/",
         visitedAtUtc: "2026-08-05T16:01:00.000Z",
         isSuspectedBot: true
       })
@@ -102,24 +105,24 @@ describe("getVisitPage", () => {
 
     expect(
       (await getVisitPage(env.DB, filters())).items.map((item) => item.path)
-    ).toEqual(["/human"]);
+    ).toEqual(["/"]);
     expect(
       (
         await getVisitPage(env.DB, filters({ bots: "include" }))
       ).items.map((item) => item.path)
-    ).toEqual(["/bot", "/human"]);
+    ).toEqual(["/publications/", "/"]);
     expect(
       (await getVisitPage(env.DB, filters({ bots: "only" }))).items.map(
         (item) => item.path
       )
-    ).toEqual(["/bot"]);
+    ).toEqual(["/publications/"]);
   });
 
   test("treats historical scanner paths as suspected bots in every bot mode", async () => {
     await insertVisit(
       env.DB,
       createVisit({
-        path: "/notes/human",
+        path: "/publications/",
         visitedAtUtc: "2026-08-24T14:08:58.000Z"
       })
     );
@@ -144,13 +147,13 @@ describe("getVisitPage", () => {
 
     expect(
       (await getVisitPage(env.DB, filters())).items.map((item) => item.path)
-    ).toEqual(["/notes/human"]);
+    ).toEqual(["/publications/"]);
     expect(
       (
         await getVisitPage(env.DB, filters({ bots: "include" }))
       ).items.map((item) => [item.path, item.isSuspectedBot])
     ).toEqual([
-      ["/notes/human", false],
+      ["/publications/", false],
       ["/wp-content/plugins/core-plugin/include.php", true],
       ["/robots.txt", true]
     ]);
@@ -178,7 +181,7 @@ describe("getVisitPage", () => {
       env.DB,
       createVisit({
         ipAddress: "203.0.113.42",
-        path: "/notes/real-visitor",
+        path: "/talks/",
         visitedAtUtc: "2026-08-24T14:08:58.000Z"
       })
     );
@@ -197,7 +200,7 @@ describe("getVisitPage", () => {
 
     expect(
       (await getVisitPage(env.DB, filters())).items.map((item) => item.path)
-    ).toEqual(["/notes/real-visitor"]);
+    ).toEqual(["/talks/"]);
     expect(
       (
         await getVisitPage(
@@ -216,9 +219,10 @@ describe("getVisitPage", () => {
   test("does not classify rapid browsing of ordinary pages as a scanner burst", async () => {
     const ordinaryPaths = [
       "/",
-      "/about/",
       "/publications/",
-      "/notes/visitor-logging/"
+      "/talks/",
+      "/teaching/",
+      "/markdown/"
     ];
     for (const [index, path] of ordinaryPaths.entries()) {
       await insertVisit(
@@ -240,17 +244,18 @@ describe("getVisitPage", () => {
   test("classifies matching Oracle Cloud duplicate navigations as automated browsing", async () => {
     const automatedIp = "129.146.61.66";
     const timestamp = "2026-08-25T01:59:15.000Z";
-    for (const referrer of [
-      "https://lizhe.link/markdown_generator",
-      "https://shanmon110.github.io/lz/markdown_generator"
+    for (const [path, referrer] of [
+      ["/publications", ""],
+      ["/publications/", "https://shanmon110.github.io/lz/publications/"]
     ]) {
       await insertVisit(
         env.DB,
         createVisit({
           ipAddress: automatedIp,
-          path: "/markdown_generator/",
+          path,
           referrer,
           asn: 31898,
+          browserSummary: "Chrome 139 on Linux",
           visitedAtUtc: timestamp,
           isSuspectedBot: false
         })
@@ -273,6 +278,107 @@ describe("getVisitPage", () => {
     ]);
   });
 
+  test("does not classify Oracle navigations more than one real second apart", async () => {
+    for (const [visitedAtUtc, path, referrer] of [
+      ["2026-08-25T01:59:15.001Z", "/publications", ""],
+      [
+        "2026-08-25T01:59:16.002Z",
+        "/publications/",
+        "https://shanmon110.github.io/lz/publications/"
+      ]
+    ]) {
+      await insertVisit(
+        env.DB,
+        createVisit({
+          ipAddress: "129.146.61.67",
+          path,
+          referrer,
+          asn: 31898,
+          browserSummary: "Chrome 139 on Linux",
+          visitedAtUtc,
+          isSuspectedBot: false
+        })
+      );
+    }
+
+    expect(
+      (
+        await getVisitPage(
+          env.DB,
+          filters({ ip: "129.146.61.67" })
+        )
+      ).items
+    ).toHaveLength(2);
+  });
+
+  test("classifies Oracle navigations exactly one real second apart", async () => {
+    for (const [visitedAtUtc, path, referrer] of [
+      ["2026-08-25T01:59:15.001Z", "/publications", ""],
+      [
+        "2026-08-25T01:59:16.001Z",
+        "/publications/",
+        "https://shanmon110.github.io/lz/publications/"
+      ]
+    ]) {
+      await insertVisit(
+        env.DB,
+        createVisit({
+          ipAddress: "129.146.61.68",
+          path,
+          referrer,
+          asn: 31898,
+          browserSummary: "Chrome 139 on Linux",
+          visitedAtUtc,
+          isSuspectedBot: false
+        })
+      );
+    }
+
+    expect(
+      (
+        await getVisitPage(
+          env.DB,
+          filters({ ip: "129.146.61.68" })
+        )
+      ).items
+    ).toEqual([]);
+  });
+
+  test("classifies the observed Tencent Cloud browser fingerprints as automated browsing", async () => {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "43.161.233.190",
+        path: "/",
+        referrer: "https://shanmon110.github.io/lz/",
+        asn: 132203,
+        browserSummary: "Mobile Safari 13 on iOS",
+        isSuspectedBot: false
+      })
+    );
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "43.172.195.7",
+        path: "/",
+        referrer: "",
+        asn: 132203,
+        browserSummary: "Chrome 106 on Windows",
+        isSuspectedBot: false
+      })
+    );
+
+    expect((await getVisitPage(env.DB, filters())).items).toEqual([]);
+    expect(
+      (
+        await getVisitPage(env.DB, filters({ bots: "only" }))
+      ).items.map((item) => [item.ipAddress, item.botReason])
+    ).toEqual([
+      ["43.172.195.7", "automated-browser"],
+      ["43.161.233.190", "automated-browser"]
+    ]);
+  });
+
   test("does not classify duplicate browser visits outside the Oracle link-checker pattern", async () => {
     const timestamp = "2026-08-25T01:59:15.000Z";
     for (const referrer of [
@@ -283,7 +389,7 @@ describe("getVisitPage", () => {
         env.DB,
         createVisit({
           ipAddress: "203.0.113.9",
-          path: "/markdown_generator/",
+          path: "/publications/",
           referrer,
           asn: 13335,
           visitedAtUtc: timestamp
@@ -294,6 +400,45 @@ describe("getVisitPage", () => {
     expect(
       (await getVisitPage(env.DB, filters({ ip: "203.0.113.9" }))).items
     ).toHaveLength(2);
+  });
+
+  test("excludes historical visits outside the homepage navigation allowlist", async () => {
+    for (const path of [
+      "/",
+      "/publications/",
+      "/talks",
+      "/teaching/",
+      "/markdown/",
+      "/markdown_generator/",
+      "/posts/2012/08/blog-post-1/",
+      "/portfolio/portfolio-2/",
+      "/sitemap/",
+      "/talks//"
+    ]) {
+      await insertVisit(
+        env.DB,
+        createVisit({
+          path,
+          visitedAtUtc: "2026-08-25T01:00:00.000Z",
+          isSuspectedBot: false
+        })
+      );
+    }
+
+    expect(
+      (await getVisitPage(env.DB, filters())).items.map((item) => item.path)
+    ).toEqual(["/markdown/", "/teaching/", "/talks", "/publications/", "/"]);
+    expect(
+      (
+        await getVisitPage(env.DB, filters({ bots: "only" }))
+      ).items.map((item) => [item.path, item.botReason])
+    ).toEqual([
+      ["/talks//", "unlisted-page"],
+      ["/sitemap/", "unlisted-page"],
+      ["/portfolio/portfolio-2/", "unlisted-page"],
+      ["/posts/2012/08/blog-post-1/", "unlisted-page"],
+      ["/markdown_generator/", "unlisted-page"]
+    ]);
   });
 
   test("filters literal exact and partial IP, country, and path values", async () => {
@@ -324,21 +469,21 @@ describe("getVisitPage", () => {
 
     expect(
       (
-        await getVisitPage(env.DB, filters({ ip: "203.0.113.7" }))
+        await getVisitPage(env.DB, filters({ bots: "include", ip: "203.0.113.7" }))
       ).items.map((item) => item.path)
     ).toEqual(["/notes/first"]);
     expect(
-      (await getVisitPage(env.DB, filters({ ip: "203.0" }))).items.map(
+      (await getVisitPage(env.DB, filters({ bots: "include", ip: "203.0" }))).items.map(
         (item) => item.path
       )
     ).toEqual(["/notes/second", "/notes/first"]);
     expect(
-      (await getVisitPage(env.DB, filters({ country: "HK" }))).items.map(
+      (await getVisitPage(env.DB, filters({ bots: "include", country: "HK" }))).items.map(
         (item) => item.path
       )
     ).toEqual(["/about", "/notes/first"]);
     expect(
-      (await getVisitPage(env.DB, filters({ path: "/notes" }))).items.map(
+      (await getVisitPage(env.DB, filters({ bots: "include", path: "/notes" }))).items.map(
         (item) => item.path
       )
     ).toEqual(["/notes/second", "/notes/first"]);
@@ -375,7 +520,7 @@ describe("getVisitPage", () => {
       (
         await getVisitPage(
           env.DB,
-          filters({ from: "2026-08-06", to: "2026-08-06" })
+          filters({ bots: "include", from: "2026-08-06", to: "2026-08-06" })
         )
       ).items.map((item) => item.path)
     ).toEqual(["/at-last-millisecond", "/at-start"]);
@@ -403,7 +548,7 @@ describe("getVisitPage", () => {
 
     const result = await getVisitPage(
       env.DB,
-      filters({ ip: suspiciousIp, country: "'?", path: "%_'); DROP" })
+      filters({ bots: "include", ip: suspiciousIp, country: "'?", path: "%_'); DROP" })
     );
     expect(result.items.map((item) => item.path)).toEqual([suspiciousPath]);
     expect(
@@ -445,7 +590,7 @@ test("getDashboardSummary excludes historical scanner bursts from visit totals",
     env.DB,
     createVisit({
       ipAddress: "203.0.113.42",
-      path: "/notes/real-visitor",
+      path: "/talks/",
       visitedAtUtc: "2026-08-24T14:09:00.000Z"
     })
   );
