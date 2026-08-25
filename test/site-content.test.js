@@ -71,6 +71,9 @@ test("keeps the homepage concise while routing readers to dedicated pages", () =
   assert.match(indexHtml, /mmasia2026\.org\/calls\/special-session-trustworthy-speech-audio-ai/);
   assert.match(indexHtml, /interspeech2026\.org\/en-AU\/pages\/programme\/tutorials/);
   assert.match(indexHtml, /2026\.ieeeicme\.org\/tutorials/);
+  assert.match(indexHtml, /Presented the <a href="https:\/\/2026\.ieeeicme\.org\/tutorials\/#1766933845252-bb9d3b7e-7e8e">Speech Large Language Models: Architectures, Efficient Adaptation, and Applications<\/a> tutorial/);
+  assert.doesNotMatch(indexHtml, /Presenting the <a href="https:\/\/2026\.ieeeicme\.org\/tutorials\/#1766933845252-bb9d3b7e-7e8e">/);
+  assert.match(indexHtml, /<a href="https:\/\/mp\.weixin\.qq\.com\/s\/HgcGxSYnunYZaDQIU7Tjuw"><strong>Outstanding Scientific and Technological Achievement Award<\/strong><\/a>/);
 
   for (const destination of [
     "/publications/",

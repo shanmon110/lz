@@ -16,7 +16,7 @@ Dr. Zhe Li is a Postdoctoral Fellow at **The University of Hong Kong (HKU)**. Hi
 
 - **2026:** Organizing the [Special Session on Trustworthy Speech and Audio AI at MMAsia 2026](https://mmasia2026.org/calls/special-session-trustworthy-speech-audio-ai/).
 - **2026:** Presenting the [Speech Large Language Models for Under-Resourced Languages](https://interspeech2026.org/en-AU/pages/programme/tutorials) tutorial at Interspeech 2026 in Sydney, Australia.
-- **2026:** Presenting the [Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e) tutorial at IEEE ICME 2026 in Bangkok, Thailand.
+- **2026:** Presented the [Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e) tutorial at IEEE ICME 2026 in Bangkok, Thailand.
 
 See the dedicated pages for [publications](/publications/), [tutorials](/tutorials/), [talks](/talks/), [academic service](/academic-service/), and [teaching](/teaching/).
 
@@ -41,5 +41,5 @@ See the dedicated pages for [publications](/publications/), [tutorials](/tutoria
 ## Selected Awards
 
 - **Best Student Paper Runner-Up Award**, Pacific Rim International Conference on Artificial Intelligence (PRICAI 2024), November 2024
-- **Outstanding Scientific and Technological Achievement Award**, Chinese Association for Artificial Intelligence (CAAI), October 2020
+- [**Outstanding Scientific and Technological Achievement Award**](https://mp.weixin.qq.com/s/HgcGxSYnunYZaDQIU7Tjuw), Chinese Association for Artificial Intelligence (CAAI), October 2020
 - **Top 100 Teams Award**, Intel Cup's Inaugural Chinese Graduate Student Artificial Intelligence Innovation Competition, June 2019
