@@ -1,6 +1,13 @@
 import type { DashboardFilters } from "./filters";
 import { getHongKongDateRange, getSummaryTimeRanges } from "./time";
 import { ALLOWED_VISIT_PATHS } from "../visits/allowed-pages";
+import {
+  HOSTING_ASNS,
+  HOSTING_ORGANIZATION_TOKENS,
+  RISK_WEIGHTS,
+  buildVisitDecision
+} from "../visits/intelligence";
+import type { VisitEvidence } from "../visits/intelligence";
 import type { VisitRow } from "../visits/types";
 
 const PAGE_SIZE = 50;
@@ -93,11 +100,8 @@ function automatedBrowserSql(tableName = "visits"): string {
     OR ${tencentAutomatedBrowserSql(tableName)})`;
 }
 
-function effectiveBotSql(tableName = "visits"): string {
-  return `(${tableName}.is_suspected_bot = 1
-    OR ${unlistedPageSql(`${tableName}.path`)}
-    OR ${scannerPathSql(`${tableName}.path`)}
-    OR EXISTS (
+function scannerBurstSql(tableName = "visits"): string {
+  return `EXISTS (
       SELECT 1
       FROM visits AS scanner_probe
       WHERE scanner_probe.ip_address = ${tableName}.ip_address
@@ -108,8 +112,165 @@ function effectiveBotSql(tableName = "visits"): string {
         AND ${scannerPathSql("scanner_probe.path")}
       GROUP BY scanner_probe.ip_address
       HAVING COUNT(DISTINCT LOWER(scanner_probe.path)) >= 4
-    )
+    )`;
+}
+
+function effectiveBotSql(tableName = "visits"): string {
+  return `(${tableName}.is_suspected_bot = 1
+    OR ${unlistedPageSql(`${tableName}.path`)}
+    OR ${scannerPathSql(`${tableName}.path`)}
+    OR ${scannerBurstSql(tableName)}
     OR ${automatedBrowserSql(tableName)})`;
+}
+
+function knownBotSignatureSql(tableName = "visits"): string {
+  const userAgent = `LOWER(${tableName}.user_agent)`;
+  return `(${userAgent} LIKE '%bot%'
+    OR ${userAgent} LIKE '%crawler%'
+    OR ${userAgent} LIKE '%spider%'
+    OR ${userAgent} LIKE '%headless%'
+    OR ${userAgent} LIKE '%curl/%'
+    OR ${userAgent} LIKE '%wget/%'
+    OR ${userAgent} LIKE '%httpie/%'
+    OR ${userAgent} LIKE '%python-requests/%'
+    OR ${userAgent} LIKE '%postmanruntime/%'
+    OR ${userAgent} LIKE '%axios/%'
+    OR ${userAgent} LIKE '%java/%')`;
+}
+
+function normalizedOrganizationSql(column: string): string {
+  return `LOWER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(${column}, '-', ' '), '_', ' '), '.', ' '), ',', ' '), '/', ' '))`;
+}
+
+function hostingNetworkSql(tableName = "visits"): string {
+  const asns = HOSTING_ASNS.join(", ");
+  const organization = normalizedOrganizationSql(`${tableName}.as_organization`);
+  const organizationMatches = HOSTING_ORGANIZATION_TOKENS.map((token) =>
+    `${organization} LIKE ${sqlStringLiteral(`%${token}%`)}`
+  ).join(" OR ");
+  return `(${tableName}.asn IN (${asns}) OR ${organizationMatches})`;
+}
+
+function recognizedBrowserSql(tableName = "visits"): string {
+  const summary = `TRIM(${tableName}.browser_summary)`;
+  const browsers = ["Chrome", "Edge", "Firefox", "Safari"];
+  const formFactors = ["", "Mobile ", "Tablet "];
+  const platforms = ["Android", "iOS", "Windows", "macOS", "Linux", "Unknown"];
+  const separatorPosition = `INSTR(${summary}, ' on ')`;
+  const browserPart = `SUBSTR(${summary}, 1, ${separatorPosition} - 1)`;
+  const platformPart = `SUBSTR(${summary}, ${separatorPosition} + 4)`;
+  const names = formFactors.flatMap((formFactor) =>
+    browsers.map((browser) => `${formFactor}${browser}`)
+  );
+  const browserMatches = names.flatMap((name) => [
+    `${browserPart} = ${sqlStringLiteral(name)}`,
+    `${browserPart} GLOB ${sqlStringLiteral(`${name} [0-9]*`)}`
+  ]);
+  const platformMatches = platforms.map(
+    (platform) => `${platformPart} = ${sqlStringLiteral(platform)}`
+  );
+  return `(${separatorPosition} > 0
+    AND (${browserMatches.join(" OR ")})
+    AND (${platformMatches.join(" OR ")}))`;
+}
+
+function effectiveBotEvidenceSql(tableName: string): string {
+  return `(${tableName}.stored_suspected_bot = 1
+    OR ${tableName}.scanner_path = 1
+    OR ${tableName}.unlisted_page = 1
+    OR ${tableName}.scanner_burst = 1
+    OR ${tableName}.automated_browser = 1)`;
+}
+
+function additiveRiskScoreSql(tableName: string): string {
+  return `(CASE
+      WHEN ${tableName}.cf_bot_score BETWEEN 1 AND 29
+        THEN ${RISK_WEIGHTS.lowCloudflareBotScore}
+      WHEN ${tableName}.cf_bot_score BETWEEN 30 AND 49
+        THEN ${RISK_WEIGHTS.elevatedCloudflareBotRisk}
+      ELSE 0
+    END
+    + CASE WHEN ${tableName}.hosting_network = 1 THEN ${RISK_WEIGHTS.hostingNetwork} ELSE 0 END
+    + CASE WHEN ${tableName}.unknown_browser = 1 THEN ${RISK_WEIGHTS.unknownBrowser} ELSE 0 END
+    + CASE WHEN ${tableName}.referrer = '' THEN ${RISK_WEIGHTS.noReferrer} ELSE 0 END
+    + CASE WHEN ${tableName}.visits_within_2m >= 2 THEN ${RISK_WEIGHTS.repeatedRequests} ELSE 0 END
+    + CASE WHEN ${tableName}.visits_preceding_24h >= 10 THEN ${RISK_WEIGHTS.high24hActivity} ELSE 0 END)`;
+}
+
+function riskScoreSql(tableName: string): string {
+  const additive = additiveRiskScoreSql(tableName);
+  return `(CASE
+    WHEN ${tableName}.cf_verified_bot = 1 OR ${tableName}.known_bot_signature = 1
+      THEN ${RISK_WEIGHTS.forcedBot}
+    ELSE MIN(
+      ${RISK_WEIGHTS.forcedBot},
+      MAX(
+        ${additive},
+        CASE WHEN ${effectiveBotEvidenceSql(tableName)}
+          THEN ${RISK_WEIGHTS.effectiveBotMinimum}
+          ELSE 0
+        END
+      )
+    )
+  END)`;
+}
+
+function countedSql(tableName = "scored_visits"): string {
+  return `${tableName}.risk_score < ${RISK_WEIGHTS.suspiciousAutomationThreshold}`;
+}
+
+function visitEvidenceCteSql(): string {
+  const currentMs = "ROUND(julianday(visits.visited_at_utc) * 86400000.0)";
+  const activityMs = "ROUND(julianday(ip_activity.visited_at_utc) * 86400000.0)";
+  return `WITH visit_evidence AS (
+    SELECT
+      visits.id, visits.visited_at_utc, visits.ip_address, visits.method,
+      visits.host, visits.path, visits.query_string, visits.referrer,
+      visits.user_agent, visits.browser_summary, visits.country, visits.region,
+      visits.city, visits.asn, visits.colo, visits.cf_ray,
+      visits.as_organization, visits.continent, visits.timezone,
+      visits.http_protocol, visits.tls_version, visits.client_tcp_rtt_ms,
+      visits.accept_language, visits.sec_fetch_site, visits.cf_bot_score,
+      visits.cf_verified_bot, visits.cf_corporate_proxy,
+      CASE WHEN visits.is_suspected_bot = 1 THEN 1 ELSE 0 END AS stored_suspected_bot,
+      CASE WHEN ${knownBotSignatureSql()} THEN 1 ELSE 0 END AS known_bot_signature,
+      CASE WHEN ${scannerPathSql("visits.path")} THEN 1 ELSE 0 END AS scanner_path,
+      CASE WHEN ${unlistedPageSql("visits.path")} THEN 1 ELSE 0 END AS unlisted_page,
+      CASE WHEN ${scannerBurstSql()} THEN 1 ELSE 0 END AS scanner_burst,
+      CASE WHEN ${automatedBrowserSql()} THEN 1 ELSE 0 END AS automated_browser,
+      CASE WHEN ${hostingNetworkSql()} THEN 1 ELSE 0 END AS hosting_network,
+      CASE WHEN ${recognizedBrowserSql()} THEN 0 ELSE 1 END AS unknown_browser,
+      (SELECT MIN(ip_activity.visited_at_utc)
+        FROM visits AS ip_activity
+        WHERE ip_activity.ip_address = visits.ip_address) AS first_seen_utc,
+      (SELECT MAX(ip_activity.visited_at_utc)
+        FROM visits AS ip_activity
+        WHERE ip_activity.ip_address = visits.ip_address) AS last_seen_utc,
+      (SELECT COUNT(*)
+        FROM visits AS ip_activity
+        WHERE ip_activity.ip_address = visits.ip_address) AS retained_visit_count,
+      (SELECT COUNT(*)
+        FROM visits AS ip_activity
+        WHERE ip_activity.ip_address = visits.ip_address
+          AND ${activityMs} >= ${currentMs} - 86400000
+          AND ${activityMs} <= ${currentMs}) AS visits_preceding_24h,
+      (SELECT COUNT(*)
+        FROM visits AS ip_activity
+        WHERE ip_activity.ip_address = visits.ip_address
+          AND ABS(${activityMs} - ${currentMs}) <= 120000) AS visits_within_2m,
+      (SELECT COUNT(DISTINCT ip_activity.path)
+        FROM visits AS ip_activity
+        WHERE ip_activity.ip_address = visits.ip_address) AS distinct_path_count,
+      CASE
+        WHEN ${unlistedPageSql("visits.path")} THEN 'unlisted-page'
+        WHEN ${automatedBrowserSql()} THEN 'automated-browser'
+        ELSE NULL
+      END AS bot_reason
+    FROM visits
+  ), scored_visits AS (
+    SELECT visit_evidence.*, ${riskScoreSql("visit_evidence")} AS risk_score
+    FROM visit_evidence
+  )`;
 }
 
 interface VisitDatabaseRow {
@@ -129,7 +290,30 @@ interface VisitDatabaseRow {
   asn: number | null;
   colo: string | null;
   cf_ray: string | null;
-  is_suspected_bot: number;
+  as_organization: string | null;
+  continent: string | null;
+  timezone: string | null;
+  http_protocol: string | null;
+  tls_version: string | null;
+  client_tcp_rtt_ms: number | null;
+  accept_language: string | null;
+  sec_fetch_site: string | null;
+  cf_bot_score: number | null;
+  cf_verified_bot: number | null;
+  cf_corporate_proxy: number | null;
+  stored_suspected_bot: number;
+  known_bot_signature: number;
+  scanner_path: number;
+  unlisted_page: number;
+  scanner_burst: number;
+  automated_browser: number;
+  first_seen_utc: string;
+  last_seen_utc: string;
+  retained_visit_count: number;
+  visits_preceding_24h: number;
+  visits_within_2m: number;
+  distinct_path_count: number;
+  risk_score: number;
   bot_reason: "automated-browser" | "unlisted-page" | null;
 }
 
@@ -166,31 +350,32 @@ function buildWhere(filters: DashboardFilters): {
 } {
   const fragments: string[] = [];
   const values: Array<string | number> = [];
+  const tableName = "scored_visits";
 
   if (filters.bots === "exclude") {
-    fragments.push(`NOT ${effectiveBotSql()}`);
+    fragments.push(countedSql(tableName));
   } else if (filters.bots === "only") {
-    fragments.push(effectiveBotSql());
+    fragments.push(`NOT ${countedSql(tableName)}`);
   }
 
   if (filters.from) {
-    fragments.push("visited_at_utc >= ?");
+    fragments.push(`${tableName}.visited_at_utc >= ?`);
     values.push(getHongKongDateRange(filters.from).startInclusive);
   }
   if (filters.to) {
-    fragments.push("visited_at_utc < ?");
+    fragments.push(`${tableName}.visited_at_utc < ?`);
     values.push(getHongKongDateRange(filters.to).endExclusive);
   }
   if (filters.ip) {
-    fragments.push("ip_address LIKE ? ESCAPE '\\'");
+    fragments.push(`${tableName}.ip_address LIKE ? ESCAPE '\\'`);
     values.push(`%${escapeLikeLiteral(filters.ip)}%`);
   }
   if (filters.country) {
-    fragments.push("country = ?");
+    fragments.push(`${tableName}.country = ?`);
     values.push(filters.country);
   }
   if (filters.path) {
-    fragments.push("path LIKE ? ESCAPE '\\'");
+    fragments.push(`${tableName}.path LIKE ? ESCAPE '\\'`);
     values.push(`%${escapeLikeLiteral(filters.path)}%`);
   }
 
@@ -201,6 +386,28 @@ function buildWhere(filters: DashboardFilters): {
 }
 
 function toVisitRow(row: VisitDatabaseRow): VisitRow {
+  const evidence: VisitEvidence = {
+    asn: row.asn,
+    asOrganization: row.as_organization,
+    browserSummary: row.browser_summary,
+    referrer: row.referrer,
+    cfBotScore: row.cf_bot_score,
+    cfVerifiedBot: row.cf_verified_bot === 1,
+    knownBotSignature: row.known_bot_signature === 1,
+    storedSuspectedBot: row.stored_suspected_bot === 1,
+    scannerPath: row.scanner_path === 1,
+    unlistedPage: row.unlisted_page === 1,
+    scannerBurst: row.scanner_burst === 1,
+    automatedBrowser: row.automated_browser === 1,
+    visitsWithin2m: Number(row.visits_within_2m),
+    visitsPreceding24h: Number(row.visits_preceding_24h)
+  };
+  const decision = buildVisitDecision(evidence);
+  const sqlRiskScore = Number(row.risk_score);
+  if (decision.riskScore !== sqlRiskScore) {
+    throw new Error(`Risk score mismatch for visit ${row.id}`);
+  }
+
   return {
     id: row.id,
     visitedAtUtc: row.visited_at_utc,
@@ -218,7 +425,26 @@ function toVisitRow(row: VisitDatabaseRow): VisitRow {
     asn: row.asn,
     colo: row.colo,
     cfRay: row.cf_ray,
-    isSuspectedBot: row.is_suspected_bot === 1,
+    asOrganization: row.as_organization,
+    continent: row.continent,
+    timezone: row.timezone,
+    httpProtocol: row.http_protocol,
+    tlsVersion: row.tls_version,
+    clientTcpRttMs: row.client_tcp_rtt_ms,
+    acceptLanguage: row.accept_language,
+    secFetchSite: row.sec_fetch_site,
+    cfBotScore: row.cf_bot_score,
+    cfVerifiedBot: row.cf_verified_bot === null ? null : row.cf_verified_bot === 1,
+    cfCorporateProxy:
+      row.cf_corporate_proxy === null ? null : row.cf_corporate_proxy === 1,
+    firstSeenUtc: row.first_seen_utc,
+    lastSeenUtc: row.last_seen_utc,
+    retainedVisitCount: Number(row.retained_visit_count),
+    visitsPreceding24h: Number(row.visits_preceding_24h),
+    visitsWithin2m: Number(row.visits_within_2m),
+    distinctPathCount: Number(row.distinct_path_count),
+    ...decision,
+    isSuspectedBot: !decision.counted,
     botReason: row.bot_reason
   };
 }
@@ -231,17 +457,9 @@ export async function getVisitPage(
   const offset = (filters.page - 1) * PAGE_SIZE;
   const result = await db
     .prepare(
-      `SELECT
-        id, visited_at_utc, ip_address, method, host, path, query_string,
-        referrer, user_agent, browser_summary, country, region, city, asn,
-        colo, cf_ray,
-        CASE WHEN ${effectiveBotSql()} THEN 1 ELSE 0 END AS is_suspected_bot,
-        CASE
-          WHEN ${unlistedPageSql("visits.path")} THEN 'unlisted-page'
-          WHEN ${automatedBrowserSql()} THEN 'automated-browser'
-          ELSE NULL
-        END AS bot_reason
-      FROM visits${where.sql}
+      `${visitEvidenceCteSql()}
+      SELECT *
+      FROM scored_visits${where.sql}
       ORDER BY visited_at_utc DESC, id DESC
       LIMIT ? OFFSET ?`
     )
@@ -263,17 +481,9 @@ export async function getVisitsForExport(
   const where = buildWhere(filters);
   const result = await db
     .prepare(
-      `SELECT
-        id, visited_at_utc, ip_address, method, host, path, query_string,
-        referrer, user_agent, browser_summary, country, region, city, asn,
-        colo, cf_ray,
-        CASE WHEN ${effectiveBotSql()} THEN 1 ELSE 0 END AS is_suspected_bot,
-        CASE
-          WHEN ${unlistedPageSql("visits.path")} THEN 'unlisted-page'
-          WHEN ${automatedBrowserSql()} THEN 'automated-browser'
-          ELSE NULL
-        END AS bot_reason
-      FROM visits${where.sql}
+      `${visitEvidenceCteSql()}
+      SELECT *
+      FROM scored_visits${where.sql}
       ORDER BY visited_at_utc DESC, id DESC
       LIMIT ?`
     )
@@ -290,11 +500,12 @@ async function countRange(
 ): Promise<SummaryCount> {
   const row = await db
     .prepare(
-      `SELECT
+      `${visitEvidenceCteSql()}
+      SELECT
         COUNT(*) AS total_visits,
         COUNT(DISTINCT ip_address) AS distinct_network_addresses
-      FROM visits
-      WHERE NOT ${effectiveBotSql()}
+      FROM scored_visits
+      WHERE ${countedSql()}
         AND visited_at_utc >= ?
         AND visited_at_utc <= ?`
     )
