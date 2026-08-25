@@ -764,6 +764,37 @@ describe("getVisitPage", () => {
     });
   });
 
+  test("recognizes canonical compound bot signatures and legacy Googlebot summaries", async () => {
+    const rows = [
+      createVisit({ ipAddress: "192.0.2.21", userAgent: "Googlebot/2.1", browserSummary: "Googlebot" }),
+      createVisit({ ipAddress: "192.0.2.22", userAgent: "bingbot/2.0", browserSummary: "Unknown" }),
+      createVisit({ ipAddress: "192.0.2.23", userAgent: "GPTBot/1.2", browserSummary: "Unknown" }),
+      createVisit({
+        ipAddress: "192.0.2.24",
+        userAgent: "Mozilla/5.0",
+        browserSummary: "Googlebot",
+        isSuspectedBot: false
+      }),
+      createVisit({ ipAddress: "192.0.2.25", userAgent: "Abbott/1.0", browserSummary: "Chrome on macOS" })
+    ];
+    for (const row of rows) await insertVisit(env.DB, row);
+
+    const result = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const byIp = new Map(result.items.map((item) => [item.ipAddress, item]));
+    for (const ipAddress of ["192.0.2.21", "192.0.2.22", "192.0.2.23", "192.0.2.24"]) {
+      expect(byIp.get(ipAddress)).toMatchObject({
+        visitorType: "Known bot signature",
+        riskScore: 100,
+        counted: false
+      });
+    }
+    expect(byIp.get("192.0.2.25")).toMatchObject({
+      visitorType: "Likely human",
+      riskScore: 10,
+      counted: true
+    });
+  });
+
   test("keeps SQL and TypeScript hosting normalization identical for repeated separators", async () => {
     await insertVisit(
       env.DB,
@@ -785,6 +816,37 @@ describe("getVisitPage", () => {
       riskReasons: ["Hosting network"],
       counted: true
     });
+    expect(exported).toEqual(page.items);
+  });
+
+  test("keeps SQL-selected hosting evidence authoritative for adversarial organizations", async () => {
+    const cases: Array<[string, string | null, boolean]> = [
+      ["192.0.2.31", "Internet ViKings International AB", false],
+      ["192.0.2.32", "Internet\0Vikings International AB", false],
+      ["192.0.2.33", "Internet--  Vikings International AB", true],
+      ["192.0.2.34", "100%_Internet_Vikings", true],
+      ["192.0.2.35", "Hetz%ner Online GmbH", false],
+      ["192.0.2.36", "", false],
+      ["192.0.2.37", null, false]
+    ];
+    for (const [ipAddress, asOrganization] of cases) {
+      await insertVisit(env.DB, createVisit({
+        ipAddress,
+        asOrganization,
+        referrer: "https://lizhe.link/"
+      }));
+    }
+
+    const page = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const exported = await getVisitsForExport(env.DB, filters({ bots: "include" }));
+    const byIp = new Map(page.items.map((item) => [item.ipAddress, item]));
+    for (const [ipAddress, , hosting] of cases) {
+      expect(byIp.get(ipAddress)).toMatchObject({
+        riskScore: hosting ? 30 : 0,
+        riskReasons: hosting ? ["Hosting network"] : [],
+        counted: true
+      });
+    }
     expect(exported).toEqual(page.items);
   });
 
@@ -956,7 +1018,7 @@ describe("getVisitPage", () => {
       riskScore: 75,
       riskReasons: ["Low Cloudflare bot score", "Unknown browser"],
       counted: false,
-      isSuspectedBot: true,
+      isSuspectedBot: false,
       botReason: null
     });
 

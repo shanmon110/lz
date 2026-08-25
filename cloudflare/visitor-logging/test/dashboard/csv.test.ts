@@ -63,6 +63,20 @@ test("exports intelligence values, stable booleans, and readable reasons", () =>
   );
 });
 
+test("keeps legacy suspected-bot false independently of a risk-only exclusion", () => {
+  const csv = serializeVisitsCsv([visit({
+    asOrganization: "Cloudflare",
+    acceptLanguage: "en",
+    riskReasons: [],
+    isSuspectedBot: false,
+    counted: false
+  })]);
+  const values = csv.split("\r\n")[1]?.split(",");
+
+  expect(values?.[16]).toBe("false");
+  expect(values?.[38]).toBe("false");
+});
+
 test("uses empty cells for unavailable nullable intelligence metadata", () => {
   const csv = serializeVisitsCsv([
     visit({

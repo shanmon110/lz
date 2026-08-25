@@ -116,7 +116,7 @@ export const DASHBOARD_SCRIPT = `(() => {
 
   function activity(visit) {
     const count = Number(visit.visitsPreceding24h);
-    return "24h: " + String(Number.isFinite(count) ? count : 0);
+    return "24h: " + String(Number.isFinite(count) ? count : 0) + " · See Details";
   }
 
   function riskBadgeClass(score) {
@@ -254,6 +254,11 @@ export const DASHBOARD_SCRIPT = `(() => {
       details.setAttribute("type", "button");
       details.setAttribute("aria-expanded", "false");
       details.setAttribute("aria-controls", detailRow.children[0].children[0].getAttribute("id"));
+      const activityCell = tableCell(activity(visit), "activity-cell");
+      const activityId = detailRow.children[0].children[0].getAttribute("id")
+        .replace("visit-details-", "visit-activity-");
+      activityCell.setAttribute("id", activityId);
+      details.setAttribute("aria-describedby", activityId);
       details.textContent = "Details";
       details.addEventListener("click", () => {
         const expanded = details.getAttribute("aria-expanded") === "true";
@@ -275,7 +280,7 @@ export const DASHBOARD_SCRIPT = `(() => {
         tableCell(fullPath(visit)),
         tableCell(visit.referrer),
         tableCell(visit.browserSummary),
-        tableCell(activity(visit), "activity-cell"),
+        activityCell,
         tableCell(visit.visitorType, "visitor-type"),
         riskCell,
         tableCell(reasonText(visit), "reasons-cell"),

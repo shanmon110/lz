@@ -120,6 +120,8 @@ Classification is deterministic, versioned as `risk-v1`, and shared by the dashb
 | At least two visits from the same IP within two minutes | +25 | `Repeated requests` |
 | At least ten visits from the same IP in the preceding 24 hours | +10 | `High 24h activity` |
 
+The canonical recognized User-Agent signature set is immutable and shared by ingestion and dashboard SQL. The bounded tokens are `bot`, `crawler`, `spider`, `googlebot`, `bingbot`, and `gptbot`; each requires non-ASCII-word boundaries on both sides. The bounded prefixes are `headless`, `curl/`, `wget/`, `httpie/`, `python-requests/`, `postmanruntime/`, `axios/`, and `java/`; each requires a non-ASCII-word left boundary and may be followed by a product/version suffix. Matching is ASCII case-insensitive, compound canonical names such as `Googlebot/2.1` are recognized, and benign embedded substrings such as `Abbott` are not. The exact historical browser summary `Googlebot` is also recognized as known-bot evidence.
+
 Clamp the result to `0–100`. A normal recognized browser starts at zero; absence of a referrer is weak evidence and cannot independently make a visit uncertain.
 
 ### Visitor type and counting decision

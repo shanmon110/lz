@@ -462,7 +462,7 @@ describe("delivered browser program", () => {
       "/notes/<script>alert(1)</script>",
       "https://example.com/<img>",
       "Browser <iframe>",
-      "24h: 2",
+      "24h: 2 · See Details",
       "Suspicious automation",
       "Risk 90",
       "Hosting network · Unknown browser · No referrer · Repeated requests",
@@ -474,6 +474,8 @@ describe("delivered browser program", () => {
     expect(detailsButton.tagName).toBe("button");
     expect(detailsButton.getAttribute("aria-expanded")).toBe("false");
     expect(detailsButton.getAttribute("aria-controls")).toBe("visit-details-91");
+    expect(cells[7].getAttribute("id")).toBe("visit-activity-91");
+    expect(detailsButton.getAttribute("aria-describedby")).toBe("visit-activity-91");
     expect(emptyRow.children[12].children[0].getAttribute("aria-controls")).toBe("visit-details-92");
     expect(detailsRow.hidden).toBe(true);
     expect(detailsRow.children[0].colSpan).toBe(13);
@@ -558,7 +560,7 @@ describe("delivered browser program", () => {
     const emptyCells = emptyRow.children;
     expect(emptyCells.map((cell) => cell.textContent)).toEqual([
       "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown",
-      "24h: 0", "Likely human", "Risk 0", "No recorded reasons", "Counted", "Details"
+      "24h: 0 · See Details", "Likely human", "Risk 0", "No recorded reasons", "Counted", "Details"
     ]);
     expect(emptyDetailsRow.hidden).toBe(true);
     const nullableSignals = emptyDetailsRow.children[0].children[0].children[3].children[1].children;

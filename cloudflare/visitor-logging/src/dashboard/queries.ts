@@ -10,6 +10,10 @@ import {
 } from "../visits/intelligence";
 import type { VisitEvidence } from "../visits/intelligence";
 import type { VisitRow } from "../visits/types";
+import {
+  CANONICAL_BOT_BROWSER_SUMMARIES,
+  CANONICAL_BOT_SIGNATURES
+} from "../visits/user-agent";
 
 const PAGE_SIZE = 50;
 export const MAX_EXPORT_ROWS = 5_000;
@@ -127,21 +131,15 @@ function effectiveBotSql(tableName = "visits"): string {
 function knownBotSignatureSql(tableName = "visits"): string {
   const userAgent = `LOWER(${tableName}.user_agent)`;
   const paddedUserAgent = `(' ' || ${userAgent} || ' ')`;
-  const boundedToken = (token: string): string =>
-    `${paddedUserAgent} GLOB '*[^a-z0-9_]${token}[^a-z0-9_]*'`;
-  const boundedPrefix = (prefix: string): string =>
-    `${paddedUserAgent} GLOB '*[^a-z0-9_]${prefix}*'`;
-  return `(${boundedToken("bot")}
-    OR ${boundedToken("crawler")}
-    OR ${boundedToken("spider")}
-    OR ${userAgent} LIKE '%headless%'
-    OR ${userAgent} LIKE '%curl/%'
-    OR ${userAgent} LIKE '%wget/%'
-    OR ${userAgent} LIKE '%httpie/%'
-    OR ${userAgent} LIKE '%python-requests/%'
-    OR ${userAgent} LIKE '%postmanruntime/%'
-    OR ${boundedPrefix("axios/")}
-    OR ${boundedPrefix("java/")})`;
+  const signatureMatches = CANONICAL_BOT_SIGNATURES.map((signature) =>
+    signature.boundary === "token"
+      ? `${paddedUserAgent} GLOB ${sqlStringLiteral(`*[^a-z0-9_]${signature.value}[^a-z0-9_]*`)}`
+      : `${paddedUserAgent} GLOB ${sqlStringLiteral(`*[^a-z0-9_]${signature.value}*`)}`
+  );
+  const summaryMatches = CANONICAL_BOT_BROWSER_SUMMARIES.map((summary) =>
+    `${tableName}.browser_summary = ${sqlStringLiteral(summary)}`
+  );
+  return `(${[...signatureMatches, ...summaryMatches].join(" OR ")})`;
 }
 
 function sqlCharacterExpression(character: string): string {
@@ -163,7 +161,7 @@ function hostingNetworkSql(tableName = "visits"): string {
   const asns = HOSTING_ASNS.join(", ");
   const organization = normalizedOrganizationSql(`${tableName}.as_organization`);
   const organizationMatches = HOSTING_ORGANIZATION_TOKENS.map((token) =>
-    `${organization} LIKE ${sqlStringLiteral(`%${token}%`)}`
+    `INSTR(${organization}, ${sqlStringLiteral(token)}) > 0`
   ).join(" OR ");
   return `(${tableName}.asn IN (${asns}) OR ${organizationMatches})`;
 }
@@ -332,6 +330,7 @@ interface VisitDatabaseRow {
   unlisted_page: number;
   scanner_burst: number;
   automated_browser: number;
+  hosting_network: number;
   first_seen_utc: string;
   last_seen_utc: string;
   retained_visit_count: number;
@@ -414,6 +413,7 @@ function toVisitRow(row: VisitDatabaseRow): VisitRow {
   const evidence: VisitEvidence = {
     asn: row.asn,
     asOrganization: row.as_organization,
+    hostingNetwork: row.hosting_network === 1,
     browserSummary: row.browser_summary,
     referrer: row.referrer,
     cfBotScore: row.cf_bot_score,
@@ -469,7 +469,12 @@ function toVisitRow(row: VisitDatabaseRow): VisitRow {
     visitsWithin2m: Number(row.visits_within_2m),
     distinctPathCount: Number(row.distinct_path_count),
     ...decision,
-    isSuspectedBot: !decision.counted,
+    isSuspectedBot:
+      evidence.storedSuspectedBot ||
+      evidence.scannerPath ||
+      evidence.unlistedPage ||
+      evidence.scannerBurst ||
+      evidence.automatedBrowser,
     botReason: row.bot_reason
   };
 }

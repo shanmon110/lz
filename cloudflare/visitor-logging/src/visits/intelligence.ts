@@ -54,6 +54,7 @@ export type VisitorType =
 export interface VisitEvidence {
   asn: number | null;
   asOrganization: string | null;
+  hostingNetwork?: boolean;
   browserSummary: string;
   referrer: string;
   cfBotScore: number | null;
@@ -137,7 +138,11 @@ export function buildVisitDecision(evidence: VisitEvidence): VisitDecision {
     riskReasons.push("Elevated Cloudflare bot risk");
   }
 
-  if (isHostingNetwork(evidence.asn, evidence.asOrganization)) {
+  const hostingNetwork = evidence.hostingNetwork ?? isHostingNetwork(
+    evidence.asn,
+    evidence.asOrganization
+  );
+  if (hostingNetwork) {
     riskScore += RISK_WEIGHTS.hostingNetwork;
     riskReasons.push("Hosting network");
   }

@@ -52,3 +52,51 @@ test("additive intelligence migration preserves legacy rows and creates the acti
 
   expect(legacyRow).toEqual(Object.fromEntries(intelligenceColumns.map((name) => [name, null])));
 });
+
+test.each([
+  [0, 1, 0, 1],
+  [600_000, 99, null, null]
+])("accepts valid intelligence CHECK boundaries", async (
+  clientTcpRttMs,
+  cfBotScore,
+  cfVerifiedBot,
+  cfCorporateProxy
+) => {
+  await expect(env.DB.prepare(
+    `INSERT INTO visits (
+      visited_at_utc, ip_address, method, host, path,
+      client_tcp_rtt_ms, cf_bot_score, cf_verified_bot, cf_corporate_proxy
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  ).bind(
+    "2026-08-25T00:00:00.000Z",
+    `192.0.2.${clientTcpRttMs === 0 ? 41 : 42}`,
+    "GET",
+    "lizhe.link",
+    "/",
+    clientTcpRttMs,
+    cfBotScore,
+    cfVerifiedBot,
+    cfCorporateProxy
+  ).run()).resolves.toMatchObject({ success: true });
+});
+
+test.each([
+  ["RTT below minimum", "client_tcp_rtt_ms", -1],
+  ["RTT above maximum", "client_tcp_rtt_ms", 600_001],
+  ["bot score below minimum", "cf_bot_score", 0],
+  ["bot score above maximum", "cf_bot_score", 100],
+  ["verified-bot outside nullable boolean", "cf_verified_bot", 2],
+  ["corporate-proxy outside nullable boolean", "cf_corporate_proxy", 2]
+])("rejects %s", async (_label, column, value) => {
+  await expect(env.DB.prepare(
+    `INSERT INTO visits (visited_at_utc, ip_address, method, host, path, ${column})
+      VALUES (?, ?, ?, ?, ?, ?)`
+  ).bind(
+    "2026-08-25T00:00:00.000Z",
+    "192.0.2.43",
+    "GET",
+    "lizhe.link",
+    "/",
+    value
+  ).run()).rejects.toThrow(/CHECK constraint failed/);
+});

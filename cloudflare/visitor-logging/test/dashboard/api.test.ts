@@ -225,6 +225,27 @@ test("returns null enrichment metadata for legacy rows", async () => {
   });
 });
 
+test("keeps the legacy suspected-bot field false for risk-only exclusions", async () => {
+  await insertVisit(env.DB, createVisit({
+    path: "/",
+    browserSummary: "Unknown",
+    cfBotScore: 20,
+    referrer: "https://lizhe.link/",
+    isSuspectedBot: false
+  }));
+
+  const response = await dashboardRequest("/api/visits?bots=include", {
+    token: await accessToken()
+  });
+  const body = await response.json() as { items: Array<Record<string, unknown>> };
+
+  expect(body.items[0]).toMatchObject({
+    riskScore: 75,
+    counted: false,
+    isSuspectedBot: false
+  });
+});
+
 test("exports real D1 rows using the active filters independently of page", async () => {
   await insertVisit(env.DB, createVisit({ country: "HK", path: "/teaching/" }));
   await insertVisit(
