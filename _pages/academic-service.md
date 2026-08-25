@@ -11,7 +11,7 @@ redirect_from:
 
 ## Conference Organization
 
-- [Special Session on Trustworthy Speech and Audio AI, MMAsia 2026](https://mmasia2026.org/calls/special-session-trustworthy-speech-audio-ai/)
+- [Trustworthy Speech and Audio AI: From Content Authenticity to Accountable Systems](https://mmasia2026.org/calls/special-session-trustworthy-speech-audio-ai/)
 
 ## Peer Review
 

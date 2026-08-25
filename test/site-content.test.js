@@ -1,12 +1,12 @@
-const { after, before, test } = require("node:test");
+const { test } = require("node:test");
 const assert = require("node:assert/strict");
 const { execFileSync } = require("node:child_process");
-const { readFileSync } = require("node:fs");
+const { existsSync, readFileSync } = require("node:fs");
 const { join, resolve } = require("node:path");
 
 const repositoryRoot = resolve(__dirname, "..");
 
-function sourceBody(relativePath) {
+function sourceFile(relativePath) {
   let source;
   try {
     source = readFileSync(join(repositoryRoot, relativePath), "utf8");
@@ -16,15 +16,73 @@ function sourceBody(relativePath) {
     }
     throw error;
   }
-  return source.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "");
+  return source;
+}
+
+function frontMatter(relativePath) {
+  const source = sourceFile(relativePath);
+  const match = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(source);
+  assert.ok(match, `${relativePath} has opening and closing YAML front matter delimiters`);
+
+  let output;
+  try {
+    output = execFileSync("ruby", ["-ryaml", "-rjson", "-e", `
+      data = YAML.safe_load(STDIN.read, aliases: false)
+      abort "front matter must be a mapping" unless data.is_a?(Hash)
+      puts JSON.generate(data)
+    `], {
+      input: match[1],
+      encoding: "utf8",
+      stdio: ["pipe", "pipe", "pipe"]
+    });
+  } catch (error) {
+    const detail = String(error.stderr || error.message).trim();
+    assert.fail(`${relativePath} has valid YAML front matter: ${detail}`);
+  }
+
+  try {
+    return JSON.parse(output);
+  } catch (error) {
+    assert.fail(`${relativePath} YAML front matter parser returned JSON: ${error.message}`);
+  }
+}
+
+function sourceBody(relativePath) {
+  const source = sourceFile(relativePath);
+  const match = /^---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/.exec(source);
+  assert.ok(match, `${relativePath} has opening and closing YAML front matter delimiters`);
+  frontMatter(relativePath);
+  return source.slice(match[0].length);
 }
 
 function rendered(relativePath) {
-  return execFileSync("/usr/local/bin/pandoc", ["--from", "gfm", "--to", "html"], {
+  return execFileSync("pandoc", ["--from", "gfm", "--to", "html"], {
     input: sourceBody(relativePath),
     encoding: "utf8"
   });
 }
+
+test("keeps the six navigation destinations and service redirects in valid front matter", () => {
+  const canonicalPermalinks = [
+    ["_pages/about.md", "/"],
+    ["_pages/publications.md", "/publications/"],
+    ["_pages/tutorials.md", "/tutorials/"],
+    ["_pages/talks.html", "/talks/"],
+    ["_pages/academic-service.md", "/academic-service/"],
+    ["_pages/teaching.html", "/teaching/"]
+  ];
+
+  for (const [relativePath, expectedPermalink] of canonicalPermalinks) {
+    assert.equal(frontMatter(relativePath).permalink, expectedPermalink, `${relativePath} uses its canonical permalink`);
+  }
+
+  assert.deepEqual(frontMatter("_pages/academic-service.md").redirect_from, [
+    "/markdown/",
+    "/md/",
+    "/markdown.html"
+  ]);
+  assert.equal(existsSync(join(repositoryRoot, "_pages/markdown.md")), false, "legacy markdown page source is removed");
+});
 
 function navigationEntries() {
   const output = execFileSync("ruby", ["-ryaml", "-rjson", "-e", `
@@ -59,6 +117,7 @@ test("publishes the approved navigation and separated academic content", () => {
   assert.match(tutorialsHtml, /2026\.ieeeicme\.org\/tutorials/);
   assert.doesNotMatch(tutorialsHtml, /mmasia2026/);
   assert.match(serviceHtml, /mmasia2026\.org\/calls\/special-session-trustworthy-speech-audio-ai/);
+  assert.match(serviceHtml, /Trustworthy Speech and Audio AI: From Content Authenticity to Accountable Systems/);
   assert.doesNotMatch(serviceHtml, /Speech Large Language Models: Architectures/);
   assert.match(talksHtml, /bilibili\.com\/video\/BV17T42127Wd/);
   assert.match(teachingHtml, /Speech Processing and Recognition/);
