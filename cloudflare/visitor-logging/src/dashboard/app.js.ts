@@ -19,10 +19,14 @@ export const DASHBOARD_SCRIPT = `(() => {
     return value === null || value === undefined || value === "" ? "—" : String(value);
   }
 
+  function formatUnknown(value) {
+    return value === null || value === undefined || value === "" ? "Unknown" : String(value);
+  }
+
   function formatHongKongTimestamp(value) {
-    if (!value) return "—";
+    if (!value) return "Unknown";
     const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return "—";
+    if (Number.isNaN(date.getTime())) return "Unknown";
     const parts = new Intl.DateTimeFormat("en-CA", {
       timeZone: "Asia/Hong_Kong",
       year: "numeric",
@@ -90,55 +94,196 @@ export const DASHBOARD_SCRIPT = `(() => {
 
   function tableCell(value, className) {
     const cell = document.createElement("td");
-    cell.textContent = formatDashboardValue(value);
+    cell.textContent = formatUnknown(value);
     if (className) cell.className = className;
     return cell;
   }
 
   function fullPath(visit) {
-    return visit.queryString ? visit.path + "?" + visit.queryString : visit.path;
+    return formatUnknown(visit.path);
   }
 
   function location(visit) {
     const values = [visit.country, visit.city].filter((value) => value !== null && value !== "");
-    return values.length ? values.join(" · ") : formatDashboardValue(null);
+    return values.length ? values.join(" · ") : "Unknown";
   }
 
-  function renderRows(items, botsIncluded) {
+  function network(visit) {
+    if (visit.asn === null || visit.asn === undefined || visit.asn === "") return "Unknown";
+    const asn = "AS" + String(visit.asn);
+    return visit.asOrganization ? asn + " · " + String(visit.asOrganization) : asn;
+  }
+
+  function activity(visit) {
+    const count = Number(visit.visitsPreceding24h);
+    return "24h: " + String(Number.isFinite(count) ? count : 0);
+  }
+
+  function riskBadgeClass(score) {
+    const value = Number(score);
+    if (!Number.isFinite(value)) return "risk-badge risk-unknown";
+    if (value >= 70) return "risk-badge risk-high";
+    if (value >= 40) return "risk-badge risk-medium";
+    return "risk-badge risk-low";
+  }
+
+  function riskText(visit) {
+    const score = Number(visit.riskScore);
+    return "Risk " + (Number.isFinite(score) ? String(score) : "Unknown");
+  }
+
+  function reasonText(visit) {
+    return Array.isArray(visit.riskReasons) && visit.riskReasons.length
+      ? visit.riskReasons.map((reason) => String(reason)).join(" · ")
+      : "No recorded reasons";
+  }
+
+  function countedLabel(visit) {
+    return visit.counted ? "Counted" : "Excluded";
+  }
+
+  function cloudflareValue(value) {
+    if (value === null || value === undefined) return "Not available";
+    return value ? "Yes" : "No";
+  }
+
+  function detailEntry(list, label, value) {
+    const term = document.createElement("dt");
+    term.textContent = label;
+    const description = document.createElement("dd");
+    description.textContent = formatUnknown(value);
+    list.append(term, description);
+  }
+
+  function appendDetailsGroup(panel, title, entries) {
+    const group = document.createElement("section");
+    group.className = "detail-group";
+    const heading = document.createElement("h3");
+    heading.textContent = title;
+    const list = document.createElement("dl");
+    list.className = "detail-list";
+    for (const entry of entries) detailEntry(list, entry[0], entry[1]);
+    group.append(heading, list);
+    panel.append(group);
+  }
+
+  function uniqueDetailId(visit, index, usedIds) {
+    const id = Number(visit.id);
+    const base = "visit-details-" + String(Number.isSafeInteger(id) && id > 0 ? id : index + 1);
+    let candidate = base;
+    let duplicate = 2;
+    while (usedIds.has(candidate)) {
+      candidate = base + "-" + String(duplicate);
+      duplicate += 1;
+    }
+    usedIds.add(candidate);
+    return candidate;
+  }
+
+  function detailsRow(visit, index, usedIds) {
+    const row = document.createElement("tr");
+    row.className = "details-row";
+    row.hidden = true;
+    const cell = document.createElement("td");
+    cell.colSpan = 13;
+    const panel = document.createElement("div");
+    panel.className = "details-panel";
+    panel.setAttribute("id", uniqueDetailId(visit, index, usedIds));
+
+    appendDetailsGroup(panel, "Request", [
+      ["Visit ID", visit.id], ["Method", visit.method], ["Host", visit.host],
+      ["Path", fullPath(visit)], ["Sanitized referrer", visit.referrer],
+      ["Timestamp", formatHongKongTimestamp(visit.visitedAtUtc)], ["Ray ID", visit.cfRay]
+    ]);
+    appendDetailsGroup(panel, "Network", [
+      ["IP address", visit.ipAddress], ["Country", visit.country], ["Region", visit.region],
+      ["City", visit.city], ["Continent", visit.continent], ["Timezone", visit.timezone],
+      ["ASN", visit.asn === null || visit.asn === undefined ? null : "AS" + String(visit.asn)],
+      ["Organization", visit.asOrganization], ["Colo", visit.colo],
+      ["HTTP protocol", visit.httpProtocol], ["TLS version", visit.tlsVersion],
+      ["TCP RTT", visit.clientTcpRttMs === null || visit.clientTcpRttMs === undefined
+        ? null : String(visit.clientTcpRttMs) + " ms"]
+    ]);
+    appendDetailsGroup(panel, "Client", [
+      ["Browser summary", visit.browserSummary], ["Raw User-Agent", visit.userAgent],
+      ["Accept-Language", visit.acceptLanguage], ["Sec-Fetch-Site", visit.secFetchSite]
+    ]);
+    appendDetailsGroup(panel, "Cloudflare signals", [
+      ["Bot score", visit.cfBotScore === null || visit.cfBotScore === undefined
+        ? "Not available" : visit.cfBotScore],
+      ["Verified bot", cloudflareValue(visit.cfVerifiedBot)],
+      ["Corporate proxy", cloudflareValue(visit.cfCorporateProxy)]
+    ]);
+    appendDetailsGroup(panel, "Activity", [
+      ["First seen", formatHongKongTimestamp(visit.firstSeenUtc)],
+      ["Last seen", formatHongKongTimestamp(visit.lastSeenUtc)],
+      ["Retained total", visit.retainedVisitCount], ["Preceding 24-hour total", visit.visitsPreceding24h],
+      ["Two-minute total", visit.visitsWithin2m], ["Distinct paths", visit.distinctPathCount]
+    ]);
+    appendDetailsGroup(panel, "Decision", [
+      ["Visitor type", visit.visitorType], ["Risk score", visit.riskScore],
+      ["Reasons", reasonText(visit)], ["Counted", countedLabel(visit)],
+      ["Classification version", visit.classificationVersion]
+    ]);
+
+    cell.append(panel);
+    row.append(cell);
+    return row;
+  }
+
+  function renderRows(items) {
     const body = byId("visit-rows");
     body.replaceChildren();
 
     if (items.length === 0) {
       const row = document.createElement("tr");
       const cell = tableCell("No visits match these filters.");
-      cell.colSpan = 7;
+      cell.colSpan = 13;
       row.append(cell);
       body.append(row);
       return;
     }
 
-    for (const visit of items) {
+    const usedDetailIds = new Set();
+    for (let index = 0; index < items.length; index += 1) {
+      const visit = items[index];
       const row = document.createElement("tr");
+      const detailRow = detailsRow(visit, index, usedDetailIds);
+      const details = document.createElement("button");
+      details.className = "details-toggle";
+      details.setAttribute("type", "button");
+      details.setAttribute("aria-expanded", "false");
+      details.setAttribute("aria-controls", detailRow.children[0].children[0].getAttribute("id"));
+      details.textContent = "Details";
+      details.addEventListener("click", () => {
+        const expanded = details.getAttribute("aria-expanded") === "true";
+        details.setAttribute("aria-expanded", expanded ? "false" : "true");
+        detailRow.hidden = expanded;
+      });
+      const riskCell = document.createElement("td");
+      const riskBadge = document.createElement("span");
+      riskBadge.className = riskBadgeClass(visit.riskScore);
+      riskBadge.textContent = riskText(visit);
+      riskCell.append(riskBadge);
+      const detailsCell = document.createElement("td");
+      detailsCell.append(details);
       row.append(
         tableCell(formatHongKongTimestamp(visit.visitedAtUtc), "time-cell"),
         tableCell(visit.ipAddress, "ip-cell"),
         tableCell(location(visit)),
+        tableCell(network(visit)),
         tableCell(fullPath(visit)),
         tableCell(visit.referrer),
-        tableCell(visit.browserSummary)
+        tableCell(visit.browserSummary),
+        tableCell(activity(visit), "activity-cell"),
+        tableCell(visit.visitorType, "visitor-type"),
+        riskCell,
+        tableCell(reasonText(visit), "reasons-cell"),
+        tableCell(countedLabel(visit), visit.counted ? "counted" : "excluded"),
+        detailsCell
       );
-      const botCell = tableCell(
-        botsIncluded && visit.isSuspectedBot
-          ? visit.botReason === "automated-browser"
-            ? "Likely automated browsing"
-            : visit.botReason === "unlisted-page"
-              ? "Unlisted page"
-            : "Suspected bot"
-          : formatDashboardValue(null),
-        botsIncluded && visit.isSuspectedBot ? "bot-marker" : ""
-      );
-      row.append(botCell);
       body.append(row);
+      body.append(detailRow);
     }
   }
 
@@ -167,7 +312,7 @@ export const DASHBOARD_SCRIPT = `(() => {
     byId("visit-rows").replaceChildren();
     const row = document.createElement("tr");
     const cell = tableCell("Visitor data is temporarily unavailable.");
-    cell.colSpan = 7;
+    cell.colSpan = 13;
     row.append(cell);
     byId("visit-rows").append(row);
   }
@@ -178,7 +323,6 @@ export const DASHBOARD_SCRIPT = `(() => {
     if (!params.has("bots")) params.set("bots", "exclude");
     if (!params.has("page")) params.set("page", "1");
     const page = pageNumber(params);
-    const botsIncluded = params.get("bots") !== "exclude";
 
     populateFilters(params);
     byId("export-link").href = csvUrl(params);
@@ -191,7 +335,7 @@ export const DASHBOARD_SCRIPT = `(() => {
       setSummary("today", summary.today);
       setSummary("seven-days", summary.sevenDays);
       setSummary("thirty-days", summary.thirtyDays);
-      renderRows(visits.items, botsIncluded);
+      renderRows(visits.items);
 
       const previous = byId("previous-page");
       previous.href = pageUrl(params, Math.max(1, page - 1));
