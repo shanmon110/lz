@@ -59,6 +59,30 @@
     font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
   }
 
+  .news-more {
+    margin: 0.5em 0 $indent-var;
+
+    summary {
+      width: fit-content;
+      color: $text-color;
+      font-family: $sans-serif;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &[open] summary {
+      margin-bottom: 0.75em;
+    }
+
+    ul {
+      margin-top: 0;
+    }
+  }
+
   h2 {
     padding-bottom: 0.5em;
     border-bottom: 1px solid $border-color;

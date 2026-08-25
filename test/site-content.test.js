@@ -217,7 +217,7 @@ test("gives each homepage section its approved accessible emoji", () => {
   assert.doesNotMatch(indexHtml, /section-icon|fa-user|fa-bullhorn|fa-microphone-alt/);
 });
 
-test("formats homepage news as one-line abbreviated-month items", () => {
+test("restores homepage news and collapses entries after the newest ten", () => {
   const indexHtml = rendered("_pages/about.md");
   const biographyMatch = /<h2 id="biography">[\s\S]*?<\/h2>\s*<p>([\s\S]*?)<\/p>/.exec(indexHtml);
   const expectedBiography = "Zhe Li is a Postdoctoral Fellow at The University of Hong Kong. His research interests include speech LLMs, robust speaker representation learning, and multimodal artificial intelligence for healthcare applications. He received his Ph.D. in Electrical and Electronic Engineering from The Hong Kong Polytechnic University in 2025, his M.Sc. in Software Engineering from Xinjiang University in 2021, and his B.Eng. in Computer Science from Qilu University of Technology in 2016. He was a research intern at Microsoft Research Asia (MSRA) in 2025 and a visiting Ph.D. researcher in the Department of Electrical Engineering at Stanford University in 2024. He has led two research projects and contributed to a project funded by the Hong Kong Research Grants Council. He has published more than 60 papers in leading speech journals and conferences, including IEEE TASLP, ICASSP, and INTERSPEECH. He holds three granted invention patents and one software copyright. He delivered tutorials on speech large language models at ICME 2026 and INTERSPEECH 2026, and co-organized a special session at ACM MMAsia 2026. He received the 2020 Outstanding Scientific and Technological Achievement Award from the Chinese Association for Artificial Intelligence. His co-authored work received the Best Student Paper Runner-Up Award at PRICAI 2024.";
@@ -225,18 +225,61 @@ test("formats homepage news as one-line abbreviated-month items", () => {
     indexHtml.indexOf('<h2 id="news">'),
     indexHtml.indexOf('<h2 id="research-interests">')
   );
+  const detailsIndex = newsHtml.indexOf('<details class="news-more" markdown="1">');
+  const visibleNewsHtml = newsHtml.slice(0, detailsIndex);
+  const collapsedNewsHtml = newsHtml.slice(detailsIndex);
   const expectedNews = [
-    ["Dec. 2026:", "Special Session on Trustworthy Speech and Audio AI at MMAsia 2026"],
-    ["Sept. 2026:", "Speech Large Language Models for Under-Resourced Languages"],
-    ["Jul. 2026:", "Speech Large Language Models: Architectures, Efficient Adaptation, and Applications"]
+    ["Dec. 2026:", "Special Session on Trustworthy Speech and Audio AI at MMAsia 2026", "https://mmasia2026.org/calls/special-session-trustworthy-speech-audio-ai/"],
+    ["Sept. 2026:", "Speech Large Language Models for Under-Resourced Languages", "https://interspeech2026.org/en-AU/pages/programme/tutorials"],
+    ["Jul. 2026:", "Speech Large Language Models: Architectures, Efficient Adaptation, and Applications", "https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e"],
+    ["Jul. 2026:", "Towards Robust Remote Sensing Visual Question Answering", "https://doi.org/10.1016/j.neunet.2026.109308"],
+    ["Jul. 2026:", "STEP: Semantic-Guided Two-Stage Framework"],
+    ["Jun. 2026:", "4 papers have been accepted to INTERSPEECH 2026"],
+    ["Apr. 2026:", "DB-SMGA: Dual-Branch Sequential Multi-Granularity Attention"],
+    ["Apr. 2026:", "Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation"],
+    ["Apr. 2026:", "Speech Large Language Models for Under-Resourced Languages", "https://interspeech2026.org/en-AU/pages/programme/tutorials"],
+    ["Mar. 2026:", "Towards A Unified Perspective on Parameter-Efficient Fine Tuning", "https://doi.org/10.1109/TASLPRO.2026.3682068"],
+    ["Jan. 2026:", "Two papers accepted to ICASSP 2026"],
+    ["Dec. 2025:", "My First Tutorial!", "https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e"],
+    ["Sep. 29, 2025:", "WhisMultiNet: Advancing End-to-End Speech Topic Classification"],
+    ["Sep. 4, 2025:", "Disentangling Speech Representations Learning with Latent Diffusion"],
+    ["Aug. 20, 2025:", "One paper accepted to EMNLP 2025"],
+    ["Jun. 18, 2025:", "One paper accepted to MICCAI 2025"],
+    ["Jun. 14, 2025:", "Mutual Information-Enhanced Contrastive Learning with Margin"],
+    ["May 19, 2025:", "Two papers accepted to INTERSPEECH 2025"],
+    ["Mar. 4, 2025:", "Spectral-Aware Low-Rank Adaptation for Speaker Verification", "https://mp.weixin.qq.com/s/2ju6s77tFD-fhD43D7cDDA"],
+    ["Feb. 11, 2025:", "Joined Microsoft Research Asia (MSRA)"],
+    ["Dec. 21, 2024:", "Four papers accepted to ICASSP 2025"],
+    ["Dec. 4, 2024:", "Best Student Paper Runner-Up Award"],
+    ["Jun. 17, 2024:", "Parameter-efficient Fine-tuning of Speaker-Aware Dynamic Prompts", "https://mp.weixin.qq.com/s/1rumaLXfNoLEVM9HZNT3Eg"],
+    ["Apr. 3, 2024:", "Dual Parameter-Efficient Fine-Tuning for Speaker Representation", "https://www.bilibili.com/video/BV17T42127Wd?t=47.1"],
+    ["Dec. 8, 2023:", "Maximal Speaker Separability via Robust Speaker Representation Learning"],
+    ["Dec. 3, 2023:", "International Doctoral Forum 2023"],
+    ["May 15, 2023:", "Discriminative Speaker Representation via Contrastive Learning", "https://www.bilibili.com/video/BV1y8411S7Qg?t=3.8"],
+    ["Jul. 1, 2022:", "Odyssey-CNSRC Workshop 2022", "https://www.bilibili.com/video/BV18S4y1p7xY?p=8&t=0.9"],
+    ["May 29, 2021:", "Completed Master’s oral examination"],
+    ["Nov. 14, 2020:", "Outstanding Scientific and Technological Achievement Award", "https://mp.weixin.qq.com/s/HgcGxSYnunYZaDQIU7Tjuw"],
+    ["Oct. 29, 2020:", "CCL 2020", "https://hub.baai.ac.cn/view/3391"],
+    ["Oct. 11, 2020:", "CCMT 2020", "https://www.bilibili.com/video/BV1PD4y197ma?p=6"]
   ];
-  const newsItems = newsHtml.match(/<li>[\s\S]*?<\/li>/g) || [];
+  const visibleNewsItems = visibleNewsHtml.match(/<li>[\s\S]*?<\/li>/g) || [];
+  const collapsedNewsItems = collapsedNewsHtml.match(/<li>[\s\S]*?<\/li>/g) || [];
+  const allNewsItems = [...visibleNewsItems, ...collapsedNewsItems];
 
-  assert.equal(newsItems.length, expectedNews.length);
-  for (const [index, [month, item]] of expectedNews.entries()) {
-    assert.ok(newsItems[index].includes(`<strong>${month}</strong>`), `${month} appears in reverse chronological order`);
-    assert.ok(newsItems[index].includes(`>${item}</a>`), `${item} shares one news item with ${month}`);
+  assert.ok(detailsIndex > 0, "older News entries use a details disclosure");
+  assert.equal(visibleNewsItems.length, 10);
+  assert.equal(collapsedNewsItems.length, 22);
+  assert.equal(allNewsItems.length, expectedNews.length);
+  for (const [index, [month, item, href]] of expectedNews.entries()) {
+    const newsText = allNewsItems[index].replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
+    const newsLinks = [...allNewsItems[index].matchAll(/href="([^"]+)"/g)].map((match) => match[1].replace(/&amp;/g, "&"));
+    assert.ok(allNewsItems[index].includes(`<strong>${month}</strong>`), `${month} appears at News position ${index + 1}`);
+    assert.ok(newsText.includes(item), `${item} identifies News item ${index + 1}`);
+    if (href) assert.ok(newsLinks.includes(href), `${item} retains its supplied link`);
   }
+
+  assert.match(collapsedNewsHtml, /^<details class="news-more" markdown="1">\s*<summary>More<\/summary>/);
+  assert.doesNotMatch(collapsedNewsHtml, /^<details[^>]*\sopen(?:\s|>)/);
 
   assert.doesNotMatch(newsHtml, /<h3/);
   assert.ok(biographyMatch, "Biography paragraph is rendered after its heading");
