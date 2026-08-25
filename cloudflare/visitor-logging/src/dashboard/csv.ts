@@ -19,7 +19,29 @@ const HEADERS = [
   "colo",
   "cf_ray",
   "is_suspected_bot",
-  "bot_reason"
+  "bot_reason",
+  "as_organization",
+  "continent",
+  "timezone",
+  "http_protocol",
+  "tls_version",
+  "client_tcp_rtt_ms",
+  "accept_language",
+  "sec_fetch_site",
+  "cf_bot_score",
+  "cf_verified_bot",
+  "cf_corporate_proxy",
+  "first_seen_utc",
+  "last_seen_utc",
+  "retained_visit_count",
+  "visits_preceding_24h",
+  "visits_within_2m",
+  "distinct_path_count",
+  "visitor_type",
+  "risk_score",
+  "risk_reasons",
+  "counted",
+  "classification_version"
 ] as const;
 
 function neutralizeFormula(value: string): string {
@@ -50,7 +72,29 @@ function rowValues(row: VisitRow): Array<string | number | boolean | null> {
     row.colo,
     row.cfRay,
     row.isSuspectedBot,
-    row.botReason
+    row.botReason,
+    row.asOrganization,
+    row.continent,
+    row.timezone,
+    row.httpProtocol,
+    row.tlsVersion,
+    row.clientTcpRttMs,
+    row.acceptLanguage,
+    row.secFetchSite,
+    row.cfBotScore,
+    row.cfVerifiedBot,
+    row.cfCorporateProxy,
+    row.firstSeenUtc,
+    row.lastSeenUtc,
+    row.retainedVisitCount,
+    row.visitsPreceding24h,
+    row.visitsWithin2m,
+    row.distinctPathCount,
+    row.visitorType,
+    row.riskScore,
+    row.riskReasons.join("; "),
+    row.counted,
+    row.classificationVersion
   ];
 }
 

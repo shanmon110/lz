@@ -49,32 +49,32 @@ export interface VisitRow {
   asn: number | null;
   colo: string | null;
   cfRay: string | null;
-  asOrganization?: string | null;
-  continent?: string | null;
-  timezone?: string | null;
-  httpProtocol?: string | null;
-  tlsVersion?: string | null;
-  clientTcpRttMs?: number | null;
-  acceptLanguage?: string | null;
-  secFetchSite?: string | null;
-  cfBotScore?: number | null;
-  cfVerifiedBot?: boolean | null;
-  cfCorporateProxy?: boolean | null;
-  firstSeenUtc?: string;
-  lastSeenUtc?: string;
-  retainedVisitCount?: number;
-  visitsPreceding24h?: number;
-  visitsWithin2m?: number;
-  distinctPathCount?: number;
-  visitorType?:
+  asOrganization: string | null;
+  continent: string | null;
+  timezone: string | null;
+  httpProtocol: string | null;
+  tlsVersion: string | null;
+  clientTcpRttMs: number | null;
+  acceptLanguage: string | null;
+  secFetchSite: string | null;
+  cfBotScore: number | null;
+  cfVerifiedBot: boolean | null;
+  cfCorporateProxy: boolean | null;
+  firstSeenUtc: string;
+  lastSeenUtc: string;
+  retainedVisitCount: number;
+  visitsPreceding24h: number;
+  visitsWithin2m: number;
+  distinctPathCount: number;
+  visitorType:
     | "Known bot signature"
     | "Suspicious automation"
     | "Uncertain"
     | "Likely human";
-  riskScore?: number;
-  riskReasons?: string[];
-  counted?: boolean;
-  classificationVersion?: "risk-v1";
+  riskScore: number;
+  riskReasons: string[];
+  counted: boolean;
+  classificationVersion: "risk-v1";
   isSuspectedBot: boolean;
   botReason: "automated-browser" | "unlisted-page" | null;
 }
