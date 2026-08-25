@@ -50,10 +50,13 @@
 
 .page__content {
 
-  .section-icon {
+  .section-emoji {
+    display: inline-block;
     margin-right: 0.2em;
-    color: $info-color;
     font-size: 0.9em;
+    line-height: 1;
+    vertical-align: -0.05em;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
   }
 
   h2 {

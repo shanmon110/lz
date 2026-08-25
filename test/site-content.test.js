@@ -170,7 +170,7 @@ test("publishes the approved navigation and separated academic content", () => {
 test("keeps the homepage concise while routing readers to dedicated pages", () => {
   const indexHtml = rendered("_pages/about.md");
 
-  assert.match(indexHtml, /Postdoctoral Fellow at <strong>The University of Hong Kong \(HKU\)<\/strong>/);
+  assert.match(indexHtml, /Postdoctoral Fellow at <strong><a href="https:\/\/www\.hku\.hk\/">The University of Hong Kong \(HKU\)<\/a><\/strong>/);
   assert.match(indexHtml, /mmasia2026\.org\/calls\/special-session-trustworthy-speech-audio-ai/);
   assert.match(indexHtml, /interspeech2026\.org\/en-AU\/pages\/programme\/tutorials/);
   assert.match(indexHtml, /2026\.ieeeicme\.org\/tutorials/);
@@ -194,26 +194,38 @@ test("keeps the homepage concise while routing readers to dedicated pages", () =
   assert.doesNotMatch(indexHtml, /JCR|impact factor|NEEDS VERIFICATION/i);
 });
 
-test("gives each homepage section a restrained accessible icon", () => {
+test("gives each homepage section its approved accessible emoji", () => {
   const indexHtml = rendered("_pages/about.md");
   const expectedIcons = [
-    ["user", "Biography"],
-    ["bullhorn", "News"],
-    ["microphone-alt", "Research Interests"],
-    ["briefcase", "Academic Positions"],
-    ["graduation-cap", "Education"],
-    ["trophy", "Selected Awards"]
+    ["👤", "Biography"],
+    ["📢", "News"],
+    ["🎙️", "Research Interests"],
+    ["💼", "Academic Positions"],
+    ["🎓", "Education"],
+    ["🏆", "Selected Awards"]
   ];
 
-  for (const [icon, title] of expectedIcons) {
+  for (const [emoji, title] of expectedIcons) {
     assert.match(
       indexHtml,
-      new RegExp(`<h2[^>]*><i class="fas fa-fw fa-${icon} section-icon" aria-hidden="true"></i> ${title}</h2>`),
-      `${title} has its intended decorative icon`
+      new RegExp(`<h2[^>]*><span class="section-emoji" aria-hidden="true">${emoji}</span> ${title}</h2>`),
+      `${title} has its intended decorative emoji`
     );
   }
 
-  assert.equal((indexHtml.match(/class="fas fa-fw fa-[^"]+ section-icon" aria-hidden="true"/g) || []).length, 6);
+  assert.equal((indexHtml.match(/class="section-emoji" aria-hidden="true"/g) || []).length, 6);
+  assert.doesNotMatch(indexHtml, /section-icon|fa-user|fa-bullhorn|fa-microphone-alt/);
+});
+
+test("groups homepage news by month and restores the detailed biography", () => {
+  const indexHtml = rendered("_pages/about.md");
+
+  for (const month of ["December 2026", "September 2026", "July 2026"]) {
+    assert.match(indexHtml, new RegExp(`<h3[^>]*>${month}</h3>`));
+  }
+
+  assert.match(indexHtml, /previously conducted international collaborative research/);
+  assert.match(indexHtml, /You are more than what you have become!/);
 });
 
 test("publishes all eight CV talks in reverse chronological order with only supplied links", () => {
