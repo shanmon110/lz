@@ -50,7 +50,7 @@ test("publishes the approved navigation and separated academic content", () => {
 
   const indexHtml = rendered("_pages/about.md");
   const tutorialsHtml = rendered("_pages/tutorials.md");
-  const talksHtml = rendered("_pages/about.md");
+  const talksHtml = rendered("_pages/talks.html");
   const serviceHtml = rendered("_pages/academic-service.md");
   const teachingHtml = rendered("_teaching/EIE558.md");
 
