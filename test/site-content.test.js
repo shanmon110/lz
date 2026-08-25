@@ -170,7 +170,7 @@ test("publishes the approved navigation and separated academic content", () => {
 test("keeps the homepage concise while routing readers to dedicated pages", () => {
   const indexHtml = rendered("_pages/about.md");
 
-  assert.match(indexHtml, /Postdoctoral Fellow at <strong><a href="https:\/\/www\.hku\.hk\/">The University of Hong Kong \(HKU\)<\/a><\/strong>/);
+  assert.match(indexHtml, /Zhe Li is a Postdoctoral Fellow at <a href="https:\/\/www\.hku\.hk\/">The University of Hong Kong<\/a>/);
   assert.match(indexHtml, /mmasia2026\.org\/calls\/special-session-trustworthy-speech-audio-ai/);
   assert.match(indexHtml, /interspeech2026\.org\/en-AU\/pages\/programme\/tutorials/);
   assert.match(indexHtml, /2026\.ieeeicme\.org\/tutorials/);
@@ -217,24 +217,30 @@ test("gives each homepage section its approved accessible emoji", () => {
   assert.doesNotMatch(indexHtml, /section-icon|fa-user|fa-bullhorn|fa-microphone-alt/);
 });
 
-test("groups homepage news by month and restores the detailed biography", () => {
+test("formats homepage news as one-line abbreviated-month items", () => {
   const indexHtml = rendered("_pages/about.md");
+  const biographyMatch = /<h2 id="biography">[\s\S]*?<\/h2>\s*<p>([\s\S]*?)<\/p>/.exec(indexHtml);
+  const expectedBiography = "Zhe Li is a Postdoctoral Fellow at The University of Hong Kong. His research interests include speech LLMs, robust speaker representation learning, and multimodal artificial intelligence for healthcare applications. He received his Ph.D. in Electrical and Electronic Engineering from The Hong Kong Polytechnic University in 2025, his M.Sc. in Software Engineering from Xinjiang University in 2021, and his B.Eng. in Computer Science from Qilu University of Technology in 2016. He was a research intern at Microsoft Research Asia (MSRA) in 2025 and a visiting Ph.D. researcher in the Department of Electrical Engineering at Stanford University in 2024. He has led two research projects and contributed to a project funded by the Hong Kong Research Grants Council. He has published more than 60 papers in leading speech journals and conferences, including IEEE TASLP, ICASSP, and INTERSPEECH. He holds three granted invention patents and one software copyright. He delivered tutorials on speech large language models at ICME 2026 and INTERSPEECH 2026, and co-organized a special session at ACM MMAsia 2026. He received the 2020 Outstanding Scientific and Technological Achievement Award from the Chinese Association for Artificial Intelligence. His co-authored work received the Best Student Paper Runner-Up Award at PRICAI 2024.";
+  const newsHtml = indexHtml.slice(
+    indexHtml.indexOf('<h2 id="news">'),
+    indexHtml.indexOf('<h2 id="research-interests">')
+  );
   const expectedNews = [
-    ["December 2026", "Special Session on Trustworthy Speech and Audio AI at MMAsia 2026"],
-    ["September 2026", "Speech Large Language Models for Under-Resourced Languages"],
-    ["July 2026", "Speech Large Language Models: Architectures, Efficient Adaptation, and Applications"]
+    ["Dec. 2026:", "Special Session on Trustworthy Speech and Audio AI at MMAsia 2026"],
+    ["Sept. 2026:", "Speech Large Language Models for Under-Resourced Languages"],
+    ["Jul. 2026:", "Speech Large Language Models: Architectures, Efficient Adaptation, and Applications"]
   ];
-  let previousIndex = -1;
+  const newsItems = newsHtml.match(/<li>[\s\S]*?<\/li>/g) || [];
 
-  for (const [month, item] of expectedNews) {
-    const monthIndex = indexHtml.indexOf(`>${month}</h3>`);
-    const itemIndex = indexHtml.indexOf(`>${item}</a>`, monthIndex);
-    assert.ok(monthIndex > previousIndex, `${month} appears in reverse chronological order`);
-    assert.ok(itemIndex > monthIndex, `${item} appears under ${month}`);
-    previousIndex = itemIndex;
+  assert.equal(newsItems.length, expectedNews.length);
+  for (const [index, [month, item]] of expectedNews.entries()) {
+    assert.ok(newsItems[index].includes(`<strong>${month}</strong>`), `${month} appears in reverse chronological order`);
+    assert.ok(newsItems[index].includes(`>${item}</a>`), `${item} shares one news item with ${month}`);
   }
 
-  assert.match(indexHtml, /previously conducted international collaborative research/);
+  assert.doesNotMatch(newsHtml, /<h3/);
+  assert.ok(biographyMatch, "Biography paragraph is rendered after its heading");
+  assert.equal(biographyMatch[1].replace(/<[^>]+>/g, ""), expectedBiography);
   assert.match(indexHtml, /You are more than what you have become!/);
 });
 

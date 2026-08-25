@@ -10,23 +10,15 @@ redirect_from:
 
 <h2 id="biography"><span class="section-emoji" aria-hidden="true">👤</span> Biography</h2>
 
-Dr. Zhe Li is a Postdoctoral Fellow at **[The University of Hong Kong (HKU)](https://www.hku.hk/)**. His research focuses on speech large language models (Speech LLMs) and robust speaker representation learning, with broader interests in multimodal AI for healthcare applications. He received his Ph.D. degree from the Department of Electrical and Electronic Engineering at **[The Hong Kong Polytechnic University (PolyU)](https://www.polyu.edu.hk/)**. He was a research intern at **[Microsoft Research Asia (MSRA)](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/)** and previously conducted international collaborative research as a visiting student scholar with the Department of Electrical Engineering, **[Stanford University](https://www.stanford.edu/)**. As a key contributor, he received the [**2020 Excellent Science and Technology Achievement Award**](https://mp.weixin.qq.com/s/HgcGxSYnunYZaDQIU7Tjuw) from the **Chinese Association for Artificial Intelligence**, and his co-authored paper received the **Best Student Paper Runner-Up Award** at **PRICAI 2024**.
+Zhe Li is a Postdoctoral Fellow at [The University of Hong Kong](https://www.hku.hk/). His research interests include speech LLMs, robust speaker representation learning, and multimodal artificial intelligence for healthcare applications. He received his Ph.D. in Electrical and Electronic Engineering from [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/) in 2025, his M.Sc. in Software Engineering from [Xinjiang University](https://www.xju.edu.cn/) in 2021, and his B.Eng. in Computer Science from Qilu University of Technology in 2016. He was a research intern at [Microsoft Research Asia (MSRA)](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/) in 2025 and a visiting Ph.D. researcher in the Department of Electrical Engineering at [Stanford University](https://www.stanford.edu/) in 2024. He has led two research projects and contributed to a project funded by the Hong Kong Research Grants Council. He has published more than 60 papers in leading speech journals and conferences, including IEEE TASLP, ICASSP, and INTERSPEECH. He holds three granted invention patents and one software copyright. He delivered tutorials on speech large language models at [ICME 2026](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e) and [INTERSPEECH 2026](https://interspeech2026.org/en-AU/pages/programme/tutorials), and co-organized a special session at [ACM MMAsia 2026](https://mmasia2026.org/calls/special-session-trustworthy-speech-audio-ai/). He received the [2020 Outstanding Scientific and Technological Achievement Award](https://mp.weixin.qq.com/s/HgcGxSYnunYZaDQIU7Tjuw) from the Chinese Association for Artificial Intelligence. His co-authored work received the Best Student Paper Runner-Up Award at PRICAI 2024.
 
 > *“You are more than what you have become!”*
 
 <h2 id="news"><span class="section-emoji" aria-hidden="true">📢</span> News</h2>
 
-### December 2026
-
-- Organizing the [Special Session on Trustworthy Speech and Audio AI at MMAsia 2026](https://mmasia2026.org/calls/special-session-trustworthy-speech-audio-ai/).
-
-### September 2026
-
-- Presenting the [Speech Large Language Models for Under-Resourced Languages](https://interspeech2026.org/en-AU/pages/programme/tutorials) tutorial at Interspeech 2026 in Sydney, Australia.
-
-### July 2026
-
-- Presented the [Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e) tutorial at IEEE ICME 2026 in Bangkok, Thailand.
+- **Dec. 2026:** Organizing the [Special Session on Trustworthy Speech and Audio AI at MMAsia 2026](https://mmasia2026.org/calls/special-session-trustworthy-speech-audio-ai/).
+- **Sept. 2026:** Presenting the [Speech Large Language Models for Under-Resourced Languages](https://interspeech2026.org/en-AU/pages/programme/tutorials) tutorial at Interspeech 2026 in Sydney, Australia.
+- **Jul. 2026:** Presented the [Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e) tutorial at IEEE ICME 2026 in Bangkok, Thailand.
 
 See the dedicated pages for [publications](/publications/), [tutorials](/tutorials/), [talks](/talks/), [academic service](/academic-service/), and [teaching](/teaching/).
 
