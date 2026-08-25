@@ -1,6 +1,6 @@
 # Academic Homepage CV Refresh Design
 
-**Date:** 2026-08-25  
+**Date:** 2026-08-25
 **Status:** Approved
 
 ## Goal
@@ -102,4 +102,3 @@ Remove `/markdown` from the valid-human allowlist. Legacy redirect requests to `
 - Run a production-equivalent Jekyll build.
 - Inspect the built homepage and each navigation destination for layout, broken internal links, and content separation.
 - Deploy only after all checks pass, then verify the public navigation and pages.
-
