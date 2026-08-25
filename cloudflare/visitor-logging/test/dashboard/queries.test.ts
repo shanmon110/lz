@@ -727,12 +727,153 @@ describe("getVisitPage", () => {
     );
   });
 
+  test("does not force benign bot substrings while preserving word-boundary signatures", async () => {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.7",
+        path: "/",
+        userAgent: "Abbott/1.0",
+        referrer: "https://lizhe.link/"
+      })
+    );
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.8",
+        path: "/",
+        userAgent: "Example client bot/1.0",
+        browserSummary: "Unknown",
+        referrer: "https://lizhe.link/"
+      })
+    );
+
+    const result = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const byIp = new Map(result.items.map((item) => [item.ipAddress, item]));
+    expect(byIp.get("192.0.2.7")).toMatchObject({
+      visitorType: "Likely human",
+      riskScore: 0,
+      riskReasons: [],
+      counted: true
+    });
+    expect(byIp.get("192.0.2.8")).toMatchObject({
+      visitorType: "Known bot signature",
+      riskScore: 100,
+      riskReasons: ["Known bot signature", "Unknown browser"],
+      counted: false
+    });
+  });
+
+  test("keeps SQL and TypeScript hosting normalization identical for repeated separators", async () => {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.9",
+        path: "/",
+        asOrganization: "Internet--  Vikings International AB",
+        referrer: "https://lizhe.link/"
+      })
+    );
+
+    const page = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const exported = await getVisitsForExport(
+      env.DB,
+      filters({ bots: "include" })
+    );
+    expect(page.items[0]).toMatchObject({
+      riskScore: 30,
+      riskReasons: ["Hosting network"],
+      counted: true
+    });
+    expect(exported).toEqual(page.items);
+  });
+
+  test("keeps SQL and TypeScript browser syntax identical for invalid version suffixes", async () => {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.17",
+        path: "/",
+        browserSummary: "Chrome 1beta on Linux",
+        referrer: "https://lizhe.link/"
+      })
+    );
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.18",
+        path: "/",
+        browserSummary: "Chrome 1 on Linux",
+        referrer: "https://lizhe.link/"
+      })
+    );
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.19",
+        path: "/",
+        browserSummary: "\tChrome 1 on Linux",
+        referrer: "https://lizhe.link/"
+      })
+    );
+
+    const page = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const exported = await getVisitsForExport(
+      env.DB,
+      filters({ bots: "include" })
+    );
+    const byIp = new Map(page.items.map((item) => [item.ipAddress, item]));
+    expect(byIp.get("192.0.2.17")).toMatchObject({
+      riskScore: 25,
+      riskReasons: ["Unknown browser"],
+      counted: true
+    });
+    expect(byIp.get("192.0.2.18")).toMatchObject({
+      riskScore: 0,
+      riskReasons: [],
+      counted: true
+    });
+    expect(byIp.get("192.0.2.19")).toMatchObject({
+      riskScore: 25,
+      riskReasons: ["Unknown browser"],
+      counted: true
+    });
+    expect(exported).toEqual(page.items);
+  });
+
+  test("uses the composite IP/time index for both activity range windows", async () => {
+    let pageSql = "";
+    const recordingDb = {
+      prepare(query: string) {
+        pageSql = query;
+        return env.DB.prepare(query);
+      }
+    } as D1Database;
+
+    await getVisitPage(recordingDb, filters({ bots: "include" }));
+    const plan = await env.DB
+      .prepare(`EXPLAIN QUERY PLAN ${pageSql}`)
+      .bind(51, 0)
+      .all<{ detail: string }>();
+    const indexedRanges = plan.results.filter((row) =>
+      /visits_ip_address_visited_at_utc_idx \(ip_address=\? AND visited_at_utc>[?] AND visited_at_utc<[?]\)/.test(
+        row.detail
+      )
+    );
+
+    expect(
+      pageSql.match(/AND ip_activity\.visited_at_utc >=/g)
+    ).toHaveLength(2);
+    expect(indexedRanges.length).toBeGreaterThanOrEqual(2);
+  });
+
   test("derives forced, effective, Bot Management, and counted-score decisions consistently", async () => {
     const decisionRows: VisitInput[] = [
       createVisit({
         ipAddress: "192.0.2.10",
         path: "/",
-        userAgent: "Mozilla/5.0 (compatible; Googlebot/2.1)",
+        userAgent:
+          "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
         browserSummary: "Googlebot",
         referrer: "https://lizhe.link/"
       }),

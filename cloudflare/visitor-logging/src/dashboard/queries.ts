@@ -3,6 +3,7 @@ import { getHongKongDateRange, getSummaryTimeRanges } from "./time";
 import { ALLOWED_VISIT_PATHS } from "../visits/allowed-pages";
 import {
   HOSTING_ASNS,
+  HOSTING_ORGANIZATION_IGNORED_CHARACTERS,
   HOSTING_ORGANIZATION_TOKENS,
   RISK_WEIGHTS,
   buildVisitDecision
@@ -125,21 +126,37 @@ function effectiveBotSql(tableName = "visits"): string {
 
 function knownBotSignatureSql(tableName = "visits"): string {
   const userAgent = `LOWER(${tableName}.user_agent)`;
-  return `(${userAgent} LIKE '%bot%'
-    OR ${userAgent} LIKE '%crawler%'
-    OR ${userAgent} LIKE '%spider%'
+  const paddedUserAgent = `(' ' || ${userAgent} || ' ')`;
+  const boundedToken = (token: string): string =>
+    `${paddedUserAgent} GLOB '*[^a-z0-9_]${token}[^a-z0-9_]*'`;
+  const boundedPrefix = (prefix: string): string =>
+    `${paddedUserAgent} GLOB '*[^a-z0-9_]${prefix}*'`;
+  return `(${boundedToken("bot")}
+    OR ${boundedToken("crawler")}
+    OR ${boundedToken("spider")}
     OR ${userAgent} LIKE '%headless%'
     OR ${userAgent} LIKE '%curl/%'
     OR ${userAgent} LIKE '%wget/%'
     OR ${userAgent} LIKE '%httpie/%'
     OR ${userAgent} LIKE '%python-requests/%'
     OR ${userAgent} LIKE '%postmanruntime/%'
-    OR ${userAgent} LIKE '%axios/%'
-    OR ${userAgent} LIKE '%java/%')`;
+    OR ${boundedPrefix("axios/")}
+    OR ${boundedPrefix("java/")})`;
+}
+
+function sqlCharacterExpression(character: string): string {
+  const characterCode = character.charCodeAt(0);
+  return characterCode <= 32
+    ? `CHAR(${characterCode})`
+    : sqlStringLiteral(character);
 }
 
 function normalizedOrganizationSql(column: string): string {
-  return `LOWER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(${column}, '-', ' '), '_', ' '), '.', ' '), ',', ' '), '/', ' '))`;
+  return HOSTING_ORGANIZATION_IGNORED_CHARACTERS.reduce(
+    (normalized, character) =>
+      `REPLACE(${normalized}, ${sqlCharacterExpression(character)}, '')`,
+    `LOWER(${column})`
+  );
 }
 
 function hostingNetworkSql(tableName = "visits"): string {
@@ -152,7 +169,7 @@ function hostingNetworkSql(tableName = "visits"): string {
 }
 
 function recognizedBrowserSql(tableName = "visits"): string {
-  const summary = `TRIM(${tableName}.browser_summary)`;
+  const summary = `${tableName}.browser_summary`;
   const browsers = ["Chrome", "Edge", "Firefox", "Safari"];
   const formFactors = ["", "Mobile ", "Tablet "];
   const platforms = ["Android", "iOS", "Windows", "macOS", "Linux", "Unknown"];
@@ -162,10 +179,13 @@ function recognizedBrowserSql(tableName = "visits"): string {
   const names = formFactors.flatMap((formFactor) =>
     browsers.map((browser) => `${formFactor}${browser}`)
   );
-  const browserMatches = names.flatMap((name) => [
-    `${browserPart} = ${sqlStringLiteral(name)}`,
-    `${browserPart} GLOB ${sqlStringLiteral(`${name} [0-9]*`)}`
-  ]);
+  const browserMatches = names.map((name) => {
+    const version = `SUBSTR(${browserPart}, ${name.length + 2})`;
+    return `(${browserPart} = ${sqlStringLiteral(name)} OR (
+      ${browserPart} GLOB ${sqlStringLiteral(`${name} [0-9]*`)}
+      AND ${version} NOT GLOB '*[^0-9]*'
+    ))`;
+  });
   const platformMatches = platforms.map(
     (platform) => `${platformPart} = ${sqlStringLiteral(platform)}`
   );
@@ -220,8 +240,12 @@ function countedSql(tableName = "scored_visits"): string {
 }
 
 function visitEvidenceCteSql(): string {
-  const currentMs = "ROUND(julianday(visits.visited_at_utc) * 86400000.0)";
-  const activityMs = "ROUND(julianday(ip_activity.visited_at_utc) * 86400000.0)";
+  const preceding24hStart =
+    "strftime('%Y-%m-%dT%H:%M:%fZ', visits.visited_at_utc, '-24 hours')";
+  const twoMinutesBefore =
+    "strftime('%Y-%m-%dT%H:%M:%fZ', visits.visited_at_utc, '-2 minutes')";
+  const twoMinutesAfter =
+    "strftime('%Y-%m-%dT%H:%M:%fZ', visits.visited_at_utc, '+2 minutes')";
   return `WITH visit_evidence AS (
     SELECT
       visits.id, visits.visited_at_utc, visits.ip_address, visits.method,
@@ -252,12 +276,13 @@ function visitEvidenceCteSql(): string {
       (SELECT COUNT(*)
         FROM visits AS ip_activity
         WHERE ip_activity.ip_address = visits.ip_address
-          AND ${activityMs} >= ${currentMs} - 86400000
-          AND ${activityMs} <= ${currentMs}) AS visits_preceding_24h,
+          AND ip_activity.visited_at_utc >= ${preceding24hStart}
+          AND ip_activity.visited_at_utc <= visits.visited_at_utc) AS visits_preceding_24h,
       (SELECT COUNT(*)
         FROM visits AS ip_activity
         WHERE ip_activity.ip_address = visits.ip_address
-          AND ABS(${activityMs} - ${currentMs}) <= 120000) AS visits_within_2m,
+          AND ip_activity.visited_at_utc >= ${twoMinutesBefore}
+          AND ip_activity.visited_at_utc <= ${twoMinutesAfter}) AS visits_within_2m,
       (SELECT COUNT(DISTINCT ip_activity.path)
         FROM visits AS ip_activity
         WHERE ip_activity.ip_address = visits.ip_address) AS distinct_path_count,

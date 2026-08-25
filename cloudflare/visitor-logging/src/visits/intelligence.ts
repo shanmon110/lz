@@ -10,10 +10,25 @@ export const HOSTING_ASNS: readonly number[] = Object.freeze([
 
 export const HOSTING_ORGANIZATION_TOKENS: readonly string[] = Object.freeze([
   "hetzner",
-  "internet vikings",
+  "internetvikings",
   "digitalocean",
-  "oracle cloud",
-  "tencent cloud"
+  "oraclecloud",
+  "tencentcloud"
+]);
+
+export const HOSTING_ORGANIZATION_IGNORED_CHARACTERS: readonly string[] = Object.freeze([
+  " ",
+  "\t",
+  "\n",
+  "\r",
+  "-",
+  "_",
+  ".",
+  ",",
+  "/",
+  "&",
+  "(",
+  ")"
 ]);
 
 export const RISK_WEIGHTS = Object.freeze({
@@ -62,11 +77,10 @@ export interface VisitDecision {
 }
 
 function normalizedOrganization(value: string): string {
-  return value
-    .normalize("NFKC")
-    .toLocaleLowerCase("en-US")
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
+  return HOSTING_ORGANIZATION_IGNORED_CHARACTERS.reduce(
+    (normalized, character) => normalized.split(character).join(""),
+    value.toLowerCase()
+  );
 }
 
 export function isHostingNetwork(
@@ -84,7 +98,7 @@ export function isHostingNetwork(
 
 function isRecognizedBrowser(browserSummary: string): boolean {
   return /^(?:(?:Mobile|Tablet) )?(?:Chrome|Edge|Firefox|Safari)(?: \d+)? on (?:Android|iOS|Windows|macOS|Linux|Unknown)$/.test(
-    browserSummary.trim()
+    browserSummary
   );
 }
 
