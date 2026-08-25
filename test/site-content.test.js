@@ -258,8 +258,8 @@ test("restores homepage news and collapses entries after the newest ten", () => 
   const allNewsItems = [...visibleNewsItems, ...collapsedNewsItems];
 
   assert.ok(detailsIndex > 0, "older News entries use a details disclosure");
-  assert.equal(visibleNewsItems.length, 10);
-  assert.equal(collapsedNewsItems.length, 22);
+  assert.equal(visibleNewsItems.length, 5);
+  assert.equal(collapsedNewsItems.length, 27);
   assert.equal(allNewsItems.length, expectedNews.length);
   for (const [index, [month, item, href]] of expectedNews.entries()) {
     const newsText = allNewsItems[index].replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");

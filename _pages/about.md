@@ -21,15 +21,15 @@ Zhe Li is a Postdoctoral Fellow at [The University of Hong Kong](https://www.hku
 - **Jul. 2026:** Presented the [Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e) tutorial at IEEE ICME 2026 in Bangkok, Thailand.
 - **Jul. 2026:** 🎉 Our paper *“[Towards Robust Remote Sensing Visual Question Answering with Spectral Expert Adaptation and Group-Relative Optimization](https://doi.org/10.1016/j.neunet.2026.109308)”* has been accepted for publication in **Neural Networks**.
 - **Jul. 2026:** 🎉 Our paper *“STEP: Semantic-Guided Two-Stage Framework with Skeleton-Conditioned Prompting for Skeleton-Based Action Recognition”* has been accepted to **PRCV 2026**. Kudos to Zheng Cui for leading this work!
+
+<details class="news-more" markdown="1">
+<summary>More</summary>
+
 - **Jun. 2026:** 🎉 4 papers have been accepted to **INTERSPEECH 2026**! Many thanks to all collaborators and co-authors for their great work — see you September 27–October 1 in Sydney, Australia! 🇦🇺
 - **Apr. 2026:** 🎉 Our paper *“DB-SMGA: Dual-Branch Sequential Multi-Granularity Attention for Speech Depression Detection”* has been accepted for publication in **IEEE Signal Processing Letters (SPL)**. Congratulations to Dr. Meirong Song for her excellent work!
 - **Apr. 2026:** 🎉 Our paper *“Uncertainty-Aware Multi-Head Multi-Mode Knowledge Distillation for Self-Supervised Speaker Verification”* has been accepted by **IEEE Transactions on Audio, Speech, and Language Processing (TASLP)**! Thanks to Dr. Jin!
 - **Apr. 2026:** 🎉 Our tutorial *[Speech Large Language Models for Under-Resourced Languages](https://interspeech2026.org/en-AU/pages/programme/tutorials)* has been accepted by **INTERSPEECH 2026** — see you September 27–October 1 in Sydney, Australia! 🇦🇺
 - **Mar. 2026:** 🎉 Our paper *“[Towards A Unified Perspective on Parameter-Efficient Fine Tuning for Speaker Verification](https://doi.org/10.1109/TASLPRO.2026.3682068)”* has been accepted by **IEEE Transactions on Audio, Speech, and Language Processing (TASLP)**! Thanks to Prof. Mak!
-
-<details class="news-more" markdown="1">
-<summary>More</summary>
-
 - **Jan. 2026:** 🎉 Two papers accepted to **ICASSP 2026** — see you May 4–8 in Barcelona, Spain! 🇪🇸
 - **Dec. 2025:** 🎉 *My First Tutorial!* Our tutorial *[Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e)* has been accepted by **IEEE ICME 2026** — see you July 5–9 in Bangkok, Thailand! 🇹🇭
 - **Sep. 29, 2025:** 🎉 Our paper *“WhisMultiNet: Advancing End-to-End Speech Topic Classification with Whisper and MultiGateGNN”* has been accepted by **IEEE Transactions on Audio, Speech, and Language Processing (TASLP)**! Thanks to Xiaozhe Qi!
