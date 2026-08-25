@@ -167,7 +167,7 @@ test("publishes the approved navigation and separated academic content", () => {
   assert.match(teachingHtml, /Speech Processing and Recognition/);
 });
 
-test("keeps the homepage concise while routing readers to dedicated pages", () => {
+test("keeps the homepage concise without a redundant dedicated-pages prompt", () => {
   const indexHtml = rendered("_pages/about.md");
 
   assert.match(indexHtml, /Zhe Li is a Postdoctoral Fellow at <a href="https:\/\/www\.hku\.hk\/">The University of Hong Kong<\/a>/);
@@ -177,16 +177,7 @@ test("keeps the homepage concise while routing readers to dedicated pages", () =
   assert.match(indexHtml, /Presented the <a href="https:\/\/2026\.ieeeicme\.org\/tutorials\/#1766933845252-bb9d3b7e-7e8e">Speech Large Language Models: Architectures, Efficient Adaptation, and Applications<\/a> tutorial/);
   assert.doesNotMatch(indexHtml, /Presenting the <a href="https:\/\/2026\.ieeeicme\.org\/tutorials\/#1766933845252-bb9d3b7e-7e8e">/);
   assert.match(indexHtml, /<a href="https:\/\/mp\.weixin\.qq\.com\/s\/HgcGxSYnunYZaDQIU7Tjuw"><strong>Outstanding Scientific and Technological Achievement Award<\/strong><\/a>/);
-
-  for (const destination of [
-    "/publications/",
-    "/tutorials/",
-    "/talks/",
-    "/academic-service/",
-    "/teaching/"
-  ]) {
-    assert.match(indexHtml, new RegExp(`href="${destination}"`));
-  }
+  assert.doesNotMatch(indexHtml, /See the dedicated pages for/);
 
   assert.match(indexHtml, /Nov\. 2025–Present/);
   assert.match(indexHtml, /Feb\. 2025–Oct\. 2025/);

@@ -55,8 +55,6 @@ Zhe Li is a Postdoctoral Fellow at [The University of Hong Kong](https://www.hku
 
 </details>
 
-See the dedicated pages for [publications](/publications/), [tutorials](/tutorials/), [talks](/talks/), [academic service](/academic-service/), and [teaching](/teaching/).
-
 <h2 id="research-interests"><span class="section-emoji" aria-hidden="true">🎙️</span> Research Interests</h2>
 
 - **Speech large language models:** multilingual modeling, parameter-efficient fine-tuning, and post-training alignment
