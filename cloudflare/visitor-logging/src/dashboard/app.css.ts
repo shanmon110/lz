@@ -115,7 +115,54 @@ th, td { padding: .8rem .7rem; border-bottom: 1px solid #e6ebe8; text-align: lef
 th { color: #53615a; font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
 td { max-width: 23rem; overflow-wrap: anywhere; }
 .time-cell, .ip-cell { white-space: nowrap; }
-.bot-marker { color: #913b24; font-weight: 700; }
+.activity-cell, .counted, .excluded { white-space: nowrap; font-weight: 700; }
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.8rem;
+  padding: .2rem .45rem;
+  border: 1px solid currentColor;
+  border-radius: .45rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.risk-low { color: #166534; background: #f0fdf4; }
+.risk-medium { color: #9a6700; background: #fff8db; }
+.risk-high { color: #9f2d19; background: #fff0ed; }
+.risk-unknown { color: #53615a; background: #f5f7f6; }
+.reasons-cell { min-width: 14rem; }
+.details-toggle {
+  min-height: 2rem;
+  padding: .35rem .6rem;
+  border: 1px solid #0a6543;
+  border-radius: .45rem;
+  color: #0a6543;
+  background: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.details-toggle:focus { outline: 3px solid rgba(24, 145, 96, .45); outline-offset: 3px; }
+.details-row > td { padding: 0; border-bottom: 0; }
+.details-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  border-top: 2px solid #b9d8c9;
+  border-bottom: 1px solid #d9e1dc;
+  background: #f8fbf9;
+}
+.detail-group {
+  min-width: 0;
+  padding: .85rem;
+  border: 1px solid #d9e1dc;
+  border-radius: .6rem;
+  background: white;
+}
+.detail-group h3 { margin-bottom: .75rem; font-size: .9rem; }
+.detail-list { display: grid; grid-template-columns: minmax(7rem, .8fr) minmax(0, 1.2fr); gap: .35rem .7rem; margin: 0; }
+.detail-list dt { color: #53615a; font-weight: 700; }
+.detail-list dd { min-width: 0; margin: 0; overflow-wrap: anywhere; }
 .pagination { margin-top: 1.25rem; }
 
 @media (max-width: 64rem) {
@@ -128,6 +175,9 @@ td { max-width: 23rem; overflow-wrap: anywhere; }
   .summary-grid { grid-template-columns: 1fr; }
   .filter-grid { grid-template-columns: 1fr; }
   .toggle { align-self: auto; }
+  .details-panel { grid-template-columns: 1fr; }
+  .detail-list { grid-template-columns: 1fr; }
+  .detail-list dt { margin-top: .45rem; }
 }
 
 @media (max-width: 30rem) {

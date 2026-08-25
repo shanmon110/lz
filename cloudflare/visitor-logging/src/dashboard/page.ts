@@ -61,7 +61,7 @@ const DASHBOARD_HTML = `<!doctype html>
           <label>IP address<input id="ip-filter" name="ip" type="search" maxlength="45" autocomplete="off" placeholder="203.0.113"></label>
           <label>Country code<input id="country-filter" name="country" type="search" maxlength="2" autocomplete="off" placeholder="HK"></label>
           <label>Path contains<input id="path-filter" name="path" type="search" maxlength="2048" autocomplete="off" placeholder="/notes"></label>
-          <label class="toggle"><input id="bots-filter" type="checkbox"> Include suspected bots</label>
+          <label class="toggle"><input id="bots-filter" type="checkbox"> Include excluded automation</label>
         </div>
         <button class="button" type="submit">Apply filters</button>
       </form>
@@ -86,14 +86,20 @@ const DASHBOARD_HTML = `<!doctype html>
               <th scope="col">Time (Hong Kong)</th>
               <th scope="col">IP address</th>
               <th scope="col">Location</th>
+              <th scope="col">Network</th>
               <th scope="col">Path</th>
               <th scope="col">Referrer</th>
               <th scope="col">Browser / device</th>
-              <th scope="col">Bot</th>
+              <th scope="col">IP activity</th>
+              <th scope="col">Visitor type</th>
+              <th scope="col">Risk</th>
+              <th scope="col">Reasons</th>
+              <th scope="col">Counted</th>
+              <th scope="col">Details</th>
             </tr>
           </thead>
           <tbody id="visit-rows">
-            <tr><td colspan="7">Loading visits…</td></tr>
+            <tr><td colspan="13">Loading visits…</td></tr>
           </tbody>
         </table>
       </div>

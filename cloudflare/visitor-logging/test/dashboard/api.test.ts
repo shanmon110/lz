@@ -130,7 +130,23 @@ describe("Access gate", () => {
 });
 
 test("returns JSON summary and visit pages from real D1", async () => {
-  await insertVisit(env.DB, createVisit({ path: "/publications/" }));
+  await insertVisit(
+    env.DB,
+    createVisit({
+      path: "/publications/",
+      asOrganization: "Cloudflare, Inc.",
+      continent: "AS",
+      timezone: "Asia/Hong_Kong",
+      httpProtocol: "HTTP/3",
+      tlsVersion: "TLSv1.3",
+      clientTcpRttMs: 17,
+      acceptLanguage: "en-HK,en;q=0.9",
+      secFetchSite: "same-origin",
+      cfBotScore: 42,
+      cfVerifiedBot: false,
+      cfCorporateProxy: false
+    })
+  );
   await insertVisit(
     env.DB,
     createVisit({ country: "US", path: "/talks/", visitedAtUtc: "2026-08-06T16:01:00.000Z" })
@@ -152,11 +168,82 @@ test("returns JSON summary and visit pages from real D1", async () => {
   expect(visits.headers.get("Content-Type")).toBe("application/json; charset=utf-8");
   expect(await visits.json()).toEqual({
     hasNext: false,
-    items: [expect.objectContaining({ country: "HK", path: "/publications/" })],
+    items: [
+      expect.objectContaining({
+        country: "HK",
+        path: "/publications/",
+        asOrganization: "Cloudflare, Inc.",
+        continent: "AS",
+        timezone: "Asia/Hong_Kong",
+        httpProtocol: "HTTP/3",
+        tlsVersion: "TLSv1.3",
+        clientTcpRttMs: 17,
+        acceptLanguage: "en-HK,en;q=0.9",
+        secFetchSite: "same-origin",
+        cfBotScore: 42,
+        cfVerifiedBot: false,
+        cfCorporateProxy: false,
+        firstSeenUtc: "2026-08-06T16:00:00.000Z",
+        lastSeenUtc: "2026-08-06T16:01:00.000Z",
+        retainedVisitCount: 2,
+        visitsPreceding24h: 1,
+        visitsWithin2m: 2,
+        distinctPathCount: 2,
+        visitorType: "Uncertain",
+        riskScore: 50,
+        riskReasons: ["Elevated Cloudflare bot risk", "Repeated requests"],
+        counted: true,
+        classificationVersion: "risk-v1"
+      })
+    ],
     page: 1,
     pageSize: 50
   });
   expectSecurityHeaders(visits);
+});
+
+test("returns null enrichment metadata for legacy rows", async () => {
+  await insertVisit(env.DB, createVisit({ path: "/publications/" }));
+
+  const response = await dashboardRequest("/api/visits?country=HK", {
+    token: await accessToken()
+  });
+  const body = await response.json() as { items: Array<Record<string, unknown>> };
+
+  expect(body.items[0]).toMatchObject({
+    asOrganization: null,
+    continent: null,
+    timezone: null,
+    httpProtocol: null,
+    tlsVersion: null,
+    clientTcpRttMs: null,
+    acceptLanguage: null,
+    secFetchSite: null,
+    cfBotScore: null,
+    cfVerifiedBot: null,
+    cfCorporateProxy: null
+  });
+});
+
+test("keeps the legacy suspected-bot field false for risk-only exclusions", async () => {
+  await insertVisit(env.DB, createVisit({
+    path: "/",
+    browserSummary: "Unknown",
+    cfBotScore: 20,
+    referrer: "https://lizhe.link/",
+    isSuspectedBot: false
+  }));
+
+  const response = await dashboardRequest("/api/visits?bots=include", {
+    token: await accessToken()
+  });
+  const body = await response.json() as { items: Array<Record<string, unknown>> };
+
+  expect(body.items[0]).toMatchObject({
+    riskScore: 75,
+    counted: false,
+    isSuspectedBot: false
+  });
 });
 
 test("exports real D1 rows using the active filters independently of page", async () => {

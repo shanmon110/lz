@@ -60,6 +60,24 @@ describe("getVisitPage", () => {
     expect(first.items).toHaveLength(50);
     expect(first.items[0]?.path).toBe("/visit-50");
     expect(first.items[49]?.path).toBe("/visit-1");
+    expect(first.items[0]).toMatchObject({
+      firstSeenUtc: "2026-08-05T00:00:00.000Z",
+      lastSeenUtc: "2026-08-05T00:00:50.000Z",
+      retainedVisitCount: 51,
+      visitsPreceding24h: 51,
+      visitsWithin2m: 51,
+      distinctPathCount: 51,
+      visitorType: "Suspicious automation",
+      riskScore: 90,
+      riskReasons: [
+        "Unlisted page",
+        "No referrer",
+        "Repeated requests",
+        "High 24h activity"
+      ],
+      counted: false,
+      classificationVersion: "risk-v1"
+    });
 
     const second = await getVisitPage(
       env.DB,
@@ -580,6 +598,462 @@ describe("getVisitPage", () => {
       await env.DB.prepare("SELECT COUNT(*) AS count FROM visits").first()
     ).toEqual({ count: 2 });
   });
+
+  test("keeps legacy NULL enrichment rows valid and derives complete activity", async () => {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        path: "/",
+        referrer: "https://lizhe.link/",
+        asOrganization: null,
+        continent: null,
+        timezone: null,
+        httpProtocol: null,
+        tlsVersion: null,
+        clientTcpRttMs: null,
+        acceptLanguage: null,
+        secFetchSite: null,
+        cfBotScore: null,
+        cfVerifiedBot: null,
+        cfCorporateProxy: null
+      })
+    );
+
+    expect((await getVisitPage(env.DB, filters())).items).toEqual([
+      expect.objectContaining({
+        asOrganization: null,
+        continent: null,
+        timezone: null,
+        httpProtocol: null,
+        tlsVersion: null,
+        clientTcpRttMs: null,
+        acceptLanguage: null,
+        secFetchSite: null,
+        cfBotScore: null,
+        cfVerifiedBot: null,
+        cfCorporateProxy: null,
+        firstSeenUtc: "2026-08-05T16:00:00.000Z",
+        lastSeenUtc: "2026-08-05T16:00:00.000Z",
+        retainedVisitCount: 1,
+        visitsPreceding24h: 1,
+        visitsWithin2m: 1,
+        distinctPathCount: 1,
+        visitorType: "Likely human",
+        riskScore: 0,
+        riskReasons: [],
+        counted: true,
+        classificationVersion: "risk-v1"
+      })
+    ]);
+  });
+
+  test("uses exact current-row boundaries for preceding-24h and two-minute activity", async () => {
+    const ipAddress = "198.51.100.24";
+    const rows: Array<[string, string]> = [
+      ["2026-08-04T15:59:59.999Z", "/talks/"],
+      ["2026-08-04T16:00:00.000Z", "/publications/"],
+      ["2026-08-05T15:57:59.999Z", "/teaching/"],
+      ["2026-08-05T15:58:00.000Z", "/academic-service/"],
+      ["2026-08-05T16:00:00.000Z", "/"],
+      ["2026-08-05T16:02:00.000Z", "/tutorials/"],
+      ["2026-08-05T16:02:00.001Z", "/talks/"]
+    ];
+    for (const [visitedAtUtc, path] of rows) {
+      await insertVisit(
+        env.DB,
+        createVisit({ ipAddress, visitedAtUtc, path, referrer: "https://lizhe.link/" })
+      );
+    }
+
+    const current = (
+      await getVisitPage(
+        env.DB,
+        filters({ bots: "include", ip: ipAddress, path: "/" })
+      )
+    ).items.find((item) => item.visitedAtUtc === "2026-08-05T16:00:00.000Z");
+
+    expect(current).toMatchObject({
+      firstSeenUtc: "2026-08-04T15:59:59.999Z",
+      lastSeenUtc: "2026-08-05T16:02:00.001Z",
+      retainedVisitCount: 7,
+      visitsPreceding24h: 4,
+      visitsWithin2m: 3,
+      distinctPathCount: 6
+    });
+  });
+
+  test("adds high-activity risk at the tenth preceding-24h visit", async () => {
+    const ipAddress = "198.51.100.25";
+    const start = Date.parse("2026-08-05T15:00:00.000Z");
+    for (let index = 0; index < 10; index += 1) {
+      await insertVisit(
+        env.DB,
+        createVisit({
+          ipAddress,
+          visitedAtUtc: new Date(start + index * 5 * 60_000).toISOString(),
+          path: "/",
+          referrer: "https://lizhe.link/"
+        })
+      );
+    }
+
+    const newest = (await getVisitPage(env.DB, filters({ ip: ipAddress }))).items[0];
+    expect(newest).toMatchObject({
+      visitsPreceding24h: 10,
+      visitsWithin2m: 1,
+      riskScore: 10,
+      riskReasons: ["High 24h activity"],
+      counted: true
+    });
+  });
+
+  test("recognizes approved hosting ASNs and normalized organization-name evidence", async () => {
+    const rows = [
+      createVisit({ ipAddress: "192.0.2.1", asn: 24940, path: "/", referrer: "https://lizhe.link/" }),
+      createVisit({ ipAddress: "192.0.2.2", asn: 16312, path: "/", referrer: "https://lizhe.link/" }),
+      createVisit({ ipAddress: "192.0.2.3", asn: 14061, path: "/", referrer: "https://lizhe.link/" }),
+      createVisit({ ipAddress: "192.0.2.4", asn: 13335, asOrganization: "HETZNER-Online GmbH", path: "/", referrer: "https://lizhe.link/" }),
+      createVisit({ ipAddress: "192.0.2.5", asn: 13335, asOrganization: "Internet Vikings International AB", path: "/", referrer: "https://lizhe.link/" }),
+      createVisit({ ipAddress: "192.0.2.6", asn: 13335, asOrganization: "DigitalOcean, LLC", path: "/", referrer: "https://lizhe.link/" })
+    ];
+    for (const row of rows) await insertVisit(env.DB, row);
+
+    const result = await getVisitPage(env.DB, filters());
+    expect(result.items).toHaveLength(rows.length);
+    expect(
+      result.items.map((item) => [item.riskScore, item.riskReasons, item.counted])
+    ).toEqual(
+      rows.map(() => [30, ["Hosting network"], true])
+    );
+  });
+
+  test("does not force benign bot substrings while preserving word-boundary signatures", async () => {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.7",
+        path: "/",
+        userAgent: "Abbott/1.0",
+        referrer: "https://lizhe.link/"
+      })
+    );
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.8",
+        path: "/",
+        userAgent: "Example client bot/1.0",
+        browserSummary: "Unknown",
+        referrer: "https://lizhe.link/"
+      })
+    );
+
+    const result = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const byIp = new Map(result.items.map((item) => [item.ipAddress, item]));
+    expect(byIp.get("192.0.2.7")).toMatchObject({
+      visitorType: "Likely human",
+      riskScore: 0,
+      riskReasons: [],
+      counted: true
+    });
+    expect(byIp.get("192.0.2.8")).toMatchObject({
+      visitorType: "Known bot signature",
+      riskScore: 100,
+      riskReasons: ["Known bot signature", "Unknown browser"],
+      counted: false
+    });
+  });
+
+  test("recognizes canonical compound bot signatures and legacy Googlebot summaries", async () => {
+    const rows = [
+      createVisit({ ipAddress: "192.0.2.21", userAgent: "Googlebot/2.1", browserSummary: "Googlebot" }),
+      createVisit({ ipAddress: "192.0.2.22", userAgent: "bingbot/2.0", browserSummary: "Unknown" }),
+      createVisit({ ipAddress: "192.0.2.23", userAgent: "GPTBot/1.2", browserSummary: "Unknown" }),
+      createVisit({
+        ipAddress: "192.0.2.24",
+        userAgent: "Mozilla/5.0",
+        browserSummary: "Googlebot",
+        isSuspectedBot: false
+      }),
+      createVisit({ ipAddress: "192.0.2.25", userAgent: "Abbott/1.0", browserSummary: "Chrome on macOS" })
+    ];
+    for (const row of rows) await insertVisit(env.DB, row);
+
+    const result = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const byIp = new Map(result.items.map((item) => [item.ipAddress, item]));
+    for (const ipAddress of ["192.0.2.21", "192.0.2.22", "192.0.2.23", "192.0.2.24"]) {
+      expect(byIp.get(ipAddress)).toMatchObject({
+        visitorType: "Known bot signature",
+        riskScore: 100,
+        counted: false
+      });
+    }
+    expect(byIp.get("192.0.2.25")).toMatchObject({
+      visitorType: "Likely human",
+      riskScore: 10,
+      counted: true
+    });
+  });
+
+  test("keeps SQL and TypeScript hosting normalization identical for repeated separators", async () => {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.9",
+        path: "/",
+        asOrganization: "Internet--  Vikings International AB",
+        referrer: "https://lizhe.link/"
+      })
+    );
+
+    const page = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const exported = await getVisitsForExport(
+      env.DB,
+      filters({ bots: "include" })
+    );
+    expect(page.items[0]).toMatchObject({
+      riskScore: 30,
+      riskReasons: ["Hosting network"],
+      counted: true
+    });
+    expect(exported).toEqual(page.items);
+  });
+
+  test("keeps SQL-selected hosting evidence authoritative for adversarial organizations", async () => {
+    const cases: Array<[string, string | null, boolean]> = [
+      ["192.0.2.31", "Internet ViKings International AB", false],
+      ["192.0.2.32", "Internet\0Vikings International AB", false],
+      ["192.0.2.33", "Internet--  Vikings International AB", true],
+      ["192.0.2.34", "100%_Internet_Vikings", true],
+      ["192.0.2.35", "Hetz%ner Online GmbH", false],
+      ["192.0.2.36", "", false],
+      ["192.0.2.37", null, false]
+    ];
+    for (const [ipAddress, asOrganization] of cases) {
+      await insertVisit(env.DB, createVisit({
+        ipAddress,
+        asOrganization,
+        referrer: "https://lizhe.link/"
+      }));
+    }
+
+    const page = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const exported = await getVisitsForExport(env.DB, filters({ bots: "include" }));
+    const byIp = new Map(page.items.map((item) => [item.ipAddress, item]));
+    for (const [ipAddress, , hosting] of cases) {
+      expect(byIp.get(ipAddress)).toMatchObject({
+        riskScore: hosting ? 30 : 0,
+        riskReasons: hosting ? ["Hosting network"] : [],
+        counted: true
+      });
+    }
+    expect(exported).toEqual(page.items);
+  });
+
+  test("keeps SQL and TypeScript browser syntax identical for invalid version suffixes", async () => {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.17",
+        path: "/",
+        browserSummary: "Chrome 1beta on Linux",
+        referrer: "https://lizhe.link/"
+      })
+    );
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.18",
+        path: "/",
+        browserSummary: "Chrome 1 on Linux",
+        referrer: "https://lizhe.link/"
+      })
+    );
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.19",
+        path: "/",
+        browserSummary: "\tChrome 1 on Linux",
+        referrer: "https://lizhe.link/"
+      })
+    );
+
+    const page = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const exported = await getVisitsForExport(
+      env.DB,
+      filters({ bots: "include" })
+    );
+    const byIp = new Map(page.items.map((item) => [item.ipAddress, item]));
+    expect(byIp.get("192.0.2.17")).toMatchObject({
+      riskScore: 25,
+      riskReasons: ["Unknown browser"],
+      counted: true
+    });
+    expect(byIp.get("192.0.2.18")).toMatchObject({
+      riskScore: 0,
+      riskReasons: [],
+      counted: true
+    });
+    expect(byIp.get("192.0.2.19")).toMatchObject({
+      riskScore: 25,
+      riskReasons: ["Unknown browser"],
+      counted: true
+    });
+    expect(exported).toEqual(page.items);
+  });
+
+  test("uses the composite IP/time index for both activity range windows", async () => {
+    let pageSql = "";
+    const recordingDb = {
+      prepare(query: string) {
+        pageSql = query;
+        return env.DB.prepare(query);
+      }
+    } as D1Database;
+
+    await getVisitPage(recordingDb, filters({ bots: "include" }));
+    const plan = await env.DB
+      .prepare(`EXPLAIN QUERY PLAN ${pageSql}`)
+      .bind(51, 0)
+      .all<{ detail: string }>();
+    const indexedRanges = plan.results.filter((row) =>
+      /visits_ip_address_visited_at_utc_idx \(ip_address=\? AND visited_at_utc>[?] AND visited_at_utc<[?]\)/.test(
+        row.detail
+      )
+    );
+
+    expect(
+      pageSql.match(/AND ip_activity\.visited_at_utc >=/g)
+    ).toHaveLength(2);
+    expect(indexedRanges.length).toBeGreaterThanOrEqual(2);
+  });
+
+  test("derives forced, effective, Bot Management, and counted-score decisions consistently", async () => {
+    const decisionRows: VisitInput[] = [
+      createVisit({
+        ipAddress: "192.0.2.10",
+        path: "/",
+        userAgent:
+          "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+        browserSummary: "Googlebot",
+        referrer: "https://lizhe.link/"
+      }),
+      createVisit({
+        ipAddress: "192.0.2.11",
+        path: "/",
+        cfVerifiedBot: true,
+        referrer: "https://lizhe.link/"
+      }),
+      createVisit({
+        ipAddress: "192.0.2.12",
+        path: "/wp-login.php",
+        referrer: "https://lizhe.link/"
+      }),
+      createVisit({
+        ipAddress: "192.0.2.13",
+        path: "/not-allowed/",
+        referrer: "https://lizhe.link/"
+      }),
+      createVisit({
+        ipAddress: "192.0.2.14",
+        path: "/",
+        cfBotScore: 20,
+        referrer: "https://lizhe.link/"
+      }),
+      createVisit({
+        ipAddress: "192.0.2.15",
+        path: "/",
+        asn: 14061,
+        referrer: ""
+      }),
+      createVisit({
+        ipAddress: "192.0.2.16",
+        path: "/",
+        browserSummary: "Unknown",
+        cfBotScore: 20,
+        referrer: "https://lizhe.link/"
+      })
+    ];
+    for (const row of decisionRows) await insertVisit(env.DB, row);
+
+    const included = await getVisitPage(env.DB, filters({ bots: "include" }));
+    const byIp = new Map(included.items.map((item) => [item.ipAddress, item]));
+    expect(byIp.get("192.0.2.10")).toMatchObject({
+      visitorType: "Known bot signature",
+      riskScore: 100,
+      counted: false
+    });
+    expect(byIp.get("192.0.2.11")).toMatchObject({
+      visitorType: "Known bot signature",
+      riskScore: 100,
+      counted: false
+    });
+    expect(byIp.get("192.0.2.12")).toMatchObject({
+      visitorType: "Suspicious automation",
+      riskScore: 90,
+      riskReasons: ["Scanner path", "Unlisted page"],
+      counted: false
+    });
+    expect(byIp.get("192.0.2.13")).toMatchObject({
+      visitorType: "Suspicious automation",
+      riskScore: 90,
+      riskReasons: ["Unlisted page"],
+      counted: false
+    });
+    expect(byIp.get("192.0.2.14")).toMatchObject({
+      visitorType: "Uncertain",
+      riskScore: 50,
+      riskReasons: ["Low Cloudflare bot score"],
+      counted: true
+    });
+    expect(byIp.get("192.0.2.15")).toMatchObject({
+      visitorType: "Uncertain",
+      riskScore: 40,
+      riskReasons: ["Hosting network", "No referrer"],
+      counted: true
+    });
+    expect(byIp.get("192.0.2.16")).toMatchObject({
+      visitorType: "Suspicious automation",
+      riskScore: 75,
+      riskReasons: ["Low Cloudflare bot score", "Unknown browser"],
+      counted: false,
+      isSuspectedBot: false,
+      botReason: null
+    });
+
+    expect((await getVisitPage(env.DB, filters())).items.map((item) => item.ipAddress)).toEqual([
+      "192.0.2.15",
+      "192.0.2.14"
+    ]);
+    expect(
+      (await getVisitPage(env.DB, filters({ bots: "only" }))).items.map(
+        (item) => item.ipAddress
+      )
+    ).toEqual([
+      "192.0.2.16",
+      "192.0.2.13",
+      "192.0.2.12",
+      "192.0.2.11",
+      "192.0.2.10"
+    ]);
+  });
+
+  test("keeps page and export decisions identical", async () => {
+    await insertVisit(
+      env.DB,
+      createVisit({
+        ipAddress: "192.0.2.20",
+        path: "/",
+        asOrganization: "DigitalOcean LLC",
+        referrer: ""
+      })
+    );
+
+    const pageItem = (await getVisitPage(env.DB, filters({ bots: "include" }))).items[0];
+    const exportItem = (await getVisitsForExport(env.DB, filters({ bots: "include" })))[0];
+    expect(exportItem).toEqual(pageItem);
+  });
 });
 
 test("getDashboardSummary counts visits and distinct network addresses in each window", async () => {
@@ -645,6 +1119,28 @@ test("getDashboardSummary excludes historical scanner bursts from visit totals",
     today: { totalVisits: 1, distinctNetworkAddresses: 1 },
     sevenDays: { totalVisits: 1, distinctNetworkAddresses: 1 },
     thirtyDays: { totalVisits: 1, distinctNetworkAddresses: 1 }
+  });
+});
+
+test("getDashboardSummary counts exactly the decisions marked counted", async () => {
+  for (const row of [
+    createVisit({ ipAddress: "198.51.100.1", path: "/", referrer: "https://lizhe.link/" }),
+    createVisit({ ipAddress: "198.51.100.2", path: "/", asn: 14061, referrer: "" }),
+    createVisit({ ipAddress: "198.51.100.3", path: "/", cfBotScore: 20, referrer: "https://lizhe.link/" }),
+    createVisit({ ipAddress: "198.51.100.4", path: "/", cfVerifiedBot: true, referrer: "https://lizhe.link/" })
+  ]) {
+    await insertVisit(env.DB, row);
+  }
+
+  const page = await getVisitPage(env.DB, filters({ bots: "include" }));
+  const counted = page.items.filter((item) => item.counted);
+  expect(counted).toHaveLength(3);
+  expect(
+    await getDashboardSummary(env.DB, new Date("2026-08-05T16:30:00.000Z"))
+  ).toEqual({
+    today: { totalVisits: 3, distinctNetworkAddresses: 3 },
+    sevenDays: { totalVisits: 3, distinctNetworkAddresses: 3 },
+    thirtyDays: { totalVisits: 3, distinctNetworkAddresses: 3 }
   });
 });
 

@@ -74,15 +74,24 @@ class HarnessElement {
   colSpan = 1;
   hidden = false;
   href = "";
-  textContent = "";
   value = "";
 
+  private ownTextContent = "";
+  private readonly attributes = new Map<string, string>();
   private readonly listeners = new Map<string, HarnessListener[]>();
 
   constructor(readonly tagName: string, readonly id = "") {}
 
   set innerHTML(_value: string) {
     throw new Error("The delivered dashboard must not write innerHTML");
+  }
+
+  set textContent(value: string) {
+    this.ownTextContent = value;
+  }
+
+  get textContent(): string {
+    return this.ownTextContent + this.children.map((child) => child.textContent).join("");
   }
 
   append(...elements: HarnessElement[]): void {
@@ -97,6 +106,14 @@ class HarnessElement {
     const listeners = this.listeners.get(type) ?? [];
     listeners.push(listener);
     this.listeners.set(type, listeners);
+  }
+
+  setAttribute(name: string, value: string): void {
+    this.attributes.set(name, value);
+  }
+
+  getAttribute(name: string): string | null {
+    return this.attributes.get(name) ?? null;
   }
 
   async dispatch(type: string): Promise<boolean> {
@@ -222,9 +239,31 @@ const VISITS_RESPONSE = {
       country: "HK",
       region: "Hong Kong",
       city: "<b>Hong Kong</b>",
-      asn: 13335,
+      asn: 24940,
       colo: "HKG",
       cfRay: "ray-91",
+      asOrganization: "Hetzner Online GmbH",
+      continent: "AS",
+      timezone: "Asia/Hong_Kong",
+      httpProtocol: "HTTP/2",
+      tlsVersion: "TLSv1.3",
+      clientTcpRttMs: 14,
+      acceptLanguage: "en-HK,en;q=0.9",
+      secFetchSite: "same-origin",
+      cfBotScore: null,
+      cfVerifiedBot: null,
+      cfCorporateProxy: null,
+      firstSeenUtc: "2026-08-06T15:00:00.000Z",
+      lastSeenUtc: "2026-08-06T16:30:05.000Z",
+      retainedVisitCount: 4,
+      visitsPreceding24h: 2,
+      visitsWithin2m: 2,
+      distinctPathCount: 2,
+      visitorType: "Suspicious automation",
+      riskScore: 90,
+      riskReasons: ["Hosting network", "Unknown browser", "No referrer", "Repeated requests"],
+      counted: false,
+      classificationVersion: "risk-v1",
       isSuspectedBot: true
     },
     {
@@ -244,6 +283,28 @@ const VISITS_RESPONSE = {
       asn: null,
       colo: null,
       cfRay: null,
+      asOrganization: null,
+      continent: null,
+      timezone: null,
+      httpProtocol: null,
+      tlsVersion: null,
+      clientTcpRttMs: null,
+      acceptLanguage: null,
+      secFetchSite: null,
+      cfBotScore: null,
+      cfVerifiedBot: false,
+      cfCorporateProxy: true,
+      firstSeenUtc: null,
+      lastSeenUtc: null,
+      retainedVisitCount: 0,
+      visitsPreceding24h: 0,
+      visitsWithin2m: 0,
+      distinctPathCount: 0,
+      visitorType: "Likely human",
+      riskScore: 0,
+      riskReasons: [],
+      counted: true,
+      classificationVersion: "risk-v1",
       isSuspectedBot: false
     }
   ],
@@ -262,6 +323,13 @@ function successfulDashboardResponse(url: string): Response {
   return url === "/api/summary"
     ? jsonResponse(SUMMARY_RESPONSE)
     : jsonResponse(VISITS_RESPONSE);
+}
+
+function textContent(element: HarnessElement): string[] {
+  return [
+    element.textContent,
+    ...element.children.flatMap((child) => textContent(child))
+  ].filter((value) => value !== "");
 }
 
 test("serves an accessible dashboard shell with external assets and all controls", async () => {
@@ -288,26 +356,46 @@ test("serves an accessible dashboard shell with external assets and all controls
     "IP address",
     "Country code",
     "Path contains",
-    "Include suspected bots"
+    "Include excluded automation"
   ]) {
     expect(html).toContain(label);
   }
-  for (const heading of [
+  const expectedHeaders = [
     "Time (Hong Kong)",
     "IP address",
     "Location",
+    "Network",
     "Path",
     "Referrer",
     "Browser / device",
-    "Bot"
-  ]) {
-    expect(html).toContain(`<th scope="col">${heading}</th>`);
-  }
+    "IP activity",
+    "Visitor type",
+    "Risk",
+    "Reasons",
+    "Counted",
+    "Details"
+  ];
+  expect(
+    Array.from(html.matchAll(/<th scope="col">([^<]+)<\/th>/g), (match) => match[1])
+  ).toEqual(expectedHeaders);
+  expect(html).toContain('<td colspan="13">Loading visits…</td>');
 
   expect(html).toContain('aria-label="Visit pagination"');
   expect(html).toContain('id="previous-page"');
   expect(html).toContain('id="next-page"');
   expect(html).toContain('id="export-link" href="/api/export.csv?bots=exclude"');
+});
+
+test("serves focused details styles with visible controls and a one-column mobile layout", async () => {
+  const response = await dashboardRequest("/app.css");
+  const css = await response.text();
+
+  expect(css).toContain(".details-row");
+  expect(css).toContain(".details-panel");
+  expect(css).toContain(".risk-badge");
+  expect(css).toContain(".details-toggle:focus");
+  expect(css).toMatch(/@media \(max-width: 44rem\)[\s\S]*\.detail-list \{ grid-template-columns: 1fr; \}/);
+  expect(css).toContain(".table-scroll { overflow-x: auto; }");
 });
 
 test("uses a strict same-origin CSP and disables storage for the dashboard shell", async () => {
@@ -333,14 +421,14 @@ test.each([
 });
 
 describe("delivered browser program", () => {
-  test("parses, starts against the delivered DOM, and renders complete API shapes safely", async () => {
+  test("renders visitor intelligence rows and safe accessible details from complete API records", async () => {
     const runtime = await executeServedDashboard(
       "?from=2026-08-01&to=2026-08-06&ip=203.0.113&country=HK&path=%2Fnotes&bots=include&page=3&debug=true",
       successfulDashboardResponse
     );
 
     await vi.waitFor(() => {
-      expect(runtime.document.element("visit-rows").children).toHaveLength(2);
+      expect(runtime.document.element("visit-rows").children).toHaveLength(4);
     });
 
     expect(runtime.fetchCalls).toEqual([
@@ -364,24 +452,129 @@ describe("delivered browser program", () => {
     expect(runtime.document.element("seven-days-total").textContent).toBe("17");
     expect(runtime.document.element("thirty-days-distinct").textContent).toBe("23");
 
-    const cells = runtime.document.element("visit-rows").children[0].children;
+    const [row, detailsRow, emptyRow, emptyDetailsRow] = runtime.document.element("visit-rows").children;
+    const cells = row.children;
     expect(cells.map((cell) => cell.textContent)).toEqual([
       "2026-08-07 00:30:05 HKT",
       '<img src=x onerror="alert(1)">',
       "HK · <b>Hong Kong</b>",
-      "/notes/<script>alert(1)</script>?q=<svg onload=alert(1)>",
+      "AS24940 · Hetzner Online GmbH",
+      "/notes/<script>alert(1)</script>",
       "https://example.com/<img>",
       "Browser <iframe>",
-      "Suspected bot"
+      "24h: 2 · See Details",
+      "Suspicious automation",
+      "Risk 90",
+      "Hosting network · Unknown browser · No referrer · Repeated requests",
+      "Excluded",
+      "Details"
     ]);
-    const emptyCells = runtime.document.element("visit-rows").children[1].children;
+    expect(cells).toHaveLength(13);
+    const detailsButton = cells[12].children[0];
+    expect(detailsButton.tagName).toBe("button");
+    expect(detailsButton.getAttribute("aria-expanded")).toBe("false");
+    expect(detailsButton.getAttribute("aria-controls")).toBe("visit-details-91");
+    expect(cells[7].getAttribute("id")).toBe("visit-activity-91");
+    expect(detailsButton.getAttribute("aria-describedby")).toBe("visit-activity-91");
+    expect(emptyRow.children[12].children[0].getAttribute("aria-controls")).toBe("visit-details-92");
+    expect(detailsRow.hidden).toBe(true);
+    expect(detailsRow.children[0].colSpan).toBe(13);
+    expect(detailsRow.children[0].children[0].getAttribute("id")).toBe("visit-details-91");
+    const detailGroups = detailsRow.children[0].children[0].children;
+    expect(detailGroups).toHaveLength(6);
+    expect(detailGroups.map((group) => group.children[0].textContent)).toEqual([
+      "Request",
+      "Network",
+      "Client",
+      "Cloudflare signals",
+      "Activity",
+      "Decision"
+    ]);
+    expect(detailGroups.map((group) => {
+      const entries = group.children[1].children;
+      return Array.from({ length: entries.length / 2 }, (_, index) => [
+        entries[index * 2].textContent,
+        entries[index * 2 + 1].textContent
+      ]);
+    })).toEqual([
+      [
+        ["Visit ID", "91"],
+        ["Method", "GET"],
+        ["Host", "lizhe.link"],
+        ["Path", "/notes/<script>alert(1)</script>"],
+        ["Sanitized referrer", "https://example.com/<img>"],
+        ["Timestamp", "2026-08-07 00:30:05 HKT"],
+        ["Ray ID", "ray-91"]
+      ],
+      [
+        ["IP address", '<img src=x onerror="alert(1)">'],
+        ["Country", "HK"],
+        ["Region", "Hong Kong"],
+        ["City", "<b>Hong Kong</b>"],
+        ["Continent", "AS"],
+        ["Timezone", "Asia/Hong_Kong"],
+        ["ASN", "AS24940"],
+        ["Organization", "Hetzner Online GmbH"],
+        ["Colo", "HKG"],
+        ["HTTP protocol", "HTTP/2"],
+        ["TLS version", "TLSv1.3"],
+        ["TCP RTT", "14 ms"]
+      ],
+      [
+        ["Browser summary", "Browser <iframe>"],
+        ["Raw User-Agent", "Mozilla/5.0"],
+        ["Accept-Language", "en-HK,en;q=0.9"],
+        ["Sec-Fetch-Site", "same-origin"]
+      ],
+      [
+        ["Bot score", "Not available"],
+        ["Verified bot", "Not available"],
+        ["Corporate proxy", "Not available"]
+      ],
+      [
+        ["First seen", "2026-08-06 23:00:00 HKT"],
+        ["Last seen", "2026-08-07 00:30:05 HKT"],
+        ["Retained total", "4"],
+        ["Preceding 24-hour total", "2"],
+        ["Two-minute total", "2"],
+        ["Distinct paths", "2"]
+      ],
+      [
+        ["Visitor type", "Suspicious automation"],
+        ["Risk score", "90"],
+        ["Reasons", "Hosting network · Unknown browser · No referrer · Repeated requests"],
+        ["Counted", "Excluded"],
+        ["Classification version", "risk-v1"]
+      ]
+    ]);
+    expect(textContent(detailsRow)).toContain('<img src=x onerror="alert(1)">');
+    expect(textContent(detailsRow)).toContain("/notes/<script>alert(1)</script>");
+
+    await detailsButton.dispatch("click");
+    expect(detailsButton.getAttribute("aria-expanded")).toBe("true");
+    expect(detailsRow.hidden).toBe(false);
+    await detailsButton.dispatch("click");
+    expect(detailsButton.getAttribute("aria-expanded")).toBe("false");
+    expect(detailsRow.hidden).toBe(true);
+
+    const emptyCells = emptyRow.children;
     expect(emptyCells.map((cell) => cell.textContent)).toEqual([
-      "—", "—", "—", "—", "—", "—", "—"
+      "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown",
+      "24h: 0 · See Details", "Likely human", "Risk 0", "No recorded reasons", "Counted", "Details"
     ]);
-    expect(
-      runtime.document.createdTags.filter((tag) => tag !== "tr" && tag !== "td")
-    ).toEqual([]);
-    expect(cells[6].className).toBe("bot-marker");
+    expect(emptyDetailsRow.hidden).toBe(true);
+    const nullableSignals = emptyDetailsRow.children[0].children[0].children[3].children[1].children;
+    expect(Array.from({ length: nullableSignals.length / 2 }, (_, index) => [
+      nullableSignals[index * 2].textContent,
+      nullableSignals[index * 2 + 1].textContent
+    ])).toEqual([
+      ["Bot score", "Not available"],
+      ["Verified bot", "No"],
+      ["Corporate proxy", "Yes"]
+    ]);
+    expect(runtime.document.createdTags).toEqual(expect.arrayContaining([
+      "button", "section", "h3", "dl", "dt", "dd", "span"
+    ]));
   });
 
   test("wires filters, pagination, and CSV URLs to the active browser query", async () => {
@@ -424,6 +617,20 @@ describe("delivered browser program", () => {
     ]);
   });
 
+  test("spans all visitor intelligence columns when no visits match", async () => {
+    const runtime = await executeServedDashboard("", (url) => {
+      if (url === "/api/summary") return jsonResponse(SUMMARY_RESPONSE);
+      return jsonResponse({ ...VISITS_RESPONSE, hasNext: false, items: [] });
+    });
+
+    await vi.waitFor(() => {
+      expect(runtime.document.element("visit-rows").children).toHaveLength(1);
+    });
+    const cell = runtime.document.element("visit-rows").children[0].children[0];
+    expect(cell.textContent).toBe("No visits match these filters.");
+    expect(cell.colSpan).toBe(13);
+  });
+
   test("shows only a generic error and retries through the delivered click handler", async () => {
     let visitsFail = true;
     const runtime = await executeServedDashboard("", (url) => {
@@ -442,12 +649,13 @@ describe("delivered browser program", () => {
     expect(
       runtime.document.element("visit-rows").children[0].children[0].textContent
     ).not.toContain("secret SQL stack");
+    expect(runtime.document.element("visit-rows").children[0].children[0].colSpan).toBe(13);
 
     visitsFail = false;
     await runtime.document.element("retry-button").dispatch("click");
 
     expect(runtime.document.element("error-state").hidden).toBe(true);
-    expect(runtime.document.element("visit-rows").children).toHaveLength(2);
+    expect(runtime.document.element("visit-rows").children).toHaveLength(4);
     expect(runtime.fetchCalls).toHaveLength(4);
   });
 });

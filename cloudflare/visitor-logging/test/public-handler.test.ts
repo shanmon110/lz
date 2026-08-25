@@ -73,6 +73,43 @@ test("starts the origin before a document write and stores one privacy-safe visi
   expect(JSON.stringify(rows.results[0])).not.toContain("never-store-this");
 });
 
+test("records available request enrichment without changing the origin response", async () => {
+  const { ctx, pending } = executionContext();
+  const inbound = new Request("https://lizhe.link/publications?query-sentinel=value", {
+    headers: {
+      Accept: "text/html",
+      "Accept-Language": "en-HK,en;q=0.9",
+      "CF-Connecting-IP": "203.0.113.61",
+      "Sec-Fetch-Site": "same-origin"
+    }
+  });
+  Object.defineProperty(inbound, "cf", {
+    value: {
+      asOrganization: "Cloudflare, Inc.", continent: "AS", timezone: "Asia/Hong_Kong",
+      httpProtocol: "HTTP/3", tlsVersion: "TLSv1.3", clientTcpRtt: 19,
+      botManagement: { score: 99, verifiedBot: false, corporateProxy: true }
+    }
+  });
+
+  const response = await handlePublicRequest(inbound, publicEnv(env.DB), ctx, async () => {
+    return new Response("origin document", { headers: { "X-Origin": "unchanged" }, status: 201 });
+  });
+  await Promise.all(pending);
+
+  expect(response.status).toBe(201);
+  expect(response.headers.get("X-Origin")).toBe("unchanged");
+  const row = await env.DB.prepare(
+    `SELECT as_organization, continent, timezone, http_protocol, tls_version, client_tcp_rtt_ms,
+      accept_language, sec_fetch_site, cf_bot_score, cf_verified_bot, cf_corporate_proxy FROM visits`
+  ).first<Record<string, unknown>>();
+  expect(row).toEqual({
+    as_organization: "Cloudflare, Inc.", continent: "AS", timezone: "Asia/Hong_Kong",
+    http_protocol: "HTTP/3", tls_version: "TLSv1.3", client_tcp_rtt_ms: 19,
+    accept_language: "en-HK,en;q=0.9", sec_fetch_site: "same-origin",
+    cf_bot_score: 99, cf_verified_bot: 0, cf_corporate_proxy: 1
+  });
+});
+
 test("does not schedule an asset visit", async () => {
   const { ctx, pending } = executionContext();
 

@@ -11,6 +11,10 @@ test.each([
   ["iPad Safari", "Mozilla/5.0 (iPad; CPU OS 17_4 like Mac OS X) AppleWebKit/605.1.15 Version/17.4 Mobile/15E148 Safari/604.1", { browserSummary: "Tablet Safari 17 on iOS", isSuspectedBot: false }],
   ["curl", "curl/8.7.1", { browserSummary: "curl", isSuspectedBot: true }],
   ["crawler", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)", { browserSummary: "Googlebot", isSuspectedBot: true }],
+  ["standalone Googlebot", "Googlebot/2.1", { browserSummary: "Googlebot", isSuspectedBot: true }],
+  ["standalone Bingbot", "bingbot/2.0", { browserSummary: "Unknown", isSuspectedBot: true }],
+  ["standalone GPTBot", "GPTBot/1.2", { browserSummary: "Unknown", isSuspectedBot: true }],
+  ["benign Abbott token", "Abbott/1.0", { browserSummary: "Unknown", isSuspectedBot: false }],
   ["unknown", "", { browserSummary: "Unknown", isSuspectedBot: false }]
 ] as const)("parses %s agents", (_name, userAgent, expected) => {
   expect(parseUserAgent(userAgent)).toEqual(expected);

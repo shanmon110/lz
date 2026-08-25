@@ -13,7 +13,7 @@
     "dev": "wrangler dev",
     "config:production": "node scripts/render-production-config.mjs",
     "deploy": "wrangler deploy --config .private/wrangler.production.jsonc",
-    "d1:migrate:local": "wrangler d1 migrations apply DB --local",
+    "d1:migrate:local": "wrangler d1 migrations apply DB --local --config .private/wrangler.production.jsonc",
     "d1:migrate:remote": "wrangler d1 migrations apply DB --remote --config .private/wrangler.production.jsonc"
   },
   "dependencies": {

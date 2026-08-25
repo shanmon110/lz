@@ -6,12 +6,19 @@ import { isAllowedVisitPath } from "../../src/visits/allowed-pages";
 function requestWithCf(
   url: string,
   headers: HeadersInit,
-  cf: Pick<IncomingRequestCfProperties, "asn" | "city" | "colo" | "country" | "region"> = {
+  cf: Record<string, unknown> = {
     asn: 13335,
+    asOrganization: "Cloudflare, Inc.",
     city: "Hong Kong",
     colo: "HKG",
+    continent: "AS",
     country: "HK",
-    region: "Hong Kong"
+    region: "Hong Kong",
+    timezone: "Asia/Hong_Kong",
+    httpProtocol: "HTTP/3",
+    tlsVersion: "TLSv1.3",
+    clientTcpRtt: 24,
+    botManagement: { score: 98, verifiedBot: false, corporateProxy: true }
   }
 ): Request {
   const inbound = new Request(url, { headers });
@@ -43,6 +50,17 @@ test("buildVisit maps a real inbound Request into the visit schema", () => {
     asn: 13335,
     colo: "HKG",
     cfRay: "8abcdef012345678-HKG",
+    asOrganization: "Cloudflare, Inc.",
+    continent: "AS",
+    timezone: "Asia/Hong_Kong",
+    httpProtocol: "HTTP/3",
+    tlsVersion: "TLSv1.3",
+    clientTcpRttMs: 24,
+    acceptLanguage: null,
+    secFetchSite: null,
+    cfBotScore: 98,
+    cfVerifiedBot: false,
+    cfCorporateProxy: true,
     isSuspectedBot: false
   });
 });
@@ -111,7 +129,7 @@ test("buildVisit truncates every bounded string at complete Unicode code points"
       colo: `${emoji}HKG`,
       country: "US",
       region: emoji.repeat(129)
-    } satisfies Pick<IncomingRequestCfProperties, "asn" | "city" | "colo" | "country" | "region">);
+    });
 
   const result = buildVisit(inbound, new Date("2026-08-06T00:00:00.000Z"));
 
@@ -138,6 +156,71 @@ test("buildVisit truncates every bounded string at complete Unicode code points"
     colo: `${emoji}HK`,
     cfRay: "c".repeat(64)
   });
+});
+
+test("buildVisit bounds optional intelligence values and rejects malformed values", () => {
+  const emoji = "😀";
+  const inbound = requestWithCf("https://lizhe.link/publications?query-sentinel=value", {
+    "CF-Connecting-IP": "203.0.113.59",
+    Referer: "https://credential-sentinel:password-sentinel@referrer.example/path?referrer-sentinel=value",
+    "Accept-Language": "a".repeat(257),
+    "Sec-Fetch-Site": "unexpected"
+  }, {
+    asOrganization: emoji.repeat(257),
+    continent: 42,
+    timezone: emoji.repeat(65),
+    httpProtocol: emoji.repeat(33),
+    tlsVersion: 1,
+    clientTcpRtt: -1,
+    botManagement: { score: 100, verifiedBot: "true", corporateProxy: 1 }
+  });
+
+  const result = buildVisit(inbound, new Date("2026-08-25T00:00:00.000Z"));
+
+  expect({
+    asOrganization: result.asOrganization,
+    continent: result.continent,
+    timezone: result.timezone,
+    httpProtocol: result.httpProtocol,
+    tlsVersion: result.tlsVersion,
+    clientTcpRttMs: result.clientTcpRttMs,
+    acceptLanguage: result.acceptLanguage,
+    secFetchSite: result.secFetchSite,
+    cfBotScore: result.cfBotScore,
+    cfVerifiedBot: result.cfVerifiedBot,
+    cfCorporateProxy: result.cfCorporateProxy
+  }).toEqual({
+    asOrganization: emoji.repeat(256),
+    continent: null,
+    timezone: emoji.repeat(64),
+    httpProtocol: emoji.repeat(32),
+    tlsVersion: null,
+    clientTcpRttMs: null,
+    acceptLanguage: "a".repeat(256),
+    secFetchSite: null,
+    cfBotScore: null,
+    cfVerifiedBot: null,
+    cfCorporateProxy: null
+  });
+  expect(JSON.stringify(result)).not.toContain("query-sentinel");
+  expect(JSON.stringify(result)).not.toContain("credential-sentinel");
+  expect(JSON.stringify(result)).not.toContain("password-sentinel");
+  expect(JSON.stringify(result)).not.toContain("referrer-sentinel");
+});
+
+test.each(["none", "same-origin", "same-site", "cross-site"])(
+  "buildVisit retains accepted Sec-Fetch-Site value %s",
+  (secFetchSite) => {
+    const inbound = requestWithCf("https://lizhe.link/publications", { "Sec-Fetch-Site": secFetchSite });
+
+    expect(buildVisit(inbound, new Date("2026-08-25T00:00:00.000Z")).secFetchSite).toBe(secFetchSite);
+  }
+);
+
+test("buildVisit caps TCP RTT at the database maximum", () => {
+  const inbound = requestWithCf("https://lizhe.link/publications", {}, { clientTcpRtt: 600_001 });
+
+  expect(buildVisit(inbound, new Date("2026-08-25T00:00:00.000Z")).clientTcpRttMs).toBeNull();
 });
 
 test("buildVisit retains only a referrer origin and path", () => {

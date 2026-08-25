@@ -17,6 +17,7 @@ class BundleElement {
   href = "";
   textContent = "";
   value = "";
+  attributes = new Map();
   listeners = new Map();
 
   set innerHTML(_value) {
@@ -33,6 +34,14 @@ class BundleElement {
 
   addEventListener(type, listener) {
     this.listeners.set(type, [...(this.listeners.get(type) ?? []), listener]);
+  }
+
+  setAttribute(name, value) {
+    this.attributes.set(name, value);
+  }
+
+  getAttribute(name) {
+    return this.attributes.get(name) ?? null;
   }
 }
 
@@ -138,7 +147,7 @@ async function executeDashboardAsset(script) {
 
   const execute = new Function("window", "document", "fetch", script);
   execute(window, document, browserFetch);
-  await waitFor(() => document.element("visit-rows").children.length === 1);
+  await waitFor(() => document.element("visit-rows").children.length === 2);
 
   assert.deepEqual(
     requests.map(({ url, init }) => ({
@@ -155,6 +164,7 @@ async function executeDashboardAsset(script) {
     document.element("visit-rows").children[0].children[0].textContent,
     "2026-08-07 00:30:05 HKT"
   );
+  assert.equal(document.element("visit-rows").children[1].hidden, true);
 }
 
 async function productionDashboardScript(bundlePath, temporaryDirectory) {
