@@ -375,6 +375,7 @@ test("production package commands always use the private configuration", () => {
   assert.equal(packageJson.scripts["config:production"], "node scripts/render-production-config.mjs");
   assert.match(packageJson.scripts["test:watch"], /--exclude test\/render-production-config\.test\.ts/);
   assert.match(packageJson.scripts.deploy, /--config \.private\/wrangler\.production\.jsonc/);
+  assert.match(packageJson.scripts["d1:migrate:local"], /--config \.private\/wrangler\.production\.jsonc/);
   assert.match(packageJson.scripts["d1:migrate:remote"], /--config \.private\/wrangler\.production\.jsonc/);
   assert.match(
     readFileSync(resolve(packageRoot, "..", "..", ".gitignore"), "utf8"),
