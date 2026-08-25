@@ -118,6 +118,10 @@ test("publishes the approved navigation and separated academic content", () => {
   assert.doesNotMatch(tutorialsHtml, /mmasia2026/);
   assert.match(serviceHtml, /mmasia2026\.org\/calls\/special-session-trustworthy-speech-audio-ai/);
   assert.match(serviceHtml, /Trustworthy Speech and Audio AI: From Content Authenticity to Accountable Systems/);
+  assert.match(serviceHtml, /Special Session Co-Organizer/);
+  assert.match(serviceHtml, /ACM Multimedia Asia 2026 \(MMAsia 2026\)/);
+  assert.match(serviceHtml, /Hanoi, Vietnam/);
+  assert.match(serviceHtml, /December 15–18, 2026/);
   assert.doesNotMatch(serviceHtml, /Speech Large Language Models: Architectures/);
   assert.match(talksHtml, /bilibili\.com\/video\/BV17T42127Wd/);
   assert.match(teachingHtml, /Speech Processing and Recognition/);

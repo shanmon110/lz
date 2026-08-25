@@ -11,7 +11,7 @@ redirect_from:
 
 ## Conference Organization
 
-- [Trustworthy Speech and Audio AI: From Content Authenticity to Accountable Systems](https://mmasia2026.org/calls/special-session-trustworthy-speech-audio-ai/)
+- **Special Session Co-Organizer** — [Trustworthy Speech and Audio AI: From Content Authenticity to Accountable Systems](https://mmasia2026.org/calls/special-session-trustworthy-speech-audio-ai/), ACM Multimedia Asia 2026 (MMAsia 2026), Hanoi, Vietnam, December 15–18, 2026.
 
 ## Peer Review
 
