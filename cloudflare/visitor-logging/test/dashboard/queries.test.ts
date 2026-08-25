@@ -404,13 +404,20 @@ describe("getVisitPage", () => {
   test("excludes historical visits outside the homepage navigation allowlist", async () => {
     for (const path of [
       "/",
+      "/publications",
       "/publications/",
+      "/tutorials",
       "/tutorials/",
       "/talks",
+      "/talks/",
+      "/academic-service",
       "/academic-service/",
+      "/teaching",
       "/teaching/",
       "/markdown",
       "/markdown/",
+      "/publications?x=1",
+      "/tutorials/?x=1",
       "/markdown_generator/",
       "/posts/2012/08/blog-post-1/",
       "/portfolio/portfolio-2/",
@@ -431,10 +438,15 @@ describe("getVisitPage", () => {
       (await getVisitPage(env.DB, filters())).items.map((item) => item.path)
     ).toEqual([
       "/teaching/",
+      "/teaching",
       "/academic-service/",
+      "/academic-service",
+      "/talks/",
       "/talks",
       "/tutorials/",
+      "/tutorials",
       "/publications/",
+      "/publications",
       "/"
     ]);
     expect(
@@ -447,6 +459,8 @@ describe("getVisitPage", () => {
       ["/portfolio/portfolio-2/", "unlisted-page"],
       ["/posts/2012/08/blog-post-1/", "unlisted-page"],
       ["/markdown_generator/", "unlisted-page"],
+      ["/tutorials/?x=1", "unlisted-page"],
+      ["/publications?x=1", "unlisted-page"],
       ["/markdown/", "unlisted-page"],
       ["/markdown", "unlisted-page"]
     ]);

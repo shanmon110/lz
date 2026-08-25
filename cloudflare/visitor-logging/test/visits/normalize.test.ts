@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 
 import { buildVisit } from "../../src/visits/normalize";
+import { isAllowedVisitPath } from "../../src/visits/allowed-pages";
 
 function requestWithCf(
   url: string,
@@ -50,9 +51,13 @@ test.each([
   "/",
   "/publications",
   "/publications/",
+  "/tutorials",
   "/tutorials/",
+  "/talks",
   "/talks/",
+  "/academic-service",
   "/academic-service/",
+  "/teaching",
   "/teaching/"
 ])("buildVisit retains homepage navigation path %s as a possible human visit", (path) => {
   const inbound = requestWithCf(`https://lizhe.link${path}`, {
@@ -84,6 +89,13 @@ test.each([
   expect(
     buildVisit(inbound, new Date("2026-08-24T22:54:28.000Z")).isSuspectedBot
   ).toBe(true);
+});
+
+test.each([
+  "/publications?x=1",
+  "/tutorials/?x=1"
+])("isAllowedVisitPath rejects query-like path %s", (path) => {
+  expect(isAllowedVisitPath(path)).toBe(false);
 });
 
 test("buildVisit truncates every bounded string at complete Unicode code points", () => {
