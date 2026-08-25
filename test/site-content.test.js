@@ -94,6 +94,46 @@ function navigationEntries() {
   return JSON.parse(output);
 }
 
+function siteConfig() {
+  const output = execFileSync("ruby", ["-ryaml", "-rjson", "-e", `
+    data = YAML.safe_load(File.read(ARGV.fetch(0)), aliases: false)
+    puts JSON.generate(data)
+  `, join(repositoryRoot, "_config.yml")], {
+    encoding: "utf8"
+  });
+  return JSON.parse(output);
+}
+
+test("serves core homepage assets from the custom domain", () => {
+  const config = siteConfig();
+
+  assert.equal(config.url, "https://lizhe.link");
+  assert.equal(config.baseurl, "");
+  assert.equal(config.repository, "shanmon110/lz");
+  assert.equal(config.author.avatar, "lizhe.png");
+  assert.equal(existsSync(join(repositoryRoot, "images", config.author.avatar)), true);
+
+  const headTemplate = sourceFile("_includes/head.html");
+  const scriptsTemplate = sourceFile("_includes/scripts.html");
+  const authorTemplate = sourceFile("_includes/author-profile.html");
+
+  assert.match(headTemplate, /href="{{ base_path }}\/assets\/css\/main\.css"/);
+  assert.match(scriptsTemplate, /src="{{ base_path }}\/assets\/js\/main\.min\.js"/);
+  assert.match(authorTemplate, /author\.avatar \| prepend: "\/images\/" \| prepend: base_path/);
+
+  for (const template of [headTemplate, scriptsTemplate, authorTemplate]) {
+    assert.doesNotMatch(template, /shanmon110\.github\.io|raw\.githubusercontent\.com/);
+  }
+
+  for (const assetPath of [
+    "/assets/css/main.css",
+    "/assets/js/main.min.js",
+    `/images/${config.author.avatar}`
+  ]) {
+    assert.equal(new URL(assetPath, config.url).origin, "https://lizhe.link");
+  }
+});
+
 test("publishes the approved navigation and separated academic content", () => {
   const navigation = navigationEntries();
   assert.deepEqual(navigation, [
@@ -152,6 +192,28 @@ test("keeps the homepage concise while routing readers to dedicated pages", () =
   assert.match(indexHtml, /Feb\. 2025–Oct\. 2025/);
   assert.match(indexHtml, /Mar\. 2024–Nov\. 2024/);
   assert.doesNotMatch(indexHtml, /JCR|impact factor|NEEDS VERIFICATION/i);
+});
+
+test("gives each homepage section a restrained accessible icon", () => {
+  const indexHtml = rendered("_pages/about.md");
+  const expectedIcons = [
+    ["user", "Biography"],
+    ["bullhorn", "News"],
+    ["microphone-alt", "Research Interests"],
+    ["briefcase", "Academic Positions"],
+    ["graduation-cap", "Education"],
+    ["trophy", "Selected Awards"]
+  ];
+
+  for (const [icon, title] of expectedIcons) {
+    assert.match(
+      indexHtml,
+      new RegExp(`<h2[^>]*><i class="fas fa-fw fa-${icon} section-icon" aria-hidden="true"></i> ${title}</h2>`),
+      `${title} has its intended decorative icon`
+    );
+  }
+
+  assert.equal((indexHtml.match(/class="fas fa-fw fa-[^"]+ section-icon" aria-hidden="true"/g) || []).length, 6);
 });
 
 test("publishes all eight CV talks in reverse chronological order with only supplied links", () => {

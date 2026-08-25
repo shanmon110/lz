@@ -50,6 +50,12 @@
 
 .page__content {
 
+  .section-icon {
+    margin-right: 0.2em;
+    color: $info-color;
+    font-size: 0.9em;
+  }
+
   h2 {
     padding-bottom: 0.5em;
     border-bottom: 1px solid $border-color;
