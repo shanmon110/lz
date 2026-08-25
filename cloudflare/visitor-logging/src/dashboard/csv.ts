@@ -18,7 +18,8 @@ const HEADERS = [
   "asn",
   "colo",
   "cf_ray",
-  "is_suspected_bot"
+  "is_suspected_bot",
+  "bot_reason"
 ] as const;
 
 function neutralizeFormula(value: string): string {
@@ -48,7 +49,8 @@ function rowValues(row: VisitRow): Array<string | number | boolean | null> {
     row.asn,
     row.colo,
     row.cfRay,
-    row.isSuspectedBot
+    row.isSuspectedBot,
+    row.botReason
   ];
 }
 

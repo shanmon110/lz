@@ -1,9 +1,116 @@
 import type { DashboardFilters } from "./filters";
 import { getHongKongDateRange, getSummaryTimeRanges } from "./time";
+import { ALLOWED_VISIT_PATHS } from "../visits/allowed-pages";
 import type { VisitRow } from "../visits/types";
 
 const PAGE_SIZE = 50;
 export const MAX_EXPORT_ROWS = 5_000;
+
+function sqlStringLiteral(value: string): string {
+  return `'${value.replace(/'/g, "''")}'`;
+}
+
+function canonicalPathSql(pathColumn: string): string {
+  return `(CASE
+    WHEN ${pathColumn} <> '/' AND SUBSTR(${pathColumn}, -1) = '/'
+      THEN SUBSTR(${pathColumn}, 1, LENGTH(${pathColumn}) - 1)
+    ELSE ${pathColumn}
+  END)`;
+}
+
+function unlistedPageSql(pathColumn: string): string {
+  const allowedPaths = ALLOWED_VISIT_PATHS.flatMap((path) =>
+    path === "/" ? [path] : [path, `${path}/`]
+  ).map(sqlStringLiteral).join(", ");
+  return `${pathColumn} NOT IN (${allowedPaths})`;
+}
+
+function scannerPathSql(pathColumn: string): string {
+  return `(LOWER(${pathColumn}) LIKE '/wp-%'
+    OR LOWER(${pathColumn}) LIKE '/wp/%'
+    OR LOWER(${pathColumn}) LIKE '%.php'
+    OR LOWER(${pathColumn}) LIKE '%.php/%'
+    OR LOWER(${pathColumn}) = '/.env'
+    OR LOWER(${pathColumn}) LIKE '/.env.%'
+    OR LOWER(${pathColumn}) = '/.git'
+    OR LOWER(${pathColumn}) LIKE '/.git/%'
+    OR LOWER(${pathColumn}) = '/robots.txt')`;
+}
+
+function knownSiteReferrerSql(referrerColumn: string): string {
+  return `(LOWER(${referrerColumn}) LIKE 'https://lizhe.link/%'
+    OR LOWER(${referrerColumn}) LIKE 'http://lizhe.link/%'
+    OR LOWER(${referrerColumn}) LIKE 'https://www.lizhe.link/%'
+    OR LOWER(${referrerColumn}) LIKE 'http://www.lizhe.link/%'
+    OR LOWER(${referrerColumn}) LIKE 'https://shanmon110.github.io/lz/%')`;
+}
+
+function oracleAutomatedBrowserSql(tableName: string): string {
+  return `(${tableName}.asn = 31898
+    AND ${tableName}.browser_summary = 'Chrome 139 on Linux'
+    AND EXISTS (
+      SELECT 1
+      FROM visits AS automated_browser_pair
+      WHERE automated_browser_pair.id <> ${tableName}.id
+        AND automated_browser_pair.ip_address = ${tableName}.ip_address
+        AND ${canonicalPathSql("automated_browser_pair.path")} = ${canonicalPathSql(`${tableName}.path`)}
+        AND automated_browser_pair.asn = 31898
+        AND automated_browser_pair.browser_summary = 'Chrome 139 on Linux'
+        AND (
+          ${knownSiteReferrerSql(`${tableName}.referrer`)}
+          OR ${knownSiteReferrerSql("automated_browser_pair.referrer")}
+        )
+        AND ABS(
+          ROUND(julianday(automated_browser_pair.visited_at_utc) * 86400000.0) -
+          ROUND(julianday(${tableName}.visited_at_utc) * 86400000.0)
+        ) <= 1000
+    ))`;
+}
+
+function tencentAutomatedBrowserSql(tableName: string): string {
+  return `(${tableName}.asn = 132203
+    AND (
+      (
+        ${tableName}.browser_summary = 'Mobile Safari 13 on iOS'
+        AND (
+          ${knownSiteReferrerSql(`${tableName}.referrer`)}
+          OR (
+            ${canonicalPathSql(`${tableName}.path`)} = '/'
+            AND ${tableName}.referrer = ''
+          )
+        )
+      )
+      OR (
+        ${tableName}.browser_summary = 'Chrome 106 on Windows'
+        AND ${canonicalPathSql(`${tableName}.path`)} = '/'
+        AND ${tableName}.referrer = ''
+      )
+    ))`;
+}
+
+function automatedBrowserSql(tableName = "visits"): string {
+  return `(${oracleAutomatedBrowserSql(tableName)}
+    OR ${tencentAutomatedBrowserSql(tableName)})`;
+}
+
+function effectiveBotSql(tableName = "visits"): string {
+  return `(${tableName}.is_suspected_bot = 1
+    OR ${unlistedPageSql(`${tableName}.path`)}
+    OR ${scannerPathSql(`${tableName}.path`)}
+    OR EXISTS (
+      SELECT 1
+      FROM visits AS scanner_probe
+      WHERE scanner_probe.ip_address = ${tableName}.ip_address
+        AND ABS(
+          unixepoch(scanner_probe.visited_at_utc) -
+          unixepoch(${tableName}.visited_at_utc)
+        ) <= 60
+        AND ${scannerPathSql("scanner_probe.path")}
+      GROUP BY scanner_probe.ip_address
+      HAVING COUNT(DISTINCT LOWER(scanner_probe.path)) >= 4
+    )
+    OR ${automatedBrowserSql(tableName)})`;
+}
 
 interface VisitDatabaseRow {
   id: number;
@@ -23,6 +130,7 @@ interface VisitDatabaseRow {
   colo: string | null;
   cf_ray: string | null;
   is_suspected_bot: number;
+  bot_reason: "automated-browser" | "unlisted-page" | null;
 }
 
 export interface VisitPage {
@@ -60,9 +168,9 @@ function buildWhere(filters: DashboardFilters): {
   const values: Array<string | number> = [];
 
   if (filters.bots === "exclude") {
-    fragments.push("is_suspected_bot = 0");
+    fragments.push(`NOT ${effectiveBotSql()}`);
   } else if (filters.bots === "only") {
-    fragments.push("is_suspected_bot = 1");
+    fragments.push(effectiveBotSql());
   }
 
   if (filters.from) {
@@ -110,7 +218,8 @@ function toVisitRow(row: VisitDatabaseRow): VisitRow {
     asn: row.asn,
     colo: row.colo,
     cfRay: row.cf_ray,
-    isSuspectedBot: row.is_suspected_bot === 1
+    isSuspectedBot: row.is_suspected_bot === 1,
+    botReason: row.bot_reason
   };
 }
 
@@ -125,7 +234,13 @@ export async function getVisitPage(
       `SELECT
         id, visited_at_utc, ip_address, method, host, path, query_string,
         referrer, user_agent, browser_summary, country, region, city, asn,
-        colo, cf_ray, is_suspected_bot
+        colo, cf_ray,
+        CASE WHEN ${effectiveBotSql()} THEN 1 ELSE 0 END AS is_suspected_bot,
+        CASE
+          WHEN ${unlistedPageSql("visits.path")} THEN 'unlisted-page'
+          WHEN ${automatedBrowserSql()} THEN 'automated-browser'
+          ELSE NULL
+        END AS bot_reason
       FROM visits${where.sql}
       ORDER BY visited_at_utc DESC, id DESC
       LIMIT ? OFFSET ?`
@@ -151,7 +266,13 @@ export async function getVisitsForExport(
       `SELECT
         id, visited_at_utc, ip_address, method, host, path, query_string,
         referrer, user_agent, browser_summary, country, region, city, asn,
-        colo, cf_ray, is_suspected_bot
+        colo, cf_ray,
+        CASE WHEN ${effectiveBotSql()} THEN 1 ELSE 0 END AS is_suspected_bot,
+        CASE
+          WHEN ${unlistedPageSql("visits.path")} THEN 'unlisted-page'
+          WHEN ${automatedBrowserSql()} THEN 'automated-browser'
+          ELSE NULL
+        END AS bot_reason
       FROM visits${where.sql}
       ORDER BY visited_at_utc DESC, id DESC
       LIMIT ?`
@@ -173,7 +294,7 @@ async function countRange(
         COUNT(*) AS total_visits,
         COUNT(DISTINCT ip_address) AS distinct_network_addresses
       FROM visits
-      WHERE is_suspected_bot = 0
+      WHERE NOT ${effectiveBotSql()}
         AND visited_at_utc >= ?
         AND visited_at_utc <= ?`
     )

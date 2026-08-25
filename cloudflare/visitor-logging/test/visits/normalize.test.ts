@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 
 import { buildVisit } from "../../src/visits/normalize";
+import { isAllowedVisitPath } from "../../src/visits/allowed-pages";
 
 function requestWithCf(
   url: string,
@@ -19,7 +20,7 @@ function requestWithCf(
 }
 
 test("buildVisit maps a real inbound Request into the visit schema", () => {
-  const inbound = requestWithCf("https://www.lizhe.link/notes/hello?tag=web&lang=en", {
+  const inbound = requestWithCf("https://www.lizhe.link/publications/?tag=web&lang=en", {
     "CF-Connecting-IP": "203.0.113.42",
     "CF-Ray": "8abcdef012345678-HKG",
     Referer: "https://example.com/article",
@@ -31,7 +32,7 @@ test("buildVisit maps a real inbound Request into the visit schema", () => {
     ipAddress: "203.0.113.42",
     method: "GET",
     host: "www.lizhe.link",
-    path: "/notes/hello",
+    path: "/publications/",
     queryString: "",
     referrer: "https://example.com/article",
     userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
@@ -44,6 +45,57 @@ test("buildVisit maps a real inbound Request into the visit schema", () => {
     cfRay: "8abcdef012345678-HKG",
     isSuspectedBot: false
   });
+});
+
+test.each([
+  "/",
+  "/publications",
+  "/publications/",
+  "/tutorials",
+  "/tutorials/",
+  "/talks",
+  "/talks/",
+  "/academic-service",
+  "/academic-service/",
+  "/teaching",
+  "/teaching/"
+])("buildVisit retains homepage navigation path %s as a possible human visit", (path) => {
+  const inbound = requestWithCf(`https://lizhe.link${path}`, {
+    "CF-Connecting-IP": "203.0.113.42",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/151.0.0.0 Safari/537.36"
+  });
+
+  expect(
+    buildVisit(inbound, new Date("2026-08-24T22:54:28.000Z")).isSuspectedBot
+  ).toBe(false);
+});
+
+test.each([
+  "/markdown",
+  "/markdown/",
+  "/markdown_generator/",
+  "/posts/2012/08/blog-post-1/",
+  "/portfolio/portfolio-2/",
+  "/sitemap/",
+  "/robots.txt",
+  "//",
+  "/talks//"
+])("buildVisit marks non-navigation page %s as a suspected bot", (path) => {
+  const inbound = requestWithCf(`https://lizhe.link${path}`, {
+    "CF-Connecting-IP": "203.0.113.42",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/151.0.0.0 Safari/537.36"
+  });
+
+  expect(
+    buildVisit(inbound, new Date("2026-08-24T22:54:28.000Z")).isSuspectedBot
+  ).toBe(true);
+});
+
+test.each([
+  "/publications?x=1",
+  "/tutorials/?x=1"
+])("isAllowedVisitPath rejects query-like path %s", (path) => {
+  expect(isAllowedVisitPath(path)).toBe(false);
 });
 
 test("buildVisit truncates every bounded string at complete Unicode code points", () => {
@@ -107,4 +159,22 @@ test("buildVisit drops a malformed referrer", () => {
   });
 
   expect(buildVisit(inbound, new Date("2026-08-06T00:00:00.000Z")).referrer).toBe("");
+});
+
+test.each([
+  "/wp-trackback.php",
+  "/wp-includes/",
+  "/wp-content/plugins/core-plugin/include.php",
+  "/tinyfilemanager.php",
+  "/.env",
+  "/robots.txt"
+])("buildVisit marks scanner path %s as a suspected bot despite a browser user agent", (path) => {
+  const inbound = requestWithCf(`https://lizhe.link${path}`, {
+    "CF-Connecting-IP": "20.240.128.207",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36"
+  });
+
+  expect(
+    buildVisit(inbound, new Date("2026-08-24T14:08:57.000Z")).isSuspectedBot
+  ).toBe(true);
 });

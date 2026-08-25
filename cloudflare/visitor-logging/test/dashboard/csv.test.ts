@@ -22,13 +22,14 @@ function visit(overrides: Partial<VisitRow> = {}): VisitRow {
     colo: "HKG",
     cfRay: null,
     isSuspectedBot: false,
+    botReason: null,
     ...overrides
   };
 }
 
 test("writes the stable CSV header in visit-field order", () => {
   expect(serializeVisitsCsv([])).toBe(
-    "id,visited_at_utc,ip_address,method,host,path,query_string,referrer,user_agent,browser_summary,country,region,city,asn,colo,cf_ray,is_suspected_bot"
+    "id,visited_at_utc,ip_address,method,host,path,query_string,referrer,user_agent,browser_summary,country,region,city,asn,colo,cf_ray,is_suspected_bot,bot_reason"
   );
 });
 

@@ -1,4 +1,6 @@
 import type { VisitInput } from "./types";
+import { isAllowedVisitPath } from "./allowed-pages";
+import { isScannerPath } from "./scanner";
 import { parseUserAgent } from "./user-agent";
 
 function truncateCodePoints(value: string, maximum: number): string {
@@ -43,6 +45,9 @@ export function buildVisit(request: Request, now: Date): VisitInput {
     asn: typeof cf?.asn === "number" ? cf.asn : null,
     colo: optionalString(cf?.colo, 3),
     cfRay: optionalString(request.headers.get("CF-Ray"), 64),
-    isSuspectedBot: agent.isSuspectedBot
+    isSuspectedBot:
+      agent.isSuspectedBot ||
+      isScannerPath(url.pathname) ||
+      !isAllowedVisitPath(url.pathname)
   };
 }

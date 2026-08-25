@@ -1,22 +1,13 @@
-# main links links
 main:
+  - title: "Home"
+    url: /
   - title: "Publications"
     url: /publications/
-
+  - title: "Tutorials"
+    url: /tutorials/
   - title: "Talks"
-    url: /talks/    
-
-  - title: "Teaching Assistant"
-    url: /teaching/    
-    
-  - title: "Services"
-    url: /markdown/
-    
-  # - title: "Portfolio"
-  #   url: /portfolio/
-        
-#   - title: "Blog"
-#     url: /year-archive/
-    
-  # - title: "CV"
-  #   url: /cv/
+    url: /talks/
+  - title: "Academic Service"
+    url: /academic-service/
+  - title: "Teaching"
+    url: /teaching/
