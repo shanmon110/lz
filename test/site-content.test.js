@@ -197,19 +197,19 @@ test("keeps the homepage concise while routing readers to dedicated pages", () =
 test("gives each homepage section its approved accessible emoji", () => {
   const indexHtml = rendered("_pages/about.md");
   const expectedIcons = [
-    ["👤", "Biography"],
-    ["📢", "News"],
-    ["🎙️", "Research Interests"],
-    ["💼", "Academic Positions"],
-    ["🎓", "Education"],
-    ["🏆", "Selected Awards"]
+    ["biography", "👤", "Biography"],
+    ["news", "📢", "News"],
+    ["research-interests", "🎙️", "Research Interests"],
+    ["academic-positions", "💼", "Academic Positions"],
+    ["education", "🎓", "Education"],
+    ["selected-awards", "🏆", "Selected Awards"]
   ];
 
-  for (const [emoji, title] of expectedIcons) {
+  for (const [id, emoji, title] of expectedIcons) {
     assert.match(
       indexHtml,
-      new RegExp(`<h2[^>]*><span class="section-emoji" aria-hidden="true">${emoji}</span> ${title}</h2>`),
-      `${title} has its intended decorative emoji`
+      new RegExp(`<h2 id="${id}"><span class="section-emoji" aria-hidden="true">${emoji}</span> ${title}</h2>`),
+      `${title} has its intended decorative emoji and stable fragment ID`
     );
   }
 
@@ -219,9 +219,19 @@ test("gives each homepage section its approved accessible emoji", () => {
 
 test("groups homepage news by month and restores the detailed biography", () => {
   const indexHtml = rendered("_pages/about.md");
+  const expectedNews = [
+    ["December 2026", "Special Session on Trustworthy Speech and Audio AI at MMAsia 2026"],
+    ["September 2026", "Speech Large Language Models for Under-Resourced Languages"],
+    ["July 2026", "Speech Large Language Models: Architectures, Efficient Adaptation, and Applications"]
+  ];
+  let previousIndex = -1;
 
-  for (const month of ["December 2026", "September 2026", "July 2026"]) {
-    assert.match(indexHtml, new RegExp(`<h3[^>]*>${month}</h3>`));
+  for (const [month, item] of expectedNews) {
+    const monthIndex = indexHtml.indexOf(`>${month}</h3>`);
+    const itemIndex = indexHtml.indexOf(`>${item}</a>`, monthIndex);
+    assert.ok(monthIndex > previousIndex, `${month} appears in reverse chronological order`);
+    assert.ok(itemIndex > monthIndex, `${item} appears under ${month}`);
+    previousIndex = itemIndex;
   }
 
   assert.match(indexHtml, /previously conducted international collaborative research/);

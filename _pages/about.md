@@ -8,13 +8,13 @@ redirect_from:
   - /about.html
 ---
 
-## <span class="section-emoji" aria-hidden="true">👤</span> Biography
+<h2 id="biography"><span class="section-emoji" aria-hidden="true">👤</span> Biography</h2>
 
 Dr. Zhe Li is a Postdoctoral Fellow at **[The University of Hong Kong (HKU)](https://www.hku.hk/)**. His research focuses on speech large language models (Speech LLMs) and robust speaker representation learning, with broader interests in multimodal AI for healthcare applications. He received his Ph.D. degree from the Department of Electrical and Electronic Engineering at **[The Hong Kong Polytechnic University (PolyU)](https://www.polyu.edu.hk/)**. He was a research intern at **[Microsoft Research Asia (MSRA)](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/)** and previously conducted international collaborative research as a visiting student scholar with the Department of Electrical Engineering, **[Stanford University](https://www.stanford.edu/)**. As a key contributor, he received the [**2020 Excellent Science and Technology Achievement Award**](https://mp.weixin.qq.com/s/HgcGxSYnunYZaDQIU7Tjuw) from the **Chinese Association for Artificial Intelligence**, and his co-authored paper received the **Best Student Paper Runner-Up Award** at **PRICAI 2024**.
 
 > *“You are more than what you have become!”*
 
-## <span class="section-emoji" aria-hidden="true">📢</span> News
+<h2 id="news"><span class="section-emoji" aria-hidden="true">📢</span> News</h2>
 
 ### December 2026
 
@@ -30,25 +30,25 @@ Dr. Zhe Li is a Postdoctoral Fellow at **[The University of Hong Kong (HKU)](htt
 
 See the dedicated pages for [publications](/publications/), [tutorials](/tutorials/), [talks](/talks/), [academic service](/academic-service/), and [teaching](/teaching/).
 
-## <span class="section-emoji" aria-hidden="true">🎙️</span> Research Interests
+<h2 id="research-interests"><span class="section-emoji" aria-hidden="true">🎙️</span> Research Interests</h2>
 
 - **Speech large language models:** multilingual modeling, parameter-efficient fine-tuning, and post-training alignment
 - **Speech processing:** speaker representation learning, speaker verification, and robust speech modeling
 - **AI for health:** speech-related health applications and multimodal representation learning
 
-## <span class="section-emoji" aria-hidden="true">💼</span> Academic Positions
+<h2 id="academic-positions"><span class="section-emoji" aria-hidden="true">💼</span> Academic Positions</h2>
 
 - **Postdoctoral Fellow**, [The University of Hong Kong](https://www.hku.hk/), Hong Kong SAR — Nov. 2025–Present
 - **Research Scientist (Intern)**, [Microsoft Research Asia](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/), Beijing, China — Feb. 2025–Oct. 2025
 - **Visiting PhD Researcher**, [Stanford University](https://profiles.stanford.edu/332001), California, USA — Mar. 2024–Nov. 2024
 
-## <span class="section-emoji" aria-hidden="true">🎓</span> Education
+<h2 id="education"><span class="section-emoji" aria-hidden="true">🎓</span> Education</h2>
 
 - **PhD in Electrical and Electronic Engineering**, [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), Hong Kong SAR — Jan. 2022–Oct. 2025
 - **Master in Software Engineering**, [Xinjiang University](https://www.xju.edu.cn/), Xinjiang, China — Sept. 2018–June 2021
 - **Undergraduate in Computer Science**, Qilu University of Technology, Shandong, China — Sept. 2012–June 2016
 
-## <span class="section-emoji" aria-hidden="true">🏆</span> Selected Awards
+<h2 id="selected-awards"><span class="section-emoji" aria-hidden="true">🏆</span> Selected Awards</h2>
 
 - **Best Student Paper Runner-Up Award**, Pacific Rim International Conference on Artificial Intelligence (PRICAI 2024), November 2024
 - [**Outstanding Scientific and Technological Achievement Award**](https://mp.weixin.qq.com/s/HgcGxSYnunYZaDQIU7Tjuw), Chinese Association for Artificial Intelligence (CAAI), October 2020
