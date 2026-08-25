@@ -21,6 +21,17 @@ function createVisit(overrides: Partial<VisitInput> = {}): VisitInput {
     asn: null,
     colo: null,
     cfRay: null,
+    asOrganization: null,
+    continent: null,
+    timezone: null,
+    httpProtocol: null,
+    tlsVersion: null,
+    clientTcpRttMs: null,
+    acceptLanguage: null,
+    secFetchSite: null,
+    cfBotScore: null,
+    cfVerifiedBot: null,
+    cfCorporateProxy: null,
     isSuspectedBot: false,
     ...overrides
   };
@@ -51,7 +62,7 @@ test("insertVisit persists a complete visit row", async () => {
   });
 });
 
-test("insertVisit persists every approved nullable Cloudflare field", async () => {
+test("insertVisit persists every approved nullable Cloudflare intelligence field", async () => {
   await insertVisit(
     env.DB,
     createVisit({
@@ -61,12 +72,25 @@ test("insertVisit persists every approved nullable Cloudflare field", async () =
       asn: 13335,
       colo: "HKG",
       cfRay: "8abcdef012345678-HKG",
+      asOrganization: "Cloudflare, Inc.",
+      continent: "AS",
+      timezone: "Asia/Hong_Kong",
+      httpProtocol: "HTTP/3",
+      tlsVersion: "TLSv1.3",
+      clientTcpRttMs: 24,
+      acceptLanguage: "en-HK,en;q=0.9",
+      secFetchSite: "same-origin",
+      cfBotScore: 98,
+      cfVerifiedBot: false,
+      cfCorporateProxy: true,
       isSuspectedBot: true
     })
   );
 
   const row = await env.DB.prepare(
-    "SELECT country, region, city, asn, colo, cf_ray, is_suspected_bot FROM visits"
+    `SELECT country, region, city, asn, colo, cf_ray, as_organization, continent, timezone,
+      http_protocol, tls_version, client_tcp_rtt_ms, accept_language, sec_fetch_site,
+      cf_bot_score, cf_verified_bot, cf_corporate_proxy, is_suspected_bot FROM visits`
   ).first<Record<string, unknown>>();
 
   expect(row).toEqual({
@@ -76,7 +100,41 @@ test("insertVisit persists every approved nullable Cloudflare field", async () =
     asn: 13335,
     colo: "HKG",
     cf_ray: "8abcdef012345678-HKG",
+    as_organization: "Cloudflare, Inc.",
+    continent: "AS",
+    timezone: "Asia/Hong_Kong",
+    http_protocol: "HTTP/3",
+    tls_version: "TLSv1.3",
+    client_tcp_rtt_ms: 24,
+    accept_language: "en-HK,en;q=0.9",
+    sec_fetch_site: "same-origin",
+    cf_bot_score: 98,
+    cf_verified_bot: 0,
+    cf_corporate_proxy: 1,
     is_suspected_bot: 1
+  });
+});
+
+test("insertVisit binds null intelligence fields", async () => {
+  await insertVisit(env.DB, createVisit());
+
+  const row = await env.DB.prepare(
+    `SELECT as_organization, continent, timezone, http_protocol, tls_version, client_tcp_rtt_ms,
+      accept_language, sec_fetch_site, cf_bot_score, cf_verified_bot, cf_corporate_proxy FROM visits`
+  ).first<Record<string, unknown>>();
+
+  expect(row).toEqual({
+    as_organization: null,
+    continent: null,
+    timezone: null,
+    http_protocol: null,
+    tls_version: null,
+    client_tcp_rtt_ms: null,
+    accept_language: null,
+    sec_fetch_site: null,
+    cf_bot_score: null,
+    cf_verified_bot: null,
+    cf_corporate_proxy: null
   });
 });
 

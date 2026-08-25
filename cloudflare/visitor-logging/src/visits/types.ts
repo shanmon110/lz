@@ -14,6 +14,17 @@ export interface VisitInput {
   asn: number | null;
   colo: string | null;
   cfRay: string | null;
+  asOrganization?: string | null;
+  continent?: string | null;
+  timezone?: string | null;
+  httpProtocol?: string | null;
+  tlsVersion?: string | null;
+  clientTcpRttMs?: number | null;
+  acceptLanguage?: string | null;
+  secFetchSite?: string | null;
+  cfBotScore?: number | null;
+  cfVerifiedBot?: boolean | null;
+  cfCorporateProxy?: boolean | null;
   isSuspectedBot: boolean;
 }
 
