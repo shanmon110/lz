@@ -292,8 +292,8 @@ const VISITS_RESPONSE = {
       acceptLanguage: null,
       secFetchSite: null,
       cfBotScore: null,
-      cfVerifiedBot: null,
-      cfCorporateProxy: null,
+      cfVerifiedBot: false,
+      cfCorporateProxy: true,
       firstSeenUtc: null,
       lastSeenUtc: null,
       retainedVisitCount: 0,
@@ -360,7 +360,7 @@ test("serves an accessible dashboard shell with external assets and all controls
   ]) {
     expect(html).toContain(label);
   }
-  for (const heading of [
+  const expectedHeaders = [
     "Time (Hong Kong)",
     "IP address",
     "Location",
@@ -374,10 +374,10 @@ test("serves an accessible dashboard shell with external assets and all controls
     "Reasons",
     "Counted",
     "Details"
-  ]) {
-    expect(html).toContain(`<th scope="col">${heading}</th>`);
-  }
-  expect(html.match(/<th scope="col">/g)).toHaveLength(13);
+  ];
+  expect(
+    Array.from(html.matchAll(/<th scope="col">([^<]+)<\/th>/g), (match) => match[1])
+  ).toEqual(expectedHeaders);
   expect(html).toContain('<td colspan="13">Loading visits…</td>');
 
   expect(html).toContain('aria-label="Visit pagination"');
@@ -488,26 +488,63 @@ describe("delivered browser program", () => {
       "Activity",
       "Decision"
     ]);
-    expect(textContent(detailsRow)).toEqual(expect.arrayContaining([
-      "Request",
-      "Network",
-      "Client",
-      "Cloudflare signals",
-      "Activity",
-      "Decision",
-      "Visit ID",
-      "91",
-      "Raw User-Agent",
-      "Mozilla/5.0",
-      "Bot score",
-      "Not available",
-      "Retained total",
-      "4",
-      "Risk score",
-      "90",
-      "Classification version",
-      "risk-v1"
-    ]));
+    expect(detailGroups.map((group) => {
+      const entries = group.children[1].children;
+      return Array.from({ length: entries.length / 2 }, (_, index) => [
+        entries[index * 2].textContent,
+        entries[index * 2 + 1].textContent
+      ]);
+    })).toEqual([
+      [
+        ["Visit ID", "91"],
+        ["Method", "GET"],
+        ["Host", "lizhe.link"],
+        ["Path", "/notes/<script>alert(1)</script>"],
+        ["Sanitized referrer", "https://example.com/<img>"],
+        ["Timestamp", "2026-08-07 00:30:05 HKT"],
+        ["Ray ID", "ray-91"]
+      ],
+      [
+        ["IP address", '<img src=x onerror="alert(1)">'],
+        ["Country", "HK"],
+        ["Region", "Hong Kong"],
+        ["City", "<b>Hong Kong</b>"],
+        ["Continent", "AS"],
+        ["Timezone", "Asia/Hong_Kong"],
+        ["ASN", "AS24940"],
+        ["Organization", "Hetzner Online GmbH"],
+        ["Colo", "HKG"],
+        ["HTTP protocol", "HTTP/2"],
+        ["TLS version", "TLSv1.3"],
+        ["TCP RTT", "14 ms"]
+      ],
+      [
+        ["Browser summary", "Browser <iframe>"],
+        ["Raw User-Agent", "Mozilla/5.0"],
+        ["Accept-Language", "en-HK,en;q=0.9"],
+        ["Sec-Fetch-Site", "same-origin"]
+      ],
+      [
+        ["Bot score", "Not available"],
+        ["Verified bot", "Not available"],
+        ["Corporate proxy", "Not available"]
+      ],
+      [
+        ["First seen", "2026-08-06 23:00:00 HKT"],
+        ["Last seen", "2026-08-07 00:30:05 HKT"],
+        ["Retained total", "4"],
+        ["Preceding 24-hour total", "2"],
+        ["Two-minute total", "2"],
+        ["Distinct paths", "2"]
+      ],
+      [
+        ["Visitor type", "Suspicious automation"],
+        ["Risk score", "90"],
+        ["Reasons", "Hosting network · Unknown browser · No referrer · Repeated requests"],
+        ["Counted", "Excluded"],
+        ["Classification version", "risk-v1"]
+      ]
+    ]);
     expect(textContent(detailsRow)).toContain('<img src=x onerror="alert(1)">');
     expect(textContent(detailsRow)).toContain("/notes/<script>alert(1)</script>");
 
@@ -524,10 +561,15 @@ describe("delivered browser program", () => {
       "24h: 0", "Likely human", "Risk 0", "No recorded reasons", "Counted", "Details"
     ]);
     expect(emptyDetailsRow.hidden).toBe(true);
-    expect(textContent(emptyDetailsRow)).toEqual(expect.arrayContaining([
-      "Unknown",
-      "Not available"
-    ]));
+    const nullableSignals = emptyDetailsRow.children[0].children[0].children[3].children[1].children;
+    expect(Array.from({ length: nullableSignals.length / 2 }, (_, index) => [
+      nullableSignals[index * 2].textContent,
+      nullableSignals[index * 2 + 1].textContent
+    ])).toEqual([
+      ["Bot score", "Not available"],
+      ["Verified bot", "No"],
+      ["Corporate proxy", "Yes"]
+    ]);
     expect(runtime.document.createdTags).toEqual(expect.arrayContaining([
       "button", "section", "h3", "dl", "dt", "dd", "span"
     ]));
