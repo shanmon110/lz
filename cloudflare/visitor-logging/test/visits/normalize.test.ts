@@ -50,9 +50,10 @@ test.each([
   "/",
   "/publications",
   "/publications/",
+  "/tutorials/",
   "/talks/",
-  "/teaching/",
-  "/markdown/"
+  "/academic-service/",
+  "/teaching/"
 ])("buildVisit retains homepage navigation path %s as a possible human visit", (path) => {
   const inbound = requestWithCf(`https://lizhe.link${path}`, {
     "CF-Connecting-IP": "203.0.113.42",
@@ -65,6 +66,8 @@ test.each([
 });
 
 test.each([
+  "/markdown",
+  "/markdown/",
   "/markdown_generator/",
   "/posts/2012/08/blog-post-1/",
   "/portfolio/portfolio-2/",

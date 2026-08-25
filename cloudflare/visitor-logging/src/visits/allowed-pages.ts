@@ -1,9 +1,10 @@
 export const ALLOWED_VISIT_PATHS = [
   "/",
   "/publications",
+  "/tutorials",
   "/talks",
-  "/teaching",
-  "/markdown"
+  "/academic-service",
+  "/teaching"
 ] as const;
 
 export function isAllowedVisitPath(path: string): boolean {

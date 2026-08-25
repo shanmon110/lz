@@ -221,8 +221,7 @@ describe("getVisitPage", () => {
       "/",
       "/publications/",
       "/talks/",
-      "/teaching/",
-      "/markdown/"
+      "/teaching/"
     ];
     for (const [index, path] of ordinaryPaths.entries()) {
       await insertVisit(
@@ -406,8 +405,11 @@ describe("getVisitPage", () => {
     for (const path of [
       "/",
       "/publications/",
+      "/tutorials/",
       "/talks",
+      "/academic-service/",
       "/teaching/",
+      "/markdown",
       "/markdown/",
       "/markdown_generator/",
       "/posts/2012/08/blog-post-1/",
@@ -427,7 +429,14 @@ describe("getVisitPage", () => {
 
     expect(
       (await getVisitPage(env.DB, filters())).items.map((item) => item.path)
-    ).toEqual(["/markdown/", "/teaching/", "/talks", "/publications/", "/"]);
+    ).toEqual([
+      "/teaching/",
+      "/academic-service/",
+      "/talks",
+      "/tutorials/",
+      "/publications/",
+      "/"
+    ]);
     expect(
       (
         await getVisitPage(env.DB, filters({ bots: "only" }))
@@ -437,7 +446,9 @@ describe("getVisitPage", () => {
       ["/sitemap/", "unlisted-page"],
       ["/portfolio/portfolio-2/", "unlisted-page"],
       ["/posts/2012/08/blog-post-1/", "unlisted-page"],
-      ["/markdown_generator/", "unlisted-page"]
+      ["/markdown_generator/", "unlisted-page"],
+      ["/markdown/", "unlisted-page"],
+      ["/markdown", "unlisted-page"]
     ]);
   });
 
