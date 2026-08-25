@@ -1,7 +1,7 @@
 # Visitor Intelligence Dashboard Design
 
 **Date:** 2026-08-25
-**Status:** Approved in chat; awaiting written-spec review
+**Status:** Approved
 
 ## Goal
 
