@@ -18,6 +18,7 @@ Zhe Li is a Postdoctoral Fellow at [The University of Hong Kong](https://www.hku
 
 - **Dec. 2026:** Organizing the [Special Session on Trustworthy Speech and Audio AI at MMAsia 2026](https://mmasia2026.org/calls/special-session-trustworthy-speech-audio-ai/).
 - **Sept. 2026:** Presenting the [Speech Large Language Models for Under-Resourced Languages](https://interspeech2026.org/en-AU/pages/programme/tutorials) tutorial at Interspeech 2026 in Sydney, Australia.
+- **Sept. 4, 2026:** Gave an invited talk, *[What to Learn and Where to Adapt: Efficient Post-Training of Speech Foundation Models](https://mp.weixin.qq.com/s/DHiWmrOUuXpEmgwBzwWOHQ)*, at the DNAs Seminar Series, Duke Kunshan University.
 - **Jul. 2026:** Presented the [Speech Large Language Models: Architectures, Efficient Adaptation, and Applications](https://2026.ieeeicme.org/tutorials/#1766933845252-bb9d3b7e-7e8e) tutorial at IEEE ICME 2026 in Bangkok, Thailand.
 - **Jul. 2026:** 🎉 Our paper *“[Towards Robust Remote Sensing Visual Question Answering with Spectral Expert Adaptation and Group-Relative Optimization](https://doi.org/10.1016/j.neunet.2026.109308)”* has been accepted for publication in **Neural Networks**.
 - **Jul. 2026:** 🎉 Our paper *“STEP: Semantic-Guided Two-Stage Framework with Skeleton-Conditioned Prompting for Skeleton-Based Action Recognition”* has been accepted to **PRCV 2026**. Kudos to Zheng Cui for leading this work!
