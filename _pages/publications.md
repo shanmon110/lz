@@ -15,6 +15,7 @@ redirect_from:
 
 📔 2026
 
+1. Ruichen Zuo, Kong Aik Lee, **Zhe Li**, and Man-Wai Mak, “[ML-CIF: Multi-Layer Continuous Integrate-and-Fire for Text-Dependent Speaker Verification](https://openreview.net/forum?id=eXDl5VWZmZ),” in *Proceedings of the 2026 IEEE Spoken Language Technology Workshop (SLT)*, Palermo, Italy, 2026. *(Accepted for poster presentation.)*
 1. Zheng Cui, **Zhe Li**, Wei Lu, and Lei Lyu, “STEP: Semantic-guided two-stage framework with skeleton-conditioned prompting for skeleton-based action recognition,” in *Proceedings of the 9th Chinese Conference on Pattern Recognition and Computer Vision (PRCV)*, 2026.
 1. Yaxuan Qiu, **Zhe Li**, Mieradilijiang Maimaiti, Zunwang Ke, and Wushour Silamu, “Mixture of spectral experts for audio deepfake detection,” in *Proceedings of Interspeech*, 2026.
 1. Siqing Qin, **Zhe Li**, Kong Aik Lee, and Man-Wai Mak, “Domain-adaptive dual-gating mixture of experts for generalizable speech deepfake detection,” in *Proceedings of Interspeech*, 2026.
